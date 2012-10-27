@@ -1,0 +1,112 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Study "Study"
+	with name "study",
+	description [;
+		print "You're in a small study.  A small desk squats in 
+			the middle of the room.  To the east is a 
+			door.  To the south is the dining room.";
+		if (self hasnt visited) {
+			print "^^Brrrr.  There is no central heating 
+			in this old Gothic mansion.  The curved outer 
+			wall of this room is exposed to the elements in 
+			three directions.  It is colder in here than it 
+			is outside, and there is no fireplace.  It must 
+			be awful during the winter.";
+		}
+		"";
+	],
+	after [;
+		if (parent(Dracan) == nothing && self hasnt general) {
+			give self general;
+			print "You can hear the high-pitched moans of a 
+			young boy and something else.  You recognize the
+			pained voice as that of your little brother.
+			It is the first sign of him you have
+			encountered.  The sounds seem to emanate from
+			upstairs.  The screams cut off suddenly... the
+			silence is deafening.^";
+		}
+	],
+	e_to StudyDoor,
+	s_to DiningRoom;
+
+Dresser -> StudyDesk "desk"
+	with name "desk",
+	description "This heavy, oak desk is not as extravagant as many 
+		of the other furnishings in the house, but it seems to 
+		have seen the most use.  There is a single drawer.",
+	has static;
+
+Drawer -> -> StudyDrawer "drawer"
+	with name "drawer",
+	description "It's an ordinary drawer.",
+	has static;
+
+Object -> -> Blotter "blotter"
+	with name "blotter",
+	description "This ink blotter is marked with the lines of many 
+		letters.  Fine indentations criss-cross the surface 
+		of the blotter.",
+	before [;
+	Read:
+		"Remembering a certain detective novel, you look at the 
+		blotter at an angle to better read what might have been 
+		written on papers resting upon it.  You are ultimately 
+		unable to read anything and you don't have a pencil to 
+		make it easier.";
+	];
+
+Object -> StudyPainting "painting"
+	with name "painting",
+	description "This mountainscape is stunning and exhilerating.  
+		You can almost smell the mountain air gusting from 
+		the canvas.",
+	has scenery;
+
+Object -> StudyWindow "window"
+	with name "window",
+	description "The scene through the dirty window looks pretty 
+		grim.",
+	has scenery;
+
+KeyChair -> StudyCouch "leather couch"
+	with name "leather" "couch" "sofa",
+	description [;
+		if (self has general)
+			print "despite the slashes you made in it, this";
+		else
+			print "This";
+
+		" leather couch appears to be a very 
+		comfortable piece of furniture.  It seems to have seen 
+		its share of use over the years.";
+	],
+	has static;
+
+
+MyDoor StudyDoor "wooden door"
+	with name "wooden" "door",
+	description [;
+		if (self in Study) 
+			"The doorway looks as if it were constructed 
+			centuries after the rest of the house.  there is 
+			no noticable lock or keyhole on the door.";
+		"This wooden door seems out of place in these 
+		underground caves.";
+	],
+	react_before [;
+	Lock, Unlock:
+		if (Player in Study) {
+			"That doesn't seem to be something you can ", 
+			(address) verb_word, ".";
+		}
+	],
+	e_to CaveStairs,
+	w_to Study,
+	with_key BrassKey,
+	npc_open false,
+	has scenery openable lockable locked;

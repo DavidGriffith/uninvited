@@ -1,0 +1,93 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Tower "Tower"
+	with name "room" "jail" "tower",
+	description "This room is bitterly cold.  The eastern half of 
+		this room is walled off with iron bars set into the 
+		floor which go up to the ceiling.  Inside the cell is 
+		a window looking outside.",
+	d_to SpiralStairRoom,
+	e_to CellDoor;
+
+Object -> TowerWindow "window"
+	with name "window",
+	description "The bars in the window look pretty solid.  You can 
+		see the sky as you look between them.",
+	has scenery;
+
+Object -> TowerBars "bars"
+	with name "bar" "bars",
+	description "A row of iron bars, six inches apart, is set deep 
+		into the floor and ceiling.  You test several of them 
+		with your weight and strength.",
+	has scenery;
+
+MyDoor -> CellDoor "cell door"
+	with name "cell" "iron" "door",
+	description "The door is made of iron bars.",
+	describe [;
+		print "^The cell door is ";
+		if (self has open) "open.";
+			"closed";
+	],
+	before [;
+	Open:
+		if (self hasnt general) {
+			give self open;
+			give self general;
+			"You pull on the cell door until the cold iron 
+			finally gives way.  A hideous figure in the 
+			shape of a decapitated peasant holding his own 
+			head forms inside the cell.  The severed head 
+			speaks as it hangs from its hair.^
+			^
+			~There is no escape from here.  There is only 
+			one sentence in this cell, an eternal life 
+			sentence.  There is no escape!  No escape, no 
+			escape...~^
+			^
+			His voice fades out as the ghastly image fades 
+			away.";
+		}
+	],
+	e_to Cell,
+	w_to Tower,
+	has static openable;
+
+Inside Cell "Cell"
+	with name "cell",
+	description "You are in the eastern half of a bitterly cold 
+		room.  Iron bars set into the floor which go up to the 
+		ceiling.  The only exit is through the cell door.",
+	before [;
+	Go:
+		if (self hasnt general && noun == w_obj) {
+			give self general;
+			give CellDoor ~open locked;
+			PlaySound(SOUND_CellDoor);
+			"Before you can reach the cell door, it slams shut.";
+		}
+	],
+	killplayer [;
+		give CellDoor ~open;
+		deadflag = 1;
+		"As you enter the cell, you hear the door slam shut 
+		behind you.  There is no escape  You are trapped here 
+		for eternity.  Eventually you die and your flesh decays, 
+		greatly adding to the old mansion's atmosphere."; 
+	],
+	w_to CellDoor,
+	has scenery light;
+
+Object -> CellWindow "window"
+	with name "window",
+	description "All you can see through this narrow glassless 
+		window is the dull grey sky.",
+	before [;
+	Search:
+		<<Examine self>>;
+	],
+	has scenery;

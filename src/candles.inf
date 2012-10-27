@@ -1,0 +1,57 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Class Candle with
+	before [;
+	Examine:
+		if (self has on)
+			"A flame dances atop ", (the) self, ".";
+		"It's a plain ", (name) self, ".";
+
+	Smell:
+		"It smells like wax.";
+	Burn:
+		print "burning";
+		if (second hasnt fire) {
+			"You can't burn ", (the) self, " with ",
+				(the) second, ".";
+		}
+		if (self has on) "But it's already lit!";
+		<<SwitchOn self second>>;
+	SwitchOff:
+		if (verb_word == 'turn' or 'switch')
+			"Perhaps snuffing or blowing out ", (the) self, 
+			" would be more useful.";
+
+		if (self hasnt on)
+			"But it's not burning.";
+
+		if (self has on) {
+			give self ~on ~fire ~light;
+			StopDaemon(self);
+			"You put out ", (the) self, ".";
+		}
+	SwitchOn:
+		if (second == nothing || second hasnt fire) {
+			print "You can't light ", (the) self, " with ";
+
+			if (second ofclass Match) 
+				"a match that isn't burning.";
+			print_ret (the) second, ".";
+		}
+		if (verb_word == 'turn') {
+			"This isn't one of those newfangled electric 
+			candles.  You'll have to try something else.";
+		}
+
+		if (self has on)
+			"But it's already burning.";
+
+		give self on fire light;
+		"You light ", (the) self, " with ", (the) second, ".";
+
+	],
+	has switchable tiny;
+

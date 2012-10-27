@@ -1,0 +1,266 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion MasterBedroom "Master Bedroom"
+	with name "master" "bedroom",
+	description "This must be the master bedroom.  Interesting 
+		decor.  There is a stale smell about this room, as if 
+		it hasn't been opened for years.  Along the west wall 
+		are a row of photographs and a large wardrobe.  Pushed 
+		up against the north wall is a large, 
+		comfortable-looking bed.  
+		Beside it is a floor-standing lamp. The hallway lies 
+		east.  Another doorway faces south.",
+	e_to SecondHall,
+	s_to MasterBath;
+
+Object -> MasterRug "rug"
+	with name "rug" "carpet",
+	description "Nice stitchwork.  The master of the house sure knew 
+		a good rug when he bought one.",
+	before [;
+	Enter:
+		"You're already on ", (the) self, ".";
+	Exit:
+		"You'll have to exit the room first.";
+	],
+	has scenery;
+
+Object -> Wheelchair "wheelchair"
+	with name "wheelchair" "chair",
+	description "This antique wheelchair is your favorite piece 
+		of furniture in the house.  Form and function combined 
+		to create the mobile seat.",
+	before [;
+	Take:
+		"It's too large and unwieldy to do that.";
+	Enter:
+		move player to self;
+		if (self hasnt visited) {
+			"You feel just like Lionel Barrymore in ~It's a 
+			Wonderful Life.~.  You roll around the room 
+			with a cackling laugh.  All you need now is 
+			some honest, workingman's mortgage to foreclose 
+			on.";
+		}
+		"You climb into ", (the) self, ".";
+	Go:
+		"You reach down and spin the wheels on the wheelchair.";
+	PushDir:
+		AllowPushDir(); rtrue;
+	],
+	has enterable transparent;
+
+Object -> MasterLamp "lamp"
+	with name "lamp",
+	description "This floor-standing reading lamp has shined on many 
+		pages of fine literature, I'm sure.",
+	has scenery;
+
+Object -> MasterBed "bed"
+	with name "bed",
+	description "This bed looks mighty inviting.  The way you feel, 
+		you could climb into it and sleep for a week.",
+	has scenery supporter enterable;
+
+Object -> MasterTable "table"
+	with name "table",
+	description "This small table has been cut from solid oak.  
+		The table-top is very deep, but there are no drawers in 
+		it.",
+	has static supporter;
+
+Object -> -> BlackDiary "black diary"
+	with name "black" "diary",
+	description "It's a small black diary.",
+	before [;
+	Read:
+		"This diary is filled with ramblings that you can barely 
+		understand.  The only meaningful page is the last one:^^
+		~I have lost control of Dracan.  My star student now 
+		fancies himself a master.  Though his power is strong, 
+		his spirit is weak.  He is easily corrupted by the dark 
+		spirits of greed and power.  My servant, more aware than 
+		I, sealed his star in my hingeless box.  They're locked 
+		away beyond his stare.  I've hidden the key, a chair 
+		knows where.~";
+	Open:
+		<<read self>>;
+	],
+	has openable;
+
+Candle -> -> GreyCandle "grey candle"
+	with name "grey" "gray" "candle";
+
+Bottle -> -> BlueBottle "blue bottle"
+	with name "blue" "bottle",
+	description "A small blue bottle.",
+	has open;
+
+Bottle -> -> BrownBottle "brown bottle"
+	with name "brown" "bottle",
+	description "A cut glass bottle with a matching cut glass top.";
+
+Liquid -> -> -> BrownLiquid "brown liquid"
+	with name "brown" "liquid",
+	description "It's a brown liquid.",
+	count 0,
+	before [;
+	Smell:
+		"It smells a bit like almonds.";
+	Taste:
+		StartDaemon(self);
+		rtrue;
+	Drink:
+		remove self;
+		StartDaemon(self);
+		rtrue;
+	],
+	daemon [ t;
+		t = (self.count)++;
+		switch (t) {
+		0:
+			"You find the brown liquid somewhat tasty.  It 
+			has a flavor not unlike almonds.  You feel very 
+			weak, almost nauseous.";
+		1:
+			"^You are starting to feel more ill now, and the 
+			aroma of almonds stays with you.";
+		2:
+			! nothing happens.
+		3:
+			"^The aromatic almond smell is coming on very 
+			strong now.  Every pore of your body now exudes 
+			that smell.  You definitely should not have 
+			consumed the contents of that bottle.  All your 
+			limbs are leaden and ache terribly.  Waves of 
+			nausea continue to wash all over your shore.";
+		4:
+			StopDaemon(self);
+			deadflag = 1;
+			"^The odor of almonds is all around you.  You 
+			are now incapable of walking or moving.  The 
+			weakness has spread to your mind.  As you gaze 
+			around the area where you spend the last few 
+			moments of life, you ponder the ultimate wisdom 
+			of eating and drinking unknown things.";
+		}
+	],
+	has edible;
+
+
+BaseContainer -> MasterWardrobe "wardrobe"
+	with name "chest" "wardrobe" "closet",
+	description "It's a large, heavy wardrobe with two doors.",
+	with_key SkeletonKey,
+	has scenery openable lockable locked;
+
+! The first time this scroll is read, the safe's combination is set.
+!
+Object -> -> PapyrusSmall "small papyrus scroll"
+	with name "small" "papyrus" "scroll",
+	description "The seal on this scroll looks familiar.  It displays a 
+		self-consuming snake.",
+	before [e1 e2 e3;
+	Read:
+		if (self hasnt general) {
+			give self general;
+			SafeDial.set_combination();
+		}
+		e1 = AtomicNumber(SafeDial.com1);
+		e2 = AtomicNumber(SafeDial.com2);
+		e3 = AtomicNumber(SafeDial.com3);
+		"~Together these form a key: ",
+		(the) e1,", ", (the) e2, ", and ", (the) e3, "~.";
+	];
+
+Object -> -> PapyrusLarge "large papyrus scroll"
+	with name "large" "papyrus" "scroll",
+	description "The seal on this scroll looks familiar.  It displays a 
+		self-consuming snake.",
+	before [;
+	Read:
+		"~The heart of the garden maze contains the Blothney 
+		Gem.  There are certain places you cannot go, 'till you 
+		unlock the 'mystery'~.";
+	];
+
+Box -> -> MagicBox "wooden box"
+	with name "wooden" "box",
+	description "This wooden box glows with a lustrous finish and 
+		closes to an airtight seal.",
+	before [;
+	Open:
+		"It's not clear how it's supposed to open.  There are 
+		no hinges, seams, or keyhole.";
+	Burn:
+		if (second && second hasnt fire)
+			rfalse;
+	],
+	has container lockable locked;
+
+Object -> -> -> BrassPentagram "brass pentagram"
+	with name "brass" "pentagram" "star",
+	description "This heavy, brass star bears the inscription ~Fire 
+		and Ice~.  It is in the shape of a pentagram, a 
+		five-pointed star wrapped in a circle.";
+
+
+Vial -> -> GoldenVial "golden vial"
+	with name "golden" "gold" "vial",
+	description "This fine cut glass vial has a brilliant gold cap.  
+		Inside there is a strange liquid.  It rolls around 
+		in the vial without splashing.  It seems as if it were 
+		in one piece.";
+
+Liquid -> -> -> Mercury "mercury"
+	with name "mercury",
+	article "some",
+	description "It's a silvery liquid.",
+	before [;
+	Drink:
+		deadflag = 1;
+		"The liquid mercury quickly settles into 
+		the depths of your digestive system...  You become 
+		nauseous and disoriented, then you slip uneasily into 
+		merciful unconsciousness, never to awaken.";
+	],
+	has edible;
+
+Photo-> MasterPhoto1 "first photo"
+	with name "first",
+	description "This is a photograph of a man in Paris.  He has 
+		an appearance that makes him look Chinese.  He is 
+		standing with his arms around a friend.  Both men are 
+		wearing long robes.",
+	has scenery;
+
+Photo -> MasterPhoto2 "second photo"
+	with name "second",
+	description "This is a photograph of a man with a woman.  The 
+		two appear to be brother and sister.",
+	has scenery;
+
+Photo -> MasterPhoto3 "third photo"
+	with name "third",
+	description "This is a photograph of a man in Buffalo Grove.",
+	has scenery;
+
+Photo -> MasterPhoto4 "fourth photo"
+	with name "fourth",
+	description "This is a photograph of a man.  His eyes appear 
+		sunken and his face is very drawn.",
+	has scenery;
+
+Photo -> MasterPhoto5 "fifth photo"
+	with name "fifth",
+	description "This is a photograph of a man in Rome.",
+	has scenery;
+
+Photo -> MasterPhoto6 "sixth photo"
+	with name "sixth",
+	description "This is a photograph of a man whose long hair falls 
+		past his shoulders -- from over his forehead.",
+	has scenery;

@@ -1,0 +1,90 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion TrophyRoom "Trophy Room"
+	with name "room",
+	description "The walls of this room are lined with the heads of 
+		dead animals.  A mounted bear stands in a corner.  A 
+		tiger skin covers the middle of the floor.  To the 
+		north is a door leading outside.  You can go back to 
+		the rec room using the door to the east.",
+	e_to RecRoom,
+	n_to BackDoor;
+
+
+Object -> TigerSkin "tiger skin"
+	with name "tiger" "skin" "rug",
+	description "The skin of this large jungle cat makes a handsome 
+		throw rug.  However, thin tiger skin does not make as 
+		plush a carpet as thick bear skin.",
+	has scenery;
+
+Object -> MooseHead "moose head"
+	with name "moose" "head",
+	description "This moose head is huge.  It must have been really 
+		intimidating when it had a body.  It has a very strange 
+		look in its eye.",
+	has scenery;
+
+Object -> BoarHead "boar head"
+	with name "boar" "head",
+	description "Ooh!  That's one ugly pig.  He was probably an 
+		awful boar.",
+	has scenery;
+
+Object -> StuffedBear "stuffed bear"
+	with name "stuffed" "mounted" "bear",
+	description "This is one big bear, like in the ~Addams Family~.  
+		It stands about nine and a half feet tall.",
+	before [;
+	Take, Push, Pull:
+		"The stuffed bear is very heavy.  You do not have the 
+		strength to move it.";
+	],
+	has scenery;
+
+
+! This item should not be takable if the player has more than nine 
+! non-tiny objects in inventory.
+Object -> Cage "small cage"
+	with name "small" "cage",
+	capacity 3,
+	description [i;
+		print "It is a small cage with a handle to allow it to 
+			be transported.";
+		if (child(self)) {
+			objectloop (i in self) {
+				if (i has animate) {
+					" You can see something moving 
+					around inside.";
+				}
+			}
+		}
+		"";
+	],
+	after [i;
+	Open:
+		if (child(self)) {
+			objectloop (i in self) {
+				if (i ofclass Animal) {
+					i.escape();
+					break;
+				}
+			}
+			rtrue;
+		}
+	],
+	has container openable transparent;
+
+! This is the only way to the back, so the gremlin shouldn't be able to 
+! get by it.
+!
+MyDoor BackDoor "back door"
+	with name "back" "door",
+	description "It's a wooden door.",
+	n_to BackYard,
+	s_to TrophyRoom,
+	npc_open false,
+	has scenery openable;

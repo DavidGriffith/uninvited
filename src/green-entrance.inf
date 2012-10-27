@@ -1,0 +1,15 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside GreenhouseEntrance "Greenhouse Entrance"
+	with name "entrance",
+	description "You stand before the entrance to a greenhouse.  The 
+		glass is covered with what appears to be dust and 
+		condensation inside.",
+	s_to YardPath,
+	n_to Greenhouse;
+
+! You are standing in front of a large door.  You see nothing unusual 
+! about the device.

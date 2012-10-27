@@ -1,0 +1,68 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside Veranda "Veranda"
+	with name "veranda",
+	description "From here you have a splendid view of the 
+		desolate estate.",
+	w_to Parlor;
+
+! A wide aerosol stream sprays from the "spider cider" can.  It leaves 
+! the railing sticky!
+
+
+Object -> VerandaRail "railing"
+	with name "railing" "rail",
+	description "This marble railing runs along the edge of the
+		veranda.  On the far side of it is a steep drop-off.
+		One could fall about twenty feet from here.",
+	before [;
+	Receive:
+		if (noun == SpiderCider) {
+			move noun to self;
+			"That's probably not what you intended, but oh well.";
+		}
+	],
+	has scenery supporter;
+
+
+Object -> -> Spider "black spider"
+	with name "black" "spider",
+	daemon [;
+		if (player notin Veranda || self hasnt concealed) { 
+			StopDaemon(self);
+			rtrue;
+		}
+
+		if (self hasnt general) {
+			give self general;
+			"^A large black spider quickly runs by you along 
+			the railing.";
+		}
+
+		print "^You see the spider continue its trek across the 
+			railing.";
+
+		if (VerandaRail has general) {
+			print " It becomes paralyzed as it comes into 
+			contact with the ~spider cider~.  It's not 
+			dead, but it's not going anywhere without your 
+			help.";
+			give self ~concealed;
+			StopDaemon(self);
+		}
+		"";
+	],
+	before [;
+	Examine:
+		if (VerandaRail has general) {
+			"This spider is either sleeping or dead.";
+		}
+		"It's a large black spider.";
+	Take:
+		if (self has concealed)
+			"The spider skitters out of your grasp.";
+	],
+	has concealed;

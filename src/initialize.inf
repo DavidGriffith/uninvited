@@ -1,0 +1,99 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+
+[ Initialise dummy;
+
+	Car.mycount = 5;
+
+	! Make compiler shut up about unused sound.h stuff.
+	if (false) { Sequencer(); RepAndFade();}
+
+!	StartDaemon(FruitDemon);	! Started in obs-entrance.inf instead
+!	StartDaemon(Ambience);		! Started in car.inf instead
+
+	StartDaemon(Timekeeper);
+	StartDaemon(Gremlin);
+	StartDaemon(Car);
+	Randomize();
+
+	InitDoors();
+
+	player.capacity = 8;
+
+	location = Car;
+
+	last_location = location;
+
+	move BouncingCreature to Maze62;
+	move Gremlin to SecondHall;
+	move Notebook to StudyDrawer;
+
+	print "Look out!!!  The last thing you remember before the 
+	darkness rushed up to claim you is your brother's startled cry.  
+	You managed to swerve around the shadowy figure that appeared in 
+	the roadway, but lost control as the car jumped the shoulder 
+	and plunged headlong into this tree.^
+	^
+	Swiveling your battered head you survey the wreckage.  You 
+	realize that you are alone: your kid brother must have gone off 
+	to get some help.  As you pry yourself free of the steering 
+	wheel's embrace, you can't help but notice the pungent odor of 
+	gasoline as it leaks from the ruptured gas tank.
+	^
+	^";
+#ifdef DEBUG;
+	print "This is a Debug Edition of Uninvited^Debug verbs:^
+	@@42 ZAP <object> to instantly make an object disappear.^
+	@@42 PURLOIN <object> to get any object.^
+	@@42 GONEAR <object> to teleport yourself near that object.^
+	^^";
+#endif; ! DEBUG
+	
+	print "[Press any key to begin.] ";
+	@read_char 1 dummy;
+	@erase_window 0;
+	"^";
+];
+
+! Disable "undo" after death.
+! This should really be dealt with by modifying parserm.h.  I propose
+! adding a new define: DEATH_DISALLOW_UNDO.  If set, attempting to use
+! "undo" after death would result in the message "[Undo is disabled
+! after death]" being printed.
+
+[ Afterlife;
+#ifndef DEBUG;
+	undo_flag = 0;
+#endif;
+];
+
+[ WinMessage;
+	"You climb through the window out onto the balcony.  You are 
+	surprised that the air is so mild.  In fact, a warm pleasant
+	breeze wafts past.  A bright, warm sun begins to shine through 
+	the clouds.  You and your brother bask in the warm, golden glow
+	of a summer sun.  Your brother is now himself agains.  You are 
+	aware of a sense of peace and triumph.  You have done very well 
+	indeed.^
+	^
+	CONGRATULATIONS^
+	By defeating the evil entities that had taken posession of both 
+	this mansion and your little brother, you have proven yourself 
+	Master of the House of Abraxas.";
+];
+
+[ DeathMessage;
+	if (deadflag == 1) {
+		"^~I've got you!~";
+	}
+];
+
+[ ScoreSub;
+	if (deadflag == 0)
+		"There is no score.  You must find your brother!";
+];
+
+

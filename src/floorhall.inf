@@ -1,0 +1,154 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion FloorHall "Hall"
+	with name "hallway" "hall",
+	description "This room is devoid of any aesthetic warmth or 
+		beauty.  It is purely functional, with no concern for 
+		the trivialities of interior design.
+		To the south is the foyer.  Two doors go southwest and 
+		west.  One door goes east.  A staircase leads up.
+		A small painting hangs between the two west-facing 
+		doors.  Near the staircase is a framed sepia-toned 
+		photograph with some writing on it.",
+		
+	before [;
+	Go:
+		if (noun == e_obj || noun == w_obj || noun == sw_obj) {
+			if (HallWoman in self) {
+				HallWoman.killplayer();
+				rtrue;
+			}
+			if (self hasnt general) {
+				HallWoman.appear();
+				rtrue;
+			}
+		}
+	Examine:
+		rfalse;
+!	default:
+!		if (HallWoman in self) {
+!			if (noun ~= NoGhost || noun ~= BottleNoGhost) {
+!				HallWoman.killplayer();
+!				rtrue;
+!			}
+!		}
+	],
+	s_to HallDoor,
+	e_to ParlorDoor,
+	w_to DiningRoom,
+	sw_to RecRoomDoor,
+	u_to HallStairs;
+
+DirDoor -> HallStairs "stairs"
+	with name "stairs" "stair" "staircase",
+	description "These are carpeted stairs which lead up.  The look 
+		reasonably sturdy, if somewhat dusty.",
+	before [;
+	Climb:
+		if (player in FloorHall)
+			<<Go u_obj>>;
+		"But you're already at the top of the stairs.";
+
+	],
+	u_to SecondHall,
+	d_to FloorHall,
+	has scenery open;
+
+Object -> FloorHallPainting "painting"
+	with name "picture" "painting",
+	description "It looks like a still reproduced from F. W Murnau's 
+		film, ~Nosferatu~.  There seems to be a familiar face in 
+		the background.  On closer examination it appears to be 
+		Dave Feldman, whose wit and insight was a valuable 
+		asset in the creation of ~Uninvited~.",
+	has scenery;
+
+Object -> FloorHallPhoto "photograph"
+	with name "picture" "photograph" "photo" "sepia" "toned",
+	description "This is an 8-by-10-inch sepia-toned photograph of 
+		two men drinking beer.  Written across the bottom is 
+		~Thanks to Stan Kaufman, the Inform reimplementation of 
+		~Uninvited~ was a success and relatively bug free. -- 
+		David Griffith.~",
+	before [; Read: <<examine self>>;],
+	has scenery;
+
+Object -> HallWindow "window"
+	with name "window",
+	description "You look through the window and remind yourself 
+		that there's a great big, wonderful world out there.",
+	has scenery;
+
+Object HallWoman "strange woman"
+	with name "strange" "woman" "lady" "ghost",
+	description "This woman wears the dress of a southern belle.",
+	appear [;
+		move self to FloorHall;
+		"As you touch the doorknob, a strange woman appears.  
+		She is dressed like Scarlett O'Hara and stands with her 
+		back to you.  You pause in wonder.";
+	],
+	killplayer [;
+		deadflag = 1;
+		"You have gotten the attention of the mysterious lady.  
+		She turns to face you.  Her face is devoid of any 
+		flesh.  You are frozen with horror as she begins 
+		ripping your body into a bloody mess.";
+	],
+	before [ weapon;
+	Receive, Pour:
+		<<Attack self noun>>;
+
+	Attack, ThrownAt:
+		if (noun == self)
+			weapon = second;
+		else
+			weapon = noun;
+		if (weapon ofclass Bottle && NoGhost in weapon &&
+				weapon has open) {
+				remove weapon;
+				self.die();
+				rtrue;
+		}
+		if (weapon == NoGhost) {
+			remove weapon;
+			self.die();
+			rtrue;
+		}
+		self.killplayer();
+		rtrue;
+	],
+	life [;
+	Show:
+		self.killplayer();
+		rtrue;
+	],
+	die [;
+		give FloorHall general;
+		remove self;
+		"You splash the foul-smelling liquid on the 
+		head of the over-dressed guest.  The liquid 
+		seems to burn as it drips over her. She lets 
+		out a horrifying scream as she begins to melt 
+		helplessly.  Suddenly you feel like Dorothy 
+		(and her little dog too).";
+	],
+	has animate supporter;
+
+
+MyDoor ParlorDoor "parlor door"
+	with name "parlor" "door",
+	description "It's a wooden door.",
+	e_to Parlor,
+	w_to FloorHall,
+	has scenery openable;
+
+MyDoor RecRoomDoor "recroom door"
+	with name "recroom" "door",
+	description "It's a wooden door.",
+	sw_to RecRoom,
+	ne_to FloorHall,
+	has scenery openable;

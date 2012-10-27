@@ -1,0 +1,37 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion SpiralStairRoom "Stairwell"
+	with name "room",
+	description "The stairwell contains an old, rickety spiral 
+		staircase that spins up towards the next level.  A bare  
+		light bulb hangs from the ceiling.",
+	w_to SpiralDoor,
+	before [;
+		if (noun == u_obj && player in Wheelchair)
+			"Oops! Climbing a ladder while in a wheelchair 
+			isn't going to work.";
+	],
+	u_to Tower;
+
+Object -> SpiralStair "spiral stair"
+	with name "spiral" "stair" "stairs" "staircase",
+	description "The spiral staircase winds up a full turn.",
+	before [;
+	Climb:
+		PlayerTo(SpiralStairRoom.u_to);
+		rtrue;
+	],
+	has scenery;
+
+Object -> Axe "axe"
+	with name "axe" "ax",
+	description "This is the type of axe that broke up several of 
+		Henry the Eighth's marriages.",
+	initial "A double-bladed axe leans against the wall.";
+
+Lamp -> SpiralLamp "lamp";
+LampChain -> -> SpiralChain "chain";
+LampBulb -> -> SpiralBulb "bulb";

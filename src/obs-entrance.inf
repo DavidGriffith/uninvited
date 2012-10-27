@@ -1,0 +1,75 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside ObservatoryEntrance "Observatory Entrance"
+	with name "observatory",
+	description "You stand at the entrance of a large domed 
+		building to the west.  The ugly, elaborate doorway is 
+		endowed with a strange, eclectic mix of decorations 
+		from at least three different centuries.  Two brass 
+		orbs atop spires are to the left and right of the door.  
+		Just above the door, in the doorframe is an 
+		oddly-shaped niche.  On the wall above the doorway is a 
+		sign reading ~Magisterium~.",
+	w_to ObservatoryOuterDoor,
+	e_to YardPath;
+
+Object -> GemNiche "niche"
+	with name "niche" "hole",
+	description [;
+		print "This niche has a very peculiar shape.  It's a 
+		square-tipped onto a point.  The upper point is then cut 
+		off.";
+		if (Gem in self)
+			" The Blothney Gem is snugly nestled inside.";
+		else
+			"";
+	],
+	before [;
+	LetGo:
+		if (Gem in self) {
+			"Some force prevents you from pulling the gem 
+			out of the hole.";
+		}
+	Receive:
+		if (noun == Gem) {
+			give ObservatoryOuterDoor ~locked;
+			move noun to self;
+			StartDaemon(FruitDemon);
+			"The gem fits perfectly.  It flashes and emits a 
+			strange shimmering noise.  A click is heard 
+			from the door below.";
+		}
+		"It doesn't fit very well.";
+	],
+	has scenery;
+
+Object -> BrassOrb "brass orb"
+	with name "brass" "orb" "orbs" "spire",
+	description [;
+		switch (random(2)) {
+		1:
+			"The brass orbs and spires decorate the door 
+			nicely.  A form like this usually has some 
+			function.  What it might be is a mystery to 
+			you.";
+		2:
+			"These heavy brass ornaments seem as if they 
+			were designed for some functional purpose, but 
+			you do not know what.";
+		}
+	],
+	has scenery;
+
+
+MyDoor -> ObservatoryOuterDoor "observatory door"
+	with name "door",
+	description "The pentacle design on the door is the only 
+		consistent thematic thread that might have some 
+		importance.",
+	w_to ObservatoryCorridor,
+	e_to ObservatoryEntrance,
+	npc_open false,
+	has openable scenery locked;

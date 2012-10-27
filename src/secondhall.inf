@@ -1,0 +1,93 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion SecondHall "Upstairs Hallway"
+	with name "upstairs" "hallway",
+	description "The old wooden floorboards creak under your 
+		weight.  Your creaking footsteps echo through the 
+		emptiness of the huge house.  Doors lead 
+		west, northwest, east, northeast, and southeast.  A 
+		stuffed fish hangs on the wall at the end of the hallway.",
+	after [;
+		if (parent(Dracan) == nothing && self hasnt general) {
+			give self general;
+			print "Your brother's screams get louder as you 
+			enter the upstairs hallway.  You must be getting 
+			closer to him.^";
+		}
+	],
+	before [;
+	Go:
+		if (noun == d_obj && player in Wheelchair)
+			"Going down the stairs in a wheelchair?  I don't 
+			think so.";
+	],
+	d_to HallStairs,
+	ne_to GuestDoor,
+	nw_to BedDoor,
+	e_to SpiralDoor,
+	w_to MasterBedroom,
+	se_to SecondHallClosetDoor;
+
+Object -> MountedFish "stuffed fish"
+	with name "red" "herring" "mounted" "stuffed" "fish" "trophy" "tail",
+	description [;
+		print "There's something fishy about this trophy.";
+		if (FishTag in parent(self))
+			" A tag dangles from the fish's tail.";
+		"";
+	],
+	before [;
+	Smell:
+		"It smells fishy.";
+	Search:
+		move FishTag to parent(self);
+		"You find a largish product-identification tag tucked 
+		behind the fish.";
+	],
+	capacity 0,
+	has scenery;
+
+Object -> -> FishTag "tag"
+	with name "tag",
+	description "According to this tag, this fish is a genuine 
+		stuffed and mounted red herring from the Frobozz Magic 
+		Fish Trophy Company.",
+	before [;
+	Read:
+		<<examine self>>;
+	Take:
+		"The tag is firmly attached to the fish.";
+	],
+	has scenery;
+
+
+MyDoor -> BedDoor "old door",
+	with name "old" "door",
+	description "The door is old and cracked.",
+	nw_to Bedroom,
+	se_to SecondHall,
+	has scenery openable;
+
+MyDoor -> GuestDoor "wooden door"
+	with name "wooden" "door",
+	description "It's a wooden door.",
+	ne_to GuestRoom,
+	se_to SecondHall,
+	has scenery openable;
+
+MyDoor -> SpiralDoor "plain door"
+	with name "plain" "door",
+	description "It's a plain old door.  There's nothing fancy about it.",
+	e_to SpiralStairRoom,
+	w_to SecondHall,
+	has scenery openable;
+
+MyDoor -> SecondHallClosetDoor "closet door"
+	with name "closet" "door",
+	description "It's a closet door.",
+	se_to SecondHallCloset,
+	nw_to SecondHall,
+	has scenery openable;

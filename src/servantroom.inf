@@ -1,0 +1,229 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion ServantRoom "Servant's Bedroom"
+	with name "bedroom",
+	description "Whoever had occupied this room must have been quite 
+		satisfied with the small accomodations.  There is a 
+		simple bed, a floor lamp, and a dresser.  A small 
+		painting hangs on the wall above the bed.  This room
+		does not seem quite as untidy as the rest of the house.  
+		You see no dust or cobwebs.",
+	n_to Kitchen;
+
+Object -> ServantBed "bed"
+	with name "bed",
+	description "This bed is rather tiny and soft-looking.  You 
+		prefer a firm mattress.",
+	has scenery supporter enterable;
+
+Object -> -> LittlePillow "little pillow"
+	with name "little" "small" "pillow",
+	description "You see nothing strange or interesting about the 
+		little pillow.";
+
+Lamp -> ServantLamp "art-deco lamp"
+	with name "floor" "art-deco" "deco" "lamp",
+	description "It's a sort of fifties, art deco, grotesque, 
+		leopard-skin reading lamp.  It has an odd electrical 
+		smell to it.",
+	before [;
+	Smell:
+		"It has an odd electrical smell.";
+	SwitchOn:
+		move Niche to parent(self);
+		print "As you turn on the lamp, you see the picture on 
+			the wall slide to your left, revealing a small 
+			niche in the wall.";
+
+		if (SpiritServant hasnt general) {
+			move SpiritServant to parent(self);
+
+			"^^Your tired eyes are having trouble 
+			focusing on the ghostly figure before you.  An 
+			angry man's spirit hovers, in chains, in front 
+			of you.  The ghost speaks: ~This is my room.  
+			Who let you in here?!  These are not the 
+			Master's things.  They're mine.  MINE.  MINE.  
+			MINE...";
+		}
+		rtrue;
+
+	SwitchOff:
+		remove Niche;
+		print "As you turn off the lamp, you see the picture on 
+		the wall slide to your right, covering the niche.";
+		if (SpiritServant in parent(self))
+			remove SpiritServant;
+			print " The ghost disappears.";
+		"";
+	];
+LampChain -> -> ServantLampChain "chain";
+LampBulb -> -> ServantLampBulb "bulb";
+
+
+Object -> ServantPainting "painting"
+	with name "painting",
+	description "This painting looks like Picasso's rendering of 
+		~The Twillight Zone's~ title shot.",
+	has scenery;
+
+
+Dresser -> ServantDresser "dresser"
+	with name "oak" "dresser",
+	description "Heavy oak drawers rest under a lustrous wood 
+		finish.  The brass handles are beginning to tarnish.",
+	has static;
+
+Drawer -> -> ServantDrawer "drawer"
+	with name "drawer",
+	description "It's a well-made drawer.",
+	has static;
+
+Object -> -> ServantBrush "brush"
+	with name "brush",
+	description "The bristles of this dirty, dusty brush are filled 
+		with strands of grey hair and white specks.";
+
+!Bottle -> -> SprayBottle "spray bottle"
+!	with name "spray" "bottle",
+!	description "It's a small crystal bottle with a gold spray 
+!		fixture.  A rubber squeeze bulb is attached for 
+!		propulsion.  A dark green liquid inhabits the bottle.";
+
+Bottle -> -> BottleCologne "cologne bottle"
+	with name "cologne" "perfume" "of" "bottle",
+	description "This bottle of cologne is labeled ~Horsetrader~.",
+	before [;
+	Smell:
+		print "Unsurprisingly, it smells ";
+		if (self has open) {
+			print "strongly";
+		} else {
+			print "faintly";
+		}
+		" of cologne.";
+	],
+	after [;
+	Open:
+		"You open the bottle and the fragrance of the cologne 
+		inside assails your nostrils.";
+	];
+
+Liquid -> -> -> Cologne "cologne"
+	with name "cologne" "perfume",
+	description "It smells like a thoroughbred.",
+	before [;
+	Smell:
+		self.description();
+		rtrue;
+	Drink:
+		remove self;
+		"The cologne tasted awful and makes your tongue feel 
+		numb.  Your breath now smells like a horsetrader's.";
+	Taste:
+		"It tastes horrible.";
+	];
+! It seems that there is a book set in the wall
+
+Object SpiritServant "ghostly servant"
+	with name "spirit" "ghostly" "ghost" "servant",
+	description "This appears to be a ghostly figure of a man 
+		dressed in very outdated clothing.  He is draped with 
+		chains.",
+	react_after [;
+		if (IndirectlyContains(player, Spider)) {
+			rfalse;
+		}
+
+		if (IndirectlyContains(parent(self), Spider)) {
+			SpiritServant.die();
+		}
+	],
+	killplayer [;
+		deadflag = 1;
+		"The screaming apparition's misty form engulfs you, and 
+		you become covered in a thick, sticky, protoplasmic goo.  
+		It burns like acid.  The pain is soon too much, and you 
+		collapse into a lifeless lump of flesh.";
+	],
+	die [;
+		give self general;
+		remove self;
+		"The posessive ghost shrieks at the sight of the 
+		stunned spider.  Flustered and frightened, the spirit 
+		dissolves from view, leaving you alone again.";
+	],
+	before [weapon;
+	Attack, ThrownAt:
+		if (noun == self)
+			weapon = second;
+		else
+			weapon = noun;
+
+		if (weapon == Spider) {
+			move weapon to parent(self);
+			self.die();
+			rtrue;
+		}
+		self.killplayer();		
+		rtrue;
+	],
+	life [;
+	Show, Give:
+		if (noun == Spider) {
+			self.die();
+			rtrue;
+		}
+		"The ghost glowers at you angrily.";
+
+	Tell, Ask:
+		"The ghost moans angrily at you.";
+	],
+	orders [;
+		"The ghost moans angrily at you.";
+	],
+	has animate;
+
+Object Niche "niche"
+	with name "niche" "hole",
+	description "It really is a hole in the wall.",
+	describe [;
+		if (child(self)) {
+			print "^The niche previously behind the 
+			painting contains ";
+			WriteListFrom(child(self), ENGLISH_BIT+
+				TERSE_BIT+CONCEAL_BIT);
+				".";
+		}
+		else
+			"^The niche previously behind the painting is empty.";
+	],
+	before [;
+	LetGo:
+		if (SpiritServant in location)
+			SpiritServant.killplayer();
+	],
+	has static container open transparent;
+
+
+Object -> Journal "dusty journal"
+	class Burnable
+	with name "dusty" "journal",
+	description "It's an old and dusty journal of some sort.",
+	before [;
+	Read:
+		"~The Master would, or could, not, so I have stolen 
+		Dracan's star.  He is an evil soul.  Unlike the Master, 
+		he uses his power for amusement and profit.  He is not 
+		concerned with spiritual enlightenment.  There is no 
+		compassion with his power.  I grow weak.  I am dying.  
+		I have hidden the star in Master's special box.  It 
+		never opens, it has no locks.  Dracan's star never 
+		discerns.  In fire, it freezes.  In ice, it burns.~";
+	Open:
+		<<examine self>>;
+	];
+		

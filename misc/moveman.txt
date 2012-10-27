@@ -1,0 +1,649 @@
+
+ MoveClass  v8.10    by Neil James Brown        and         Alan Trewartha
+                     neil@highmount.demon.co.uk     alan@alant.demon.co.uk
+                     with thanks to Matthew Russotto
+
+ MoveClass.h can be found at the ftp site ftp.gmd.de in the location:
+   if-archive/infocom/compilers/inform6/library/contributions/moveclass.h
+
+ and also at the URL:
+   http://www.alant.demon.co.uk/
+
+___________________________________________________________________________
+
+
+
+
+     Contents
+     --------
+ 1. Introduction
+ 2. NPC Movement
+ 3. Setting Up             - Using MoveClass in your game
+ 4. AIMED_MOVEs            - Finding a path from one location to another
+ 5. PRESET_MOVEs           - Using pre-determined pathways
+ 6. The *_to properties
+ 7. NPCs and Doors         - Details of the npc_open property for doors
+ 8. Blocked Paths          - Details of the npc_blocked property
+ 9. Variables, Attributes,
+    Properties & Routines
+10. Troubleshooting
+11. Version Update
+
+
+!  **Version Warning**
+!  There are a few important differences between versions 7 and 8 of this
+!  library. These differences are highlighted in sections of text like this
+!  headed **Version Warning** and marked with exclamation marks in the left
+!  margin. The text is also repeated at the end of the file in section 11
+!  (Version Update) as a list of CHANGEs and how to go about FIXING OLD CODE.
+
+
+
+
+ 1. Introduction
+    ------------
+
+MoveClass is a library file designed to assist with the creation of
+relatively sophisticated non-player character (NPC) movement in Inform
+compiled Interactive Fiction (IF) games. Simply put, with the minimum of game
+code, objects given the class 'MoveClass' can be switched between:
+
+   * Random movement
+   * Moving on a pre-determined path
+   * Moving on a calculated path to a given location
+   * Stationary
+
+
+
+
+ 2. NPC Movement
+    ------------
+
+Non-random NPC movement in IF is usually achieved by storing a string of
+directions within an array, and then reading the array one entry at a time,
+moving the NPC in the given direction. This technique is fast and effective
+(see the movement of the various characters in Christminster), but restricts
+the author to pre-determined pathways. That is, the author has to decide
+where the NPC is going and which way it takes while writing the game.
+
+Moveclass supports this type of movement - see section 5 for more details.
+
+On occasion, the author may require a more dynamic approach, where the
+pathway is decided during the game. For instance, there may be a dog running
+around that the player can summon at any time by blowing a dog whistle. Or
+perhaps the crewmember of a space ship is checking the hull's integrity when
+the captain calls her to the bridge based on information you have just given
+the captain. Defining the ways of getting from any location to any other
+location is impractical unless there are very few locations in the game.
+
+Moveclass is capable of calculating a pathway between any two given
+locations, provided that a pathway exists within the maximum depth search.
+
+The aim of this library file is to shield the programmer from the complex
+coding involved with such NPC movement, and to improve efficiency by avoiding
+duplication of movement code. A basic level of competence with Inform
+programming is assumed, as the library file provides several access points.
+The programmer may also need to provide a number of game-specific routines
+for the library to work with, though the library will not assume
+automatically that these have been provided, and will not crash any compiled
+programs if they haven't.
+
+For the rest of this manual, 'author' and 'programmer' refer to the person
+wishing to use the library file.
+
+
+
+
+ 3. Setting Up
+    ----------
+Short version:
+A) Include the library file
+B) Make rooms to be of class 'Room',
+   NPCs to be of class 'MoveClass'
+C) Start the NPC's daemon
+D) Call NPC_Path()
+
+Long version:
+
+A) Include the library file
+   Include it after 'include verblib.h', or 'include follower.h' if you are
+   using the follower module.
+
+   The library supports the use of 'followclass' by Andrew Clover and Gareth
+   Rees. This class, as the name suggests, allows the player to follow any NPC.
+   It must be included in the listing *before* MoveClass, as MoveClass checks
+   to see if FollowClass has been seen by the compiler and acts accordingly.
+
+
+B) Make rooms to be of class 'Room', NPCs to be of class 'MoveClass'.
+   Rooms that aren't of class 'Room' are effectively forbidden areas for NPCs.
+   The movement and path calculating algorithm will only look at rooms that
+   have the class Room.
+   
+   The library defines a 'Room' class, if you have your own 'Room' class,
+   ensure that your own definition has the link_data property which should be
+   initialised to the array 0 0 0. (Copy the definition from the library if
+   you want.)
+
+
+C) Start the NPC's daemon
+   It is recommended that this is done only when the NPC is needed, so if the
+   NPC doesn't appear until halfway through the game, then StartDaemon(NPC)
+   only then. If the NPC needs to be started up at the beginning, include a
+   StartDaemon(NPC) statement within the code's Initialise property, eg:
+
+      [ Initialise;
+        StartDaemon(Fred);
+        StartDaemon(Dobbin);
+        "^^Welcome to this game...^";
+      ];
+
+   Your own code can no longer use the daemon of a moveclass object. Use
+   'before_action' and 'after_action' instead. (See section 9.)
+
+
+D) Call NPC_Path()
+   The first two parameters passed to NPC_Path are always the npc and then
+   the movement type wanted. The current movement type is held in the npc's
+   'move_type' property. Extra parameters are needed by some movement types:
+
+ NPC_Path(npc, NO_MOVE)
+   This will make the named npc remain still.
+
+ NPC_Path(npc, RANDOM_MOVE, [caprice])
+   This will make the named npc move in random directions. If you supply the
+   optional third parameter, this will change the npc's 'caprice' property.
+   An npc's caprice is the percentage chance that the npc will move in a given
+   turn.
+
+ NPC_Path(npc, AIMED_MOVE, target_room, [path_type])
+   This will make the named npc move on a path towards the given target_room.
+   See section 4 for more detail.
+
+ NPC_Path(npc, PRESET_MOVE, path_array, path_length)
+   This will make the named npc move on a path given in the array 'path_array'.
+   See section 5 for more detail.
+
+
+That's it. There is more detail of course, and you should read section 9 to
+find out what other properties govern movement. Special care also needs to be
+taken in setting up *_to properties and doors (sections 6 and 7) so that NPCs
+can move about sensibly.
+
+!  **Version Warning**
+!  The methods of changing movement used prior to version 8 still work. You
+!  can still safely set the 'move_type' property to 0 and 2, you can still call
+!  NPC_Path(npc, target) and you can still call NPCPrePath as before. If you
+!  look in the library, you'll find that the new 'unified' approach is just a
+!  more readable front-end for the old methods, with some checks to remain
+!  compatible with calls from older code.
+
+
+
+
+ 4. AIMED_MOVEs
+    -----------
+
+  NPC_Path(npc, AIMED_MOVE, target_room, [path_type])
+
+Where:
+  target_room   - where you want to send it
+  path_type     - the restrictions on the type of path to follow:
+                            ANY_PATH uses doors indiscriminately (default)
+                       UNLOCKED_PATH will not go through locked doors
+                           OPEN_PATH will not go through closed doors
+                       DOORLESS_PATH will not go through any doors
+
+You can also combine path_types, e.g. OPEN_PATH+UNLOCKED_PATH, should
+the need ever arise. If you omit path_type, it defaults to ANY_PATH.
+
+If a path is found, NPC_Path returns true, otherwise it returns false. It
+is recommended that the game code reads the value returned and acts on it.
+
+By default, the algorithm will only search to a depth set by the global
+variable 'path_size_limit' (defaults to 10). The author can change this at
+any time, though attempts to set it outside the range 2 to 32 may cause the
+compiled game to crash. High values may also result in an extremely noticable
+delay (especially in games with lots of locations). Experimentation is the
+best way of finding a good value.
+
+!  **Version Warning**
+!  Prior to version 8.00, the path-finding algorithm worked very differently.
+!  The old search algorithm required an extra parameter that was put into
+!  the npc_ifblocked property. This has been replaced with a 'path_type' which
+!  is part of a new approach to blocking problems (see section 8). Passing old
+!  'ifblocked' values will not crash the new library, but it could inadvertently
+!  set the 'path_type' to something restrictive, though this is unlikely.
+!  A further parameter was used to distinguish between the first and the
+!  shortest path found. As the new algorithm always finds the shortest path,
+!  this parameter is discarded.
+
+
+
+
+ 5. PRESET_MOVEs
+    ------------
+
+  NPC_Path(npc, PRESET_MOVE, path_array, path_length)
+
+Where:
+  path_array  - the name of the array holding the directions to follow
+  path_length - the number of entries in the array to use
+
+To set an NPC off on a pre-determined pathway, define the pathway in a byte
+array. If you are working in Glulx, then use a word array. Use the names of
+the compass directions as defined in the 'english.h' library file and the
+number 0 to stand still for one turn. (Note that the after_action property
+is only called when the NPC moves location.) Here's an example array:
+
+  Array ToBuriedTreasure -> n_obj n_obj w_obj  0 u_obj in_obj se_obj d_obj;
+
+(Use --> in Glulx) This details a pathway as north, north, west, wait a turn,
+up, in, southeast and down. To set an npc off to find the buried treasure you
+would use:
+
+  NPC_Path(BlueBeard, PRESET_MOVE, ToBuriedTreasure, 8);
+
+
+
+
+ 6. The *_to properties
+    -------------------
+MoveClass reads the <direction>_to properties (eg n_to, s_to) of a room to
+see which directions are available and where they lead to. If the property is
+a simple string it is ignored. If the property is a routine, then MoveClass
+will run it expecting either the value of a location, or false (if it doesn't
+lead anywhere).
+
+If you define the constant NOISY_DIR_TOS, then MoveClass will NOT evaluate
+routines and will assume they lead nowhere. (If you don't define it, a warning
+message is also printed at compilation time).
+
+If you decide not to have NOISY_DIR_TOS you should ensure that your *_to routines
+contain no actions or print statements. This would be bad...
+
+   e_to "Rocks block your way.",
+   w_to [; if (self hasnt general)
+           { give self general;
+             move footprint to location;
+           }
+           return West_Location;
+        ],
+   <etc>
+
+Because an npc moving around would trigger the 'give self general' (etc). It would
+be better to do it something like this instead:
+
+   e_to "Rocks block your way.",
+   w_to West_Location,
+   before [;
+      Go: if (noun==w_obj)
+          { if (self hasnt general)
+            { give self general;
+              move footprint to location;
+            }
+          }
+   ],
+    <etc>
+
+Notice that the e_to routine did not need to change because 'pure string' routines are
+interpreted 'noiselessly' as not leading anywhere.
+
+
+
+
+ 7. NPCs and Doors
+    --------------
+In the door_dir and door_to properties, be sure that nothing depends on the
+value of 'location' (which is the player's current location). Use
+'parent(self)' instead, otherwise NPCs will be unable to open any doors that
+the player is not next to.
+
+If the author wishes to make it possible for an NPC to unlock or open a door,
+they can provide that door with an 'npc_open' property. This can also be used
+to print special messages indicating specific behaviour. A door without an
+npc_open property will only be used by an NPC if the door is open.
+
+When an NPC wants to traverse a door (because it is on its pathway), it checks
+to see if the door provides an 'npc_open' property, and if so, calls it,
+passing it the NPC identifier. The property should return 0, 1 or 2:
+
+           2 - NPC can use the door and walkoff/walkon will print/run as usual
+                      
+    (true) 1 - NPC can use the door and walkoff/walkon *will not* print/run
+               (it is assumed that npc_open has done the honours)
+               
+   (false) 0 - NPC cannot use the door
+
+The routine doesn't have to give the door 'open'. It is quite possible for
+the routine to return true and 'close the door after itself'. If you return
+by print_ret (or "blah";) this prevents the usual walkoff/walkon message,
+so that npc_open can print a more sophisticated message to do with motion
+through the door.
+
+!  **Version Warning**
+!  Prior to version 8.00, npc_open worked quite differently. Returning
+!  with a value of 1 (true) would print/run walkon/walkoff as usual.
+!  Code designed for these older versions of MoveClass and compiled with
+!  version 8, onwards, will therefore be missing those messages they
+!  previously relied on appearing. The old code can be hacked by making all
+!  npc_open properites return 2, though it is likely to make the code neater,
+!  or produce more appropriate messages, if npc_open deals with the special
+!  cases of NPCs walking on/off through doors.
+
+A simple npc_open routine may look like the following:
+
+    npc_open [ act_npc;                   ! - parameter passed from library
+        give self open;
+        if (TestScope(act_npc))           ! - print a special 'walkoff'
+            print_ret (The) act_npc, " opens the oak door and slips through.";
+        rtrue;                            ! - returns true otherwise.
+      ],
+
+A slightly more complex npc_open, taken from an actual game, is given below:
+
+    npc_open [ act_npc;
+      if (self hasnt open)
+      {   give self open;
+          StartTimer(self,3);
+          if (TestScope(act_npc))
+            "^", (The) act_npc, " waves his hand at the red light in the door.
+              The light turns green with a little electronic chirrup,
+              the door slides open and ", (the) act_npc, " walks through.";
+          if (TestScope(self))
+            "^There is a small chirruping sound, the locked door slides
+              open and in walks ", (the) act_npc, ".";
+          rtrue;
+      }
+      if (TestScope(act_npc))
+        "^",(The) act_npc, " walks through the open door.";
+      if (TestScope(self))
+        "^", (The) act_npc, " arrives through the open door.";
+      return 2;
+    ],
+
+Note that this example door is 'found_in' two locations. TestScope(act_npc)
+is used to see if the NPC is in the same location as the player, in which
+case a special walkoff can be printed. This is followed by TestScope(self) to
+see if the door is in the same location as the player, in which case a
+special walkon can be printed as the NPC is bound to arrive.
+
+A door can also be used as a barrier, invisible to the player, to prevent
+NPCs (or certain NPCs) travelling in certain directions. For example, if the
+player and all NPCs except for a very superstitious person are happy to
+travel into a witch's cave, it might be worthwhile to create a door which the
+player isn't aware of, that prevents the superstitious person from passing
+through by putting in an npc_open property to that effect.
+
+
+
+
+ 8. Blocked Paths
+    -------------
+
+There are three conditions when an NPC, set firmly on a pre-set or calculated
+path will have its progress blocked:
+
+   * The next room on its path appears to be nowhere (0)
+   * The door in its path has an npc_open that returns false
+   * The door in its path is not open and has no npc_open property
+
+In all three cases the npc_blocked property of the NPC will then be called.
+By default this property calls NPC_Path(self, RANDOM_MOVE). Another,
+simpler, approach would be to do nothing, which will wait until the path is
+unblocked and resume the path. A more sophisticated property would look for
+a longer path unencumbered by tricksy doors.
+
+There is a free property, npc_ifblocked, which can be set and read so that
+npc_blocked can respond more intelligently to blocking conditions. A good use
+of npc_ifblocked would be to hold the 'path_type' used to calculate the
+current path. You can then work through easier and easier path_types until
+you give up and try something else. For example:
+
+    do
+    {   switch (self.npc_ifblocked)
+        {    ANY_PATH: self.npc_ifblocked=UNLOCKED_PATH;
+        UNLOCKED_PATH: self.npc_ifblocked=    OPEN_PATH;
+            OPEN_PATH: self.npc_ifblocked=DOORLESS_PATH;
+        DOORLESS_PATH: self.npc_ifblocked=-1;
+        }
+    }
+    until (self.npc_ifblocked==-1 ||
+           NPC_Path(self, AIMED_MOVE, target, self.npc_ifblocked))
+    if (self.npc_ifblocked==-1) NPC_Path(self,RANDOM_MOVE);
+
+Another variation on this would be to fiddle with (i.e. increase) the global
+variable 'path_size_limit' and go through the preferred path_type's again.
+It all depends on how your Rooms are connected really.
+
+Here's yet another trick: When is a door not a door?
+
+If you want to find a path that selectively discounts only certain doors,
+then temporarily make them not doors (give bad_door ~door) and use ANY_PATH
+as normal. That way the library treats them like rooms, but as they aren't of
+class 'Room' they aren't traversable! When the path has been calculated,
+just return the doors to 'doordom' (give bad_door door). Ta da!
+
+!  **Version Warning**
+!  Prior to version 8.00, npc_blocked worked very differently. It
+!  depended on the initial call to NPC_Path, which passed an ifblocked
+!  parameter. When ifblocked was 0, the result in npc_blocked was the same as
+!  the new default -- random walking. When ifblocked was 1 it was the same as
+!  doing nothing and waiting for the path to unblock. An ifblocked of 2
+!  would attempt finding a new path before reverting to random walking.
+!  If an author's code designed with the older library didn't alter npc_blocked
+!  or npc_ifblocked, then the result will be much the same -- random walking.
+
+
+
+
+ 9. Variables, Attributes, Properties and Routines
+    ----------------------------------------------
+
+GLOBAL VARIABLES
+path_size_limit - Limit to the size of the depth search employed by the
+                  routine NPC_Path(). It can be raised and lowered throughout
+                  the game to suit, and only affects the initial search, not
+                  the actual movement by the NPC. It can have any value between
+                  2 and 32. It is 10 by default.
+
+
+PROPERTIES
+link_data     - Used by the path calculating algorithm to compile a list of
+                possible rooms in a 'linked chain' and to note down the paths
+                searched.
+
+move_type     - Determines how the NPC is moving, if at all. This is set by
+                calling the NPC_Path() routine, though the author can 'manually'
+                set it to either RANDOM_MOVE or NO_MOVE at any time. Setting it
+                to AIMED_MOVE or PRESET_MOVE will be unpredictable and can
+                cause run-time errors and crashes.
+
+caprice       - The percentage chance that an NPC set to move_type=RANDOM_MOVE
+                will move in any given turn. 20 by default.
+
+before_action - To be used by authors in NPC objects in place of the daemon
+                property (which is unavailable, as it is used by moveclass).
+                This property, if it exists, is executed before movement (if
+                any) takes place, and is called each turn, *even if the NPC
+                does not move*. If it returns true, then the NPC will not
+                move.
+
+after_action  - If this property exists within an NPC object, then it is
+                called only after an NPC has moved successfully from one
+                location to another, and is useful for occasions where the NPC
+                has to react instantly to objects, events or other NPCs within
+                the new room. *Not called if the NPC doesn't move*.
+
+walkoff       - The message that will be displayed if an NPC moves out of the
+                location the player is currently in. The default setting is
+                "walks off". It can be defined as a string (in which case
+                moveclass automatically places the name of the NPC at the
+                front and "to the <direction>" at the end - see details of
+                GiveDir below) or a routine. If defined as a routine, moveclass
+                passes it one parameter - the direction the NPC has moved in.
+                The author should print an appropriate message, with one
+                linespace before and one after (eg "^The NPC walks off.", or
+                print "^The NPC walks off.^").
+
+walkon        - As walkoff, but this time it is the message when an NPC walks
+                into the player's current location. Can be defined as a string
+                in the form "walks into the room" (moveclass adds the NPC name
+                at the beginning and a full stop at the end) or a routine,
+                which moveclass passes one parameter, the direction the NPC
+                has moved in.
+
+npc_dirs      - A property array used by moveclass to store directions.
+
+prepath_name  - The name of the last or currently used PrePath array.
+
+prepath_size  - The number of steps in the pre-set or calculated path.
+
+npc_stage     - Keeps track of how far along a pathway the NPC is currently at.
+                Should not normally be changed by the author.
+
+npc_target    - Used by moveclass to store the target location for an NPC.
+
+npc_blocked   - A routine that is called when the NPC finds its path blocked.
+
+npc_ifblocked - A spare property that can be used to determine what should
+                happen when npc_blocked is called.
+
+npc_arrived   - Called when an NPC arrives at its destination after following
+                either a pre-determined or a specially-calculated pathway.
+                The routine MUST end with a succesful call to NPC_Path,
+                otherwise a crash might occur.
+                
+
+follow_action } Included with Moveclass in order to avoid a problem when
+follow_object } using Follower.h as well.
+
+
+ROUTINES
+NPC_Path(npc, movement_type, target_room, path_type)
+             - See section 4 for details.
+
+NPCPrePath(npc, name_of_array, array_length)
+             - This is called by NPC_Path if movement_type=PRESET_MOVE. It is
+               kept as a separate routine for neatness and back compatability.
+
+GiveDir(dir) - Used by moveclass to insert "to the <dir>" (or a more
+               appropriate message for going in, out, up and down) at the end
+               of the walkoff string. May be of use to authors, if walkoff is
+               being defined as a routine, especially as it can be used as a
+               printing rule, e.g.
+                 print "The north wall is ", (GiveDir) n_obj, ".";
+
+Leadsto(dir, room, path_type)
+             - Used to find the 'Room' in the given direction from the given
+               room. 'path_type' is as per NPC_Path, restricting access via
+               doors to varying degrees.
+
+MoveNPCDir(npc, dir)
+             - Used to move the NPC in a given direction. It uses Leadsto()
+               and then calls MoveNPC().
+
+MoveNPC(npc,destination,-,-)
+             - Only defined if follower.h isn't being used. Moveclass has been
+               written to be aware of follower, and uses the MoveNPC call when
+               moving an NPC from one location to another. If follower hasn't
+               been included, then MoveNPC won't have been defined, and
+               moveclass provides a simpler version of the routine itself.
+
+
+
+
+10. Troubleshooting
+    ---------------
+
+MoveClass, prior to the changes in version 8, had been tested with numerous
+example files and was sturdy. The changes have simplified the code a little,
+but as with all code changes, this is an opportunity for bugs to appear.
+Much effort has also gone into keeping version 8 backwards compatible with
+older code.
+
+MoveClass will produce debugging information of its own if the DEBUG compiler
+directive is set and the trace level is set to two or greater. This, in
+addition to the other debugging messages, may help you to pinpoint the source
+of the problem. If MoveClass is at fault, please contact me, Alan Trewartha,
+at the email address given at the start of this file. If possible, include a
+transcript of the debugging information. Please don't send enormous files
+without contacting me initially.
+
+It should be noted that some older ports of the Zip interpreter (notably !Zip
+for the Acorn range and WinZip for Windows 3.1x) contain errors that cause
+problems with games compiled under Inform 6.1x and library 6/5+. In
+particular, spurious crashes can occur when making extensive use of the
+NPC_Path routine. If you are using an old Zip interpreter, then it is
+recommended that you upgrade to a more up-to-date one (Frotz ports are
+usually safe bets), or restrict yourself to Inform 6.05 and library 6/2.
+
+
+
+
+11. Version Update
+    --------------
+Here are the major changes that happened in the transition to version 8.00
+
+CHANGE
+  NPC_Path() is the only recommended way to change how an npc moves. This
+  replaces manually setting 'move_type' and the different calls for starting
+  pre-set and calculated paths. The methods of changing movement used prior to
+  version 8 still work. You can still safely set the 'move_type' property to
+  0 and 2, you can still call NPC_Path(npc, target) and you can still call
+  NPCPrePath as before. If you look in the library, you'll find that the new
+  'unified' approach is just a more readable front-end for the old methods,
+  with some checks to remain compatible with calls from older code
+FIXING OLD CODE
+   Nothing to do. It should work as before, but go on, change to the easy to
+   read version. You know it makes sense! :-)
+
+CHANGE
+  Prior to version 8.00, the path-finding algorithm worked very differently.
+  The old search algorithm required an extra parameter that was put into
+  the npc_ifblocked property. This has been replaced with a 'path_type' which
+  is part of a new approach to blocking problems (see section 8).
+FIXING OLD CODE
+   Passing old 'ifblocked' values will not crash the new library, but it may
+   inadvertently set the 'path_type' to something restrictive, though this
+   is unlikely.
+   
+CHANGE
+   A further parameter was used to distinguish between the first and the
+   shortest path found.
+FIXING OLD CODE
+   The algorithm always finds the shortest path, so this parameter is discarded.
+
+CHANGE
+   Prior to version 8.00, npc_open worked differently. Returning
+   with a value of 1 (true) would print/run walkon/walkoff as usual.
+   Code designed for these older versions of MoveClass and compiled with
+   version 8, onwards, will therefore be missing those messages they
+   previously relied on appearing.
+FIXING OLD CODE
+   The old code can be hacked by making all npc_open properites return 2,
+   though it is likely to make the code neater if npc_open deals with the
+   special cases of NPCs walking on/off through doors.
+
+CHANGE
+   Prior to version 8.00, npc_blocked worked differently. It
+   depended on the initial call to NPC_Path, which passed an ifblocked
+   parameter. When ifblocked was 0, the result in npc_blcoed was the same as
+   the new default -- random walking. When ifblocked was 1 it was the same as
+   doing nothing and waiting for the path to unblock. An ifblocked of 2
+   would attempt finding a new path before reverting to random walking.
+FIXING OLD CODE
+   If an author's code designed with the older library didn't alter npc_blocked
+   or npc_ifblocked, then the result will be much the same -- random walking.
+
+
+Minor revisions
+
+  8.03 Fixed some initial bugs in the change to v8.00
+  8.04 Removed references to 'self' in external routines
+  8.05 Removed VZEFH caused by parent(door)==0
+       This has the advantage of reducing the door coding pitfalls.
+  8.10 Incorporated Matthew Russotto's Glulx patches
+       Also added NOISY_DIR_TOS option and allowed 'pure string' *_to properties
+       
+       

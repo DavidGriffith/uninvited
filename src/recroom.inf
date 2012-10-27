@@ -1,0 +1,122 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+! FIXME: This room description needs a lot of work.
+
+Mansion RecRoom "Rec Room"
+	with name "rec" "room",
+	description "This looks like a room designed for fun and games.  
+		It seems out of place on this gloomy estate.  To the 
+		west is a rustic-looking door.  On the east and west 
+		walls are some rather ugly paintings.  The 
+		dining room is to the north.  The hallway is to the east.",
+	w_to TrophyRoom,
+	n_to DiningRoom,
+	ne_to RecRoomDoor,
+	e_to RecRoomDoor;
+
+Object -> ChessTable "chess table"
+	with name "chess" "table" "board",
+	description "Inlaid on the face of this table is a chess 
+		board.  You wonder if there are any chess pieces lying 
+		around.",
+	has supporter static;
+
+Object -> Gramophone "gramophone"
+	with name "gramophone" "record" "player",
+	description "Until now, you had only seen a gramophone in the 
+		movies.  This record player has no electronic parts.  It 
+		consists of a crankshaft, a nail of a needle, and a 
+		cone-like horn for a speaker.  On the platter is a 78 
+		rpm copy (with a MacNifty label) of Rudy Valee 
+		singing ~Winchester Cathedral~.",
+	before [;
+	SwitchOn:
+		if (self has general) {
+			"The poor antique Victrola's mainspring has 
+			snapped.  Looks like it's not going to play any 
+			more of that outrageous Rudy Vallee today.";
+		}
+		PlaySound(SOUND_Cathedral);
+		give self general;
+		"As the old Victrola spews out its sounds, a problem 
+		occurs within, causing the record to start skipping and 
+		soon the old mainspring snaps with a loud ~POP~.
+		Anyway, that Rudy Vallee sure has a shnazzy sound.";
+	],
+	has static switchable;
+
+Object -> Record "record"
+	with name "record",
+	description "A 78 rpm record of Rudy Valee singing Winchester 
+		Cathedral, pressed by MacNifty.  The record itself 
+		appears considerably older than the song on it.  
+		That didn't even sound like Rudy Valee.  What's going 
+		on here?",
+	before [;
+	Take:
+		print_ret (The) self, " appears to be glued to the 
+		player by a combination of grime and time.";
+	],
+	has scenery;
+
+Object -> RecPaintings "paintings"
+	with name "paintings",
+	description "The paintings are very ugly.  That's really all 
+		there is to say about them.",
+	has scenery;
+
+Object -> RecPainting1 "west painting"
+	with name "west" "w" "painting",
+	description "The face on this canvas is extremely ugly.",
+	has scenery;
+
+Object -> RecPainting1Face "face"
+	with name "face",
+	description "Very ugly.",
+	has scenery;
+
+Object -> RecPainting2 "east painting"
+	with name "east" "e" "painting",
+	description "Despite the flat, art-school-dropout technique 
+		displayed on the canvas, you are deeply affected by the 
+		cold stare from the frightening eyes of the subject.",
+	has scenery;
+
+Object -> RecPainting2Face "eyes"
+	with name "eyes",
+	description "Very frightening.",
+	has scenery;
+
+Object -> RecCanvas "canvas"
+	with name "canvas",
+	description "Just look at the paintings.",
+	has scenery;
+
+BaseContainer -> RecCabinet "cabinet"
+	with name "cabinet",
+	description "This cabinet has a nice wood finish.  There is 
+		mother-of-pearl inlay on the trim.  You notice that the 
+		cabinet's fine finish has been marred.  It seems as if 
+		someone has carelessly hacked at the latch with a dull 
+		knife in an unsuccessful attempt to open it.",
+	before [;
+	Receive:
+		if (noun ofclass Liquid) {
+			remove noun;
+			print_ret (The) noun, " dribbles to the bottom
+			of ", (the) self, " and evaporates.";
+		}
+	],
+	with_key SkeletonKey,
+ 	has static openable lockable locked;
+
+TalkingStatue -> -> GypsyDoll "gypsy doll"
+	with name "gypsy" "doll",
+	description "This little doll is a reproduction of a gypsy 
+		fortuneteller.",
+	speech "The doll says ~Talk to my pious brother.  He can help 
+		you find yours.  A word from him can open doors in high 
+		places.~";

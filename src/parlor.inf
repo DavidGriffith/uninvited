@@ -1,0 +1,71 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Parlor "Parlor"
+	with name "parlor",
+	description "This parlor has lost its original 
+		charm.  The cracked, dirty walls are a testament to the 
+		estate's state of disrepair.  A simple chandelier hangs 
+		from the ceiling.  An antique chair sits in a corner.  
+		In the opposite corner is a large vase of artificial 
+		flowers.  A veranda can be seen outside to the east.  
+		The hallway is to the west.",
+	w_to FloorHall,
+	e_to [;
+		StartDaemon(Spider);
+		return Veranda;
+	];
+
+Object -> ParlorChandelier "chandelier"
+	with name "lamp" "chandelier" "light",
+	description "A chandelier hangs from the ceiling.  Each of its 
+		three bulbs is covered by a glass, flame-shaped 
+		fixture.",
+	has scenery;
+
+
+KeyChair -> ParlorChair "antique chair"
+	with name "antique" "chair",
+	description [;
+		print "This house is filled with some exquisite antique 
+		furniture.  This chair is another fine example.  Its 
+		plush, intricate upholstery is framed by the finest 
+		oak.";
+		if (self.cut_count > 0) {
+			" Too bad you ruined it by slashing at the upholstry.";
+                }
+		"";
+	],
+	has scenery;
+
+
+Object -> ParlorRug "rug"
+	with name "rug",
+	description "This simply-woven rug seems slightly out of place 
+		amidst the extravagent decor filling the rest of the 
+		mansion.",
+	has scenery;
+
+
+Bowl -> ParlorVase "vase"
+	with name "vase",
+	capacity 1,
+	description "It looks like a goldfish bowl, but it's serving as 
+		a vase.  Function before form, perhaps -- just as in 
+		your case.";
+
+Object -> -> ParlorFlowers "artificial flowers"
+	with name "artificial" "flowers",
+	article "some",
+	description "Though artificial, these flowers are tasteful.",
+	has pluralname;
+
+
+Object -> ParlorWindow "window"
+	with name "window",
+	description "Your view of the barren grounds of the estate is 
+		obscured by the seven years worth of dirt cakes on the 
+		window pane.",
+	has scenery;

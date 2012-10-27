@@ -1,0 +1,73 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Observatory "Observatory"
+	with name "observatory",
+	description "This room is dominated by a huge telescope and the 
+		extensive gears and machinery required to operate it.
+		You do not see an owner's manual.  A star chart is 
+		fastened to one wall.  Below it is a table.  The only 
+		exit is south.",
+	s_to ObservatoryCorridor;
+
+Object -> Telescope "telescope"
+	with name "telescope",
+	description "These large lenses can bring the stars to your 
+		eyes.  It is aimed with these cranks.  Maybe you can see 
+		what the neighbors are doing -- that is, if you have 
+		any neighbors.",
+	before [;
+	Focus:
+		print "Now the view through ", (the) self, 
+		" is a little ";
+		switch(random(2)) {
+		1:	"better.";
+		}
+		"worse.";
+
+	Search:
+		"Looking through ", (the) self, " you see nothing in 
+		particular.";
+	Push, Pull, Turn:
+		"Unfortunately, the gears that are supposed to move ", 
+		(the) self, " appear to have jammed long ago.";
+	],
+	has scenery;
+
+Object -> Gears "gears"
+	with name "gear" "gears" "machine" "machinery" "crank",
+	description "It's the machinery necessary to turn and focus the 
+		telescope.",
+	before [;
+	Push, Pull, Turn:
+		<<push Telescope>>;
+	],
+	has scenery;
+
+Object -> ObservatoryMap "star chart"
+	with name "star" "chart" "map",
+	description "Maybe someday we'll be able to reach one of these 
+		distant points of light on this star map.  For their 
+		sake, let's hope not.",
+	has scenery;
+
+Object -> ObservatoryTable "table"
+	with name "table",
+	description "The surface of this table is covered with tiny 
+		indentations.  Dents, scratches, and stains show that 
+		many hours have been spent here over the years.",
+	has supporter scenery;
+
+Object -> -> ObservatoryBook "mysterious book"
+	with name "mysterious" "book",
+	description "It's a medium-sized brown book.",
+	before [;
+	Read:
+		if (self hasnt open)
+			"The cover bears indecipherable runes.";
+
+		"The language of this text is indecipherable to you.";
+	],
+	has openable;

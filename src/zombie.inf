@@ -1,0 +1,192 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+
+! A group of zombies is different from two or more single zombies in the 
+! same room.  I need to make sure single zombies NEVER enter a room 
+! already occupied by another zombie or a group.
+
+! Spend more than one move in the room with the zombie and it will kill 
+! the player
+
+Class Zombie
+	class Moveclass
+	with 
+	move_type RANDOM_MOVE,
+	caprice 75,
+	name "zombie",
+	short_name "zombie",
+	describe [;
+		PlaySound(SOUND_ZombieAttack);
+	],
+	description "Either this guy was buried prematurely or he was 
+		resurrected late.  What little flesh he has left hangs 
+		loosely from his exposed bones.  He exudes the stench 
+		of decay that permeates the entire estate. ",
+	killplayer [;
+		PlaySound(SOUND_ZombieAttack);
+		deadflag = 1;
+		"This guy doesn't look like he wants to be your closest 
+		friend.  The zombie grabs your arm with its bony hands.  
+		Quickly, it takes a voracious bite.  Your blood drains 
+		rapidly from your body, providing a nice salty beverage 
+		for your bony friend.  The miserable dead now welcome 
+		your company.";
+	],
+	react_before [;
+	Go:
+		if (noun ~= OppositeDir(last_direction)) {
+			self.killplayer();
+			rtrue;
+		}
+	default:
+		if (noun ~= Pendant) {
+			self.killplayer();
+			rtrue;
+		}
+	],
+	before [;
+	Smell:
+		"It smells of death and decay.";
+	Take, Attack, ThrownAt:
+		self.killplayer();
+		rtrue;
+	],
+	walktype [;
+		switch (random(5)) {
+		1:      print "staggers";
+		2:      print "shuffles";
+		3:      print "limps";
+		4:      print "wanders";
+		5:      print "stumbles";
+		}
+	],
+	walkon [;
+		PlaySound(SOUND_ZombieAttack);
+		print "A zombie ";
+		self.walktype();
+		print " into the ";
+		switch (random(4)) {
+		1:	print "passage";
+		2:	print "corridor";
+		3:	print "room";
+		4:	print "hallway";
+		}
+		".";
+	],
+	walkoff [;
+		print "The zombie ";
+		self.walktype();
+		" away.";
+	],
+	orders [;
+		PlaySound(SOUND_ZombieAttack);
+		"The zombie moans at you.";
+	],
+	life [;
+	Show:
+		if (noun == Pendant) {
+			remove self;
+			PlaySound(SOUND_ZombieRun);
+			switch(random(2)) {
+			1:
+			"You dangle the shiny, gold amulet before the 
+			eye sockets of the zombie.  The glittering 
+			self-consuming snake frightens the zombie away.";
+			2:
+			"You show your golden talisman to the walking 
+			abomination and it runs away.";
+			}
+		}
+	],
+	has animate;
+
+
+
+Object ZombieGroup
+	with
+	name "zombie" "zombies" "group" "of",
+	short_name "zombies",
+	found_in Maze40 Maze60 Maze29,
+	escape_dir,
+	count,
+	count_init 2,
+	describe [;
+		if (self hasnt general) {
+			StartDaemon(self);
+			self.count = self.count_init;
+			self.escape_dir = OppositeDir(last_direction);
+			give self general;
+		}
+		PlaySound(SOUND_ZombieAttack);
+		"^Whoa!  This is like a scene from a ~Living Dead~ 
+		film.  It brings new meaning to the term ~dead end~.  A 
+		gang of zombies confronts you.";
+	],
+	react_before [;
+	Go:
+		if (self has general) {
+			if (noun ~= self.escape_dir) {
+				self.killplayer();
+				rtrue;
+			}
+		}
+	],
+	daemon [;
+		if (player notin parent(self)) {
+			give self ~general;
+			StopDaemon(self);
+			rtrue;
+		}
+		if (self.count-- == 0) {
+			self.killplayer();
+		}
+	],
+	killplayer [;
+		PlaySound(SOUND_ZombieAttack);
+		deadflag = 1;
+		"You shouldn't have gone this way.  It looks like you've 
+		now permanently joined the ~dead end kids~.  Your last 
+		waking moments are marked by a wretched pain as you 
+		provide dinner for a group of ill-mannered dinner 
+		guests that just wouldn't leave.";
+	],
+	before [;
+	Smell:
+		print "They smell of death and decay.^^";
+		self.killplayer();
+		rtrue;
+	Examine:
+		switch(random(5)) {
+		1:
+			"This is definitely a dropout from the American
+			School of Health and Beauty.";
+		2:
+			"No it's not Halloween.  This guy isn't wearing 
+			a costume.  But he is very hungry.";
+		3:
+			"A diet is one thing, but this guy overdid it.";
+		4:
+			"Don't let this happen to you -- a message from 
+			the Presidential Council on Physical Fitness.";
+		5:
+			"Haven't we all felt like this after a hangover?";
+		}
+		self.killplayer();
+		rtrue;
+	],
+	life [;
+	Show:
+		print "The zombies are not impressed.^^";
+		self.killplayer();
+		rtrue;
+	],
+	orders [;
+		PlaySound(SOUND_ZombieAttack);
+		print "The zombies moan at you.^^";
+		self.killplayer();
+		rtrue;
+	],
+	has animate pluralname;

@@ -1,0 +1,292 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Bathroom "Bathroom"
+	with name "guest" "bathroom",
+	movecount 1,
+	description [;
+		print "This bathroom is cold and dark.  You can see a 
+		white sink and a porcelain bathtub here.  There is no 
+		toilet.  Whoever lived here really did have a mysterious 
+		way of doing things.  The door is to the south. ";
+
+		if (BathroomLight has general)
+			"There is a gaping hole in the ceiling.";
+
+		"Your attention is drawn to a strangly-shaped light 
+		fixture on the ceiling.";
+	],
+	before [;
+	Swim:
+		if (self has general) {
+			if (RisingWater.movecount > 7)
+				"You can't help but swim.";
+			"There's not quite enough water to swim in here.";
+		}
+	],
+	s_to [;
+		if (self has general)
+			"The door is locked.";
+		return Bedroom;
+	],
+	after [;
+		if (parent(Dracan) == nothing && self hasnt general) {
+			give self general;
+			StartDaemon(RisingWater);
+			move RisingWater to self;
+		}
+	],
+	u_to [;
+		if (SecretCeilingHole in self) {
+			print "You grab the edges of the hole and pull 
+				yourself through.^";
+			StopDaemon(RisingWater);
+			return SecretCeilingHole;
+		}
+		rfalse;
+	];
+
+Lamp -> BathroomLight "light fixture"
+	with name "light" "fixture",
+	description "This large light fixture vaguely resembles 
+		something from a playground that children like to hang 
+		and swing from.",
+	before [;
+	SwitchOn, SwitchOff:
+		"There is no visible light switch.";
+	Pull, Take:
+		if (RisingWater.movecount <= 12)
+			"You can't reach ", (the) self, ".";
+		move SecretCeilingHole to location;
+		"You grab the fixture and pull.  It comes loose, 
+		revealing a large hole in the ceiling.";
+	],
+	has scenery;
+
+Towel ->;
+Towel ->;
+
+Object -> BathMat "bath mat"
+	with name "bath" "mat",
+	description "The bath mat is speckled with color.",
+	has scenery;
+
+Object -> Bathtub "porcelain bathtub"
+	with name "bath" "bathtub" "porcelain" "tub",
+	description "The years have not dulled the beautiful shine 
+		on the porcelain tub.  A solid gold faucet is mounted 
+		on the wall just above the tub.",
+	before [newthing;
+	Enter:
+		"Now is not the time for a bath.";
+	Receive:
+		if (second ofclass Liquid) {
+			remove second;
+			print_ret (The) second, " goes down the drain.";
+		}
+	LetGo:
+		if (second ofclass MyWater && BathFaucet has on) {
+			newthing = MyWater.create();
+			move newthing to self;
+			rtrue;
+		}
+        ],
+	has scenery container open transparent;
+
+Faucet -> -> BathFaucet "gold faucet"
+	with name "gold" "golden" "faucet" "tap" "spigot",
+	description [;
+		print "This solid gold faucet is one expensive plumbing 
+			fixture.";
+		if (self has on) {
+			PlaySound(SOUND_Faucet);		
+			" It continues to gush water.";
+		}
+		"";
+	];
+
+Object -> -> BathDrain "drain"
+	with name "drain",
+	description "It's a drain like any other.",
+	before [;
+	Open, Close:
+		print_ret (The) self, " does not seem to be functioning.";
+	],
+	found_in Bathtub MasterTub BathSink MasterBasin,
+	has static;
+
+
+Sink -> BathSink "sink"
+	with name "sink",
+	description "This floor-standing sink is very shiny.  It shows 
+		no signs of neglect or disuse.  A handsome white 
+		faucet is mounted to its top.",
+	has scenery container open;
+
+
+Faucet -> -> SinkFaucet "white faucet"
+	with name "faucet" "white" "tap" "spigot",
+	description [;
+		print "It's a faucet that has been painted white.";
+		if (self has on) {
+			PlaySound(SOUND_Faucet);
+			" It continues to gush water.";
+		}
+		"";
+	];
+
+Box -> LaundryBasket "laundry hamper"
+	with name "laundry" "hamper",
+	description "This ordinary laundry hamper matches the decor 
+		of this room perfectly.",
+	has container openable static;
+
+Object -> -> BloodyTowel "bloody towel"
+	with name "bloody" "towel",
+	description "This towel is damp and moldy.  It is stained by 
+		what looks like blood",
+	before [;
+	Smell:
+		"It stinks!";
+	];
+
+
+Object -> FishTank "fish tank"
+	with name "fish" "tank" "fishtank",
+	description [;
+		if (self has general) {
+			"This fish tank is now devoid of any water or 
+			fish.  Bits of broken glass cling to the
+			aquarium's structure.";
+		}
+		"It is a twenty-gallon fish tank.  There seem to be 
+		tiny gold flecks drifting around the tank.";
+	],
+	before [;
+	Attack:
+		if (self hasnt general) {
+			give self general;
+			"You smash the ", (the) self, ".";
+		}
+		"But it's already broken.";	
+	Search:
+		"You see tiny goldfish.";
+	],
+	has scenery;
+
+
+Object -> MarbleShelf "marble shelf"
+	with name "marble" "shelf" "gold" "support",
+	description "It's a marble shelf on a gold support.",
+	has supporter static;
+
+Object -> -> SoapBar "bar of soap"
+	with name "bar" "of" "soap",
+	description "You wonder if this soap is 99 and 44/100 percent pure.",
+	before [;
+	Smell:
+		"It smells just like soap.";
+	];
+
+Object SecretCeilingHole
+	with name "hole",
+	description "Through the hole you see a small room above you.",
+	before [;
+	Search:
+		<<examine self>>;
+	],
+	door_to [;
+		StopDaemon(RisingWater);
+		StopDaemon(Ambience);
+		return SecretRoom;
+	],
+	door_dir u_to,
+	npc_open false,
+	has scenery door open;
+
+
+Object RisingWater
+	with name "rising" "water",
+	movecount 0,
+	description [;
+		switch(self.movecount-1) {
+		0:
+			"No matter what you do with the faucet, you 
+			cannot turn off the water.";
+		1:
+			"The water is puddling across the floor.";
+		}
+		"The water bubbles and waves as it fills the room.";
+	],
+	daemon [;
+		print "^";
+		if (self notin parent(self))
+			rtrue;
+
+		if (self hasnt general) {
+			print "As you enter the bathroom, the door slams 
+			shut behind you.  Your brother's screams are 
+			deafeningly loud in here; it almost seems as if 
+			he is on top of you.  It's as if someone or 
+			something wants you to be here.^^";
+			give self general;
+		}
+
+		switch(self.movecount++) {
+		0:
+			"The faucet in the tub has turned itself on and 
+			the drain appears to have stopped functioning.";
+		1:
+			"The water continues flowing, flooding the bathroom.";
+		2:
+			"Your feet now start getting wet.  You were 
+			really in no hurry to take a bath, but there are 
+			some things beyond your control.";
+		3:
+			"Your feet are now completely underwater.";
+		4:
+			"The water has risen up to your knees.";
+		5:
+			"The water is about mid-thigh-depth.";
+		6:
+			"The water comes up to your waist.";
+		7:
+			"The water is about chest deep now.";
+		8:
+			"You can barely keep your head above water 
+			yet have your feet on the floor.";
+		9:
+			"The water is now too deep to touch bottom 
+			and breathe.  You are now treading water.";
+		10:
+			"Treading water, you rise towards the ceiling.";
+		11:
+			"The ceiling gets closer as you rise on the 
+			water.";
+		12:
+			"The ceiling is within arm's reach as you 
+			tread water.";
+		13:
+			"While treading water, you bump your head on 
+			the ceiling.";
+		14:
+			"You managed to get your feet over the sink.  
+			Standing there, your head is pressed against the 
+			ceiling as the water rises to your chin.";
+		15:
+			"There is very little space left for you to 
+			breath.  Finally the room is completely filled 
+			with water.";
+		default:
+			deadflag = 1;
+			StopDaemon(self);
+			"You can hold your breath for only so long.  Now 
+			you take water into your lungs, black out, and 
+			drown.";
+		}
+	],
+	has scenery;
+
+

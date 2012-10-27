@@ -1,0 +1,106 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+!
+! See _The Inform Designer's Manual, Fourth Edition_, pages 239 and 431.
+!
+
+[ ChooseObjects obj code retval;
+
+	if (indef_wanted==100 && code==2) rfalse;
+	if (code < 2) { 
+		if (obj has scenery) return 2;
+		if (obj has static) return 2;
+		rfalse;
+	}
+
+	if (obj == IceWall) {
+		no_infer_message = true;
+		return 3;
+	}
+
+	if (obj == MatchBox) {
+		no_infer_message = true;
+		return 3;
+	}
+
+	if (action_to_be == ##Eat && obj has edible) {
+		return 3;
+	}
+
+	retval = 1;
+
+	if (action_to_be == ##Exit && obj == Car) retval++;
+	if (action_to_be == ##Exit && obj == CarDoor) {
+		no_infer_message = true;
+		retval--;
+	}
+
+
+	! Without this, the FILL verb gets overeager.
+	! I don't know why the parser behaves like that.
+	! Maybe it's a confluence of all the other stuff in here.
+	if (action_to_be == ##Fill) {
+		if (noun == nothing || second == nothing)
+			return 0;
+	}
+
+
+	! Prefer not to do things to yourself
+	if (obj == player)
+		retval--;
+
+	! Prefer to drop a held object
+	!
+	if (action_to_be == ##Drop) {
+		if (obj in player) retval++;
+	}
+
+	! Prefer to smell a held object {
+	if (action_to_be == ##Smell) {
+		if (obj in player) retval++;
+	}
+
+	! Prefer to open a held object
+	if (action_to_be == ##Open) {
+		if (obj in player) retval++;
+	}
+
+	! If a container and its contents have similar names, prefer to 
+	! do something with the contents first.
+	!
+	if (parent(obj) has container) retval++;
+
+
+	! Prefer to take a non-held object
+	!
+	if (action_to_be == ##Take) {
+		if (obj notin player) retval++;
+		if (obj ofclass UnlitMatch) retval++;
+	}
+
+	! Prefer to strike a held, good match
+	!
+	if (action_to_be == ##Strike or ##Rub or ##Burn) {
+		if (parent(obj) == Player) retval++;
+	}
+
+
+	! This is intended to make "START FIRE WITH MATCH" and so on 
+	! work correctly.
+	!
+	if (obj has fire) retval++;
+
+
+	if (action_to_be == ##Insert) {
+		if (obj in player) retval++;
+		if (obj notin player) retval--;
+	}
+
+
+	if (obj hasnt scenery) retval++;;
+	if (obj hasnt static) retval++;
+
+	return retval;
+];

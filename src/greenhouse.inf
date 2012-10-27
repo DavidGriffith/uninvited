@@ -1,0 +1,101 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Array PotFlags -> 2;
+
+Outside Greenhouse "Greenhouse"
+	with name "greenhouse",
+	description [;
+		if (self hasnt visited) {
+			BlueDirt.type = Shuffle(6, PotFlags) - 1;
+			BrownDirt.type = Shuffle(6, PotFlags) - 1;
+			YellowDirt.type = Shuffle(6, PotFlags) - 1;
+			GreenDirt.type = Shuffle(6, PotFlags) - 1;
+			RedDirt.type = Shuffle(6, PotFlags) - 1;
+			WhiteDirt.type = Shuffle(6, PotFlags) - 1;
+#ifdef DEBUG; 
+			BrownDirt.type = 0;
+			YellowDirt.type = 1;
+			GreenDirt.type = 2;
+			RedDirt.type = 3;
+			WhiteDirt.type = 4;
+			BlueDirt.type = 5;
+#endif;
+		}
+
+		"This steel and glass structure must have once 
+		housed a multitude of life-forms.  Now potted corpses 
+		inhabit shallow, clay graves.  It seems that living 
+		organisms don't do too well on this estate.  Whoever 
+		lived here must have had a gold touch, but no green
+		thumb.";
+	],
+	s_to GreenhouseEntrance;
+
+Object -> GreenhouseTable "table"
+	with name "table",
+	description " This white lab table has been discolored by water 
+		stains and many hours of direct sunlight.  Brown now 
+		threatens the table's natural white in several places.
+		However, it still does a pretty good job as a greenhouse 
+		table.",
+	has scenery supporter;
+
+
+PlantPot -> -> BluePot "blue pot"
+	with name "blue" "pot",
+	description "It's a blue pot.";
+Dirt -> -> -> BlueDirt "dirt";
+
+PlantPot -> -> BrownPot "brown pot"
+	with name "brown" "pot",
+	description "It's a brown pot.";
+Dirt -> -> -> BrownDirt "dirt";
+
+PlantPot -> -> YellowPot "yellow pot"
+	with name "yellow" "pot",
+	description "It's a yellow pot.";
+Dirt -> -> -> YellowDirt "dirt";
+
+PlantPot -> -> GreenPot "green pot"
+	with name "green" "pot",
+	description "It's a green pot.";
+Dirt -> -> -> GreenDirt "dirt";
+
+PlantPot -> -> RedPot "red pot"
+	with name "red" "pot",
+	description "It's a red pot.";
+Dirt -> -> -> RedDirt "dirt";
+
+PlantPot -> -> WhitePot "white pot"
+	with name "white" "pot",
+	description "It's a white pot.";
+Dirt -> -> -> WhiteDirt "dirt";
+	
+
+Bowl -> WateringCan "watering can"
+	with name "watering" "can",
+	description "This tin watering can has a long spout for reaching 
+		into plants and depositing water at their dirt floors.";
+
+MyWater -> ->;
+
+Object Fruit "fruit"
+	with name "fruit",
+	description "It's a fruit of some sort.",
+	before [;
+	Smell:
+		"It smells delicious and entirely unlike any other fruit 
+		you've seen.";
+	Eat, Taste:
+		deadflag = 1;
+		"You sink your teeth into the newly-ripened fruit.  The 
+		fruit's juices burn your throat on the way to your 
+		stomach.  The pain in your innards soon becomes 
+		unbearable.  The excruciating sensations send you into 
+		unconsciousness and cause your bodily functions to 
+		permanently cease.";
+	],
+	has edible;

@@ -1,0 +1,162 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+! required by moveclass.h
+Class NPCRoom with
+	link_data 0 0 0;
+
+Class Room 
+	class NPCRoom,
+	with name "room",
+	before [;
+	Go:
+		last_location = real_location;
+		last_direction = noun;
+	],
+	has light;
+
+Object Wall "walls"
+	with name "wall" "walls//p",
+	description [;
+		"You see nothing special about ",  (the) self, ".";
+	],
+	found_in [; return (location ofclass Room); ],
+	has scenery;
+
+Class Outside
+	class NPCRoom,
+	with
+	before [;
+	Go:
+		last_location = real_location;
+		last_direction = noun;
+	],
+	has light;
+
+Class Inside
+	class Room,
+	with
+	has light;
+
+Class Mansion
+	class Room,
+	with
+	has light;
+
+Class Maze 
+	class Outside,
+	with
+	name "maze" "stone",
+	description [;
+		self.comment();
+		print "^";
+		self.mydescription();	
+	],
+	comment [;
+		switch (random(9)) {
+		1:
+		"These cold stone corridors give you the creeps.
+		The dark, grey, misty air hands heavily here.  It is
+		hard to retain your sense of direction.";
+		2:
+		"Don't look back!  Something might be gaining on you.  
+		The cold monotony of these corridors makes you nervous 
+		and uneasy.";
+		3:
+		"You are overwhelmed by a sense of disorientation as you 
+		wind from room to room.";
+		4:
+		"It is difficult to distinguish one room from another in 
+		this labyrinth.  As you wander the dark corridors of the 
+		maze, you find that your sense of direction has left 
+		you.  You do still know your right from your left, 
+		however.";
+		5:
+		"You now feel trapped; imprisoned in this stony maze 
+		like some mythic Minotaur.";
+		6:
+		"As you move from room to room you get a strange sense 
+		of deja vu.  Each subsequent room bears a striking 
+		resemblance to the previous one.";
+		7:
+		"You are uneasy about continuing through this eerie
+		labyrinth.  The farther you go, it seems, the farther
+		you have to go.";
+		8:
+		"One room leads to another almost identical to it.";
+		9:
+		"A sense of paranoid claustrophobia creeps into your 
+		consciousness.  You feel confined and watched as you 
+		wander the spooky, stone labyrinth.";
+		default:
+		"Error in Maze class!  See rooms.inf.";
+		}
+	],
+	has light scenery;
+
+Class DeadEnd
+	class Maze,
+	with name "maze" "stone" "dead" "end";
+
+Class EWMaze
+	class Maze,
+	with mydescription [;
+		switch(random(4)) {
+		1:	"This hallway goes from east to west.";
+		2:	"This passage goes from east to west.";
+		3:	"This hallway goes from west to east.";
+		4:	"This passage goes from west to east.";
+		}
+	];
+
+Class NSMaze
+	class Maze,
+	with mydescription [;
+		switch(random(2)) {
+		1:	"This is a north-south passage.";
+		2:	"This is a north-south hallway.";
+		default: "Error in Class NSMaze (rooms.inf).";
+		}
+	];
+
+Include "car.inf";		! good
+Include "front.inf";		! good
+Include "foyer.inf";		! good
+Include "library.inf";		! good
+Include "gallery.inf";
+Include "floorhall.inf";	! good
+Include "recroom.inf";		! good
+Include "trophyroom.inf";	! good
+Include "secondhall.inf";	! good
+Include "secondhallcloset.inf";	! good
+Include "spiralstair.inf";	! good
+Include "tower.inf";		! good
+Include "guestroom.inf";	! good
+Include "bedroom.inf";		! good
+Include "bathroom.inf";		! good
+Include "parlor.inf";		! good
+Include "veranda.inf";		! good
+Include "masterbed.inf";	! good
+Include "masterbath.inf";	! good
+Include "diningroom.inf";	! good
+Include "study.inf";		! good
+Include "kitchen.inf";		! good
+Include "pantry.inf";		! good
+Include "servantroom.inf";	! good
+Include "backyard.inf";		! good
+Include "yardpath.inf";		! good
+Include "obs-entrance.inf";	! good
+Include "obs-corridor.inf";	! good
+Include "observatory.inf";	! good
+Include "laboratory.inf";	! good
+Include "chap-entrance.inf";	! good
+Include "green-entrance.inf";	! good
+Include "greenhouse.inf";	! good
+Include "chapel.inf";		! good
+Include "churchgrounds.inf";	! good
+Include "maze.inf";		! good
+Include "caves.inf";		! good
+Include "secretroom.inf";	! good
+Include "outsidewin.inf";	! good

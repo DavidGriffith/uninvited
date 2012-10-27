@@ -1,0 +1,14 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside YardPath "Yard Path"
+	with name "yard",
+	description "You stand at a four-way intersection of paths.  
+		North is a greenhouse.  West is an observatory.  East is 
+		an old chapel.",
+	s_to Backyard,
+	n_to GreenhouseEntrance,
+	w_to ObservatoryEntrance,
+	e_to ChapelEntrance;

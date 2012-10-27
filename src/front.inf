@@ -1,0 +1,140 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Room FrontOfHouse "Front Yard"
+	with
+	description "You stand at the front porch of a house.  This old, 
+		Gothic mansion casts gloomy shadows all around you.  A 
+		sharp wind cuts through your flesh to chill your bones.  
+		The pounding thunder grows louder and more threatening.  
+		A curiously-shaped knocker adorns the front door.  
+		Flanking the front door is a pair of marble statues. ",
+	n_to FrontDoor,
+	in_to FrontDoor;
+
+Object -> BurningCar "car"
+	with name "debris" "wreck" "burning" "flaming" "car" "auto" "loss" "automobile",
+	article "my",
+	description "This flaming pile of debris used to be your car.  
+		It's a total loss.",
+	has scenery;
+
+Object -> House "house"
+	with name "house",
+	description "This dark, Gothic mansion is cold and foreboding.  
+		It's not a nice place to visit or to live.",
+	has scenery;
+
+TalkingStatue -> MarbleStatue "marble statue"
+	with name "marble" "statue" "statues" "pair" "left" "right", 
+	description "A marble, life-sized statue of young Greek manhood 
+		adorns the front of the mansion.  The Greek sculpture 
+		does not really match the Gothic architecture.",
+	speech "The statue trembles and utters the words ~Help your 
+		brother!~",
+	has scenery;
+
+Object -> Mailbox "mailbox"
+	with name "mail" "box" "mailbox",
+	description "The mailbox is the type that you would expect to 
+		see outside of a farm or secluded rural residence.",
+	has static container openable;
+
+Object -> -> Envelope "envelope"
+	with name "envelope",
+	description "This envelope is addressed to ~Master Crowley, 
+		666 Blackwell Road, Loch Ness, Scotland~.",
+	before [;
+	Read:
+		<<examine self>>;
+	],
+	has container openable;
+
+Object -> -> -> Letter "letter"
+	with name "letter",
+	description "This note reads:
+		^~Dear Master.  Please forgive me. My health prevents 
+		me from aiding you in your battle against the evil 
+		one.  You teach your students well; they become too 
+		powerful for their own good.  Enclosed is an amulet 
+		that should look familiar.  Wear this charm and think 
+		of me.  The undead fear symbology.  Still the 
+		Evil, my friend; set it free for the sake of the 
+		family.~",
+	before [;
+	Read:
+		<<examine self>>;
+	];
+
+Object -> -> -> Pendant "pendant"
+	with name "pendant" "amulet",
+	description "It's a heavy chain necklace with a gaudy gold 
+		amulet attached.  It looks very old and handmade.",
+	before [;
+	Wear:
+		give self worn;
+		"You put ", (the) self, " around your neck.";
+	],
+	has clothing tiny;
+
+! As you enter, the door slams shut behind you.  This is a large and 
+! luxurious room.  Still, it seems strangely oppressive.
+
+DirDoor -> FrontDoor "front door"
+	with name "front" "door" "wooden",
+	npc_open false,
+	description [;
+		print "It's an extremely heavy, ancient door.  
+		It is engraved with the image of a snake 
+		consuming itself.  It also bears inscription, ~AS 
+		ABOVE, SO BELOW.~  It 
+		is currently";
+		if (self hasnt open)
+			print " closed";
+		else
+			print " open";
+		".";
+	],
+	before [;
+	Knock:
+		"Crack!  There go the knuckles in your hand.  Bones 
+		weren't meant to take such abuse.  Can you take such 
+		pain?";
+	Open:
+		if (self in Foyer)
+			print_ret (The) self, " is locked.";
+		give self open;
+		print_ret (The) self, " creaks open.";
+!	Close:
+!		"The door is closed.";
+	],
+	react_before [;
+		if (player in Foyer && self hasnt locked)
+			give self locked ~open;
+	],
+!	door_to [;
+!		if (self in FrontOfHouse) return Foyer;
+!		return FrontOfHouse;
+!	],
+!	door_dir [;
+!		if (self in FrontOfHouse) return n_obj;
+!		return s_obj;
+!	],
+	n_to Foyer,
+	s_to FrontOfHouse,
+	found_in Foyer FrontOfHouse,
+	has scenery;
+
+Object -> Knocker "knocker"
+	with name "knocker" "serpent" "snake",
+	description "This all-brass self-consuming serpent serves the 
+		functional purpose of a door knocker.",
+	before [;
+	Swing, Pull, Push, Knock:
+		"The heavy, brass self-consuming snake strikes the solid 
+		oak door with a resounding thud.  The hollow thump of 
+		the knocker rings through the emptiness of the house.";
+	],
+	has scenery;

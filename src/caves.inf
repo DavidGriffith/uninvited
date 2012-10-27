@@ -1,0 +1,364 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Inside Cave1 "Cave"
+	with name "cave",
+	description "You slide, thigh deep, into this bubbling tarpit.  
+		You nearly choke on the noxious odor of flesh in decay.  
+		Your stomach turns as you slide deeper into the tar.  A 
+		bat flies by as you watch.  You hope it was only a bat.
+		This passage continues north.  A side corridor to the 
+		west is encrusted with ice.  In the ceiling is a trap 
+		door.",
+	u_to LabTrapDoor,
+	w_to IceCave,
+	n_to [;
+		StartDaemon(GiantSpider);
+		return SpiderRoom;
+	];
+
+
+Inside SpiderRoom "Cave"
+	with name "room",
+	description [;
+		print "This dark gaping hole reminds you of something 
+			from a Freudian nightmare.";
+		if (AltarHole in Chapel)
+			print " Through the shaft above, you see a 
+			glimpse of stained glass.";
+		print " The only ";
+		if (AltarHole in Chapel)
+			print "other ";
+		print "exit is to the south.";
+
+		if (last_location == Chapel) {
+			rfalse;
+		}
+		"";
+	],
+	u_to [;
+		print "It looks like you can easily go down the shaft, 
+			but you can't quite reach it to go up.^";
+		GiantSpider.killplayer();
+		rtrue;
+	],
+	s_to [;
+		StopDaemon(GiantSpider);
+		GiantSpider.mycount = 2;
+		return Cave1;
+	],
+	has scenery;
+
+
+Object -> GiantSpider "giant spider"
+	with name "giant" "spider",
+	mycount 2,
+	description "This huge spider sends chills down your spine.  Its 
+		head is the same size as yours, its body dwarfs you, 
+		however.  It is horribly ugly and has huge, sharp hairs 
+		all over it.",
+	daemon [t;
+		t = --(self.mycount);
+		if (last_location == Chapel) {
+			print "^Well, now you know.  There really is a 
+			spider to beware of!^";
+			self.killplayer();
+			rtrue;
+		}
+		if (t <= 0) {
+			self.killplayer();
+			rtrue;
+		}
+	],
+	killplayer [;
+		deadflag = 1;
+		"^", (The) self, " attacks you from above.  It 
+		crushes your tiny body in its large, powerful jaws.";
+	],
+	before [;
+	Attack:
+		if (second) {
+			print "You raise ", (the) second, " to attack.^^";
+		}
+		self.killplayer();
+		rtrue;
+	],
+	life [;
+		self.killplayer();
+		rtrue;
+	],
+	orders [;
+		self.killplayer();
+		rtrue;
+	],
+	has animate;
+
+
+Inside IceCave "Ice Cave"
+	with name "ice" "cave",
+	movecount,
+	description [;
+		if (IceWall notin self) {
+			"The ice in this section has rapidly melted, 
+			resulting in a torrent of water which flows 
+			northwards to a newly-revealed cave.  You can 
+			also exit this chamber by going south.";
+		}
+		"You stand in a section of cave that is mysteriously 
+		frozen.  There is an exit to the south.  The entire 
+		northern part of the cave is covered with a wall of ice.";
+	],
+	after [;
+		if (self hasnt general) {
+			give self general;
+			move OldMan to self;
+			StartDaemon(OldMan);
+		}
+	],
+	e_to Cave1,
+	n_to [;
+		if (IceWall in self)
+			"Your path is blocked by ", (a) IceWall, ".";
+		return Cave2;
+	];
+
+
+Object -> IceWall "wall of ice"
+	with name "wall" "of" "ice",
+	capacity 0,
+	description "This wall of ice goes back quite a bit, so it's 
+		surprising you could see anything though it.  You can 
+		see a passage and the body of robed figure.  A crack 
+		running from the top to bottom spoils the otherwise 
+		mirror-like sheen.",
+	melt [;
+		move Dracan to Cave2;
+		StartDaemon(Dracan);
+		remove self;
+		remove DummyPassage;
+		print "You put the brass pentagram into the ice.  
+		Instantly the star glows red and a strange creature 
+		appears.  It is shaped like a pyramid covered with 
+		flames.  It approaches the ice mass and engulfs it. 
+		Steam bursts from the block as it rapidly melts.  The 
+		melting ice creates a flow of water that rushes into 
+		the next cave. The current sweeps a human figure from 
+		within the ice into the next cave. ";
+		move OldMan to self;
+		StartDaemon(OldMan);
+	],
+	before [;
+	Receive:
+		if (noun == BrassPentagram) {
+			self.melt();
+			move noun to location;
+			rtrue;
+		}
+		move noun to location;
+		print (The) noun, " slide";
+		if (noun hasnt pluralname)
+			print "s";
+		" down ", (the) self, "'s face and lands at your feet.";
+	LetGo:
+		if (noun == Dracan)
+			"But ", (the) noun, " is encased in ice.";
+	],
+	has transparent container open scenery;
+
+
+Object -> ->  Crack "crack"
+	with name "crevice" "hole" "cranny" "crack" "niche",
+	description "It's a crack in the ice.  You could put a prybar 
+		in it or use it as a tiny shelf.",
+	describe [;
+		if (child(self))
+			"In ", (the) self, " is ", (a) child(self), ".";
+	],
+	capacity 1,
+	before [;
+	Receive:
+		if (noun == BrassPentagram) {
+			IceWall.melt();
+			move noun to location;
+			rtrue;
+		}
+	],
+	has container open transparent scenery;
+
+
+Object -> -> Dracan "body"
+	with name "body" "dracan" "corpse" "figure",
+	mycount 0,
+	description [;
+		if (self in IceWall) {
+			"The figure imprisoned in the ice has an 
+			expression of rage and surprise on his face.  
+			Clearly he has been here a very long time, but 
+			he looks very much alive and aware.";
+		}
+		"In his dark robe, the frozen figure begins to thaw 
+		rapidly.  As his temperature rises, you feel a powerful 
+		evil presence filling the room, along with a very, very 
+		noxious odor.  The entire room is filled with a
+		loathsome cold blanket of oppression.  You now begin to 
+		realize why you've felt so much forboding, and why all 
+		the trees and wildlife have withered.  You feel like 
+		you are about to panic and with every passing moment 
+		that feeling increases.";
+	],
+	before [;
+	Take:
+		"The body is too heavy and unwieldy to pick up.  You'll 
+		have to try something else.";
+	],
+	daemon [;
+		switch (self.mycount++) {
+		3:	if (TestScope(self)) "The body moves a bit.";
+		4:	if (TestScope(self)) "The body's head is turning.";
+		5:	self.killplayer(1);
+		}
+	],
+	killplayer [n;
+		deadflag = 1;
+		switch (n) {
+		1:
+		"^The figure that was previously frozen in the ice has 
+		now thawed out.  He is very grateful that you let him
+		free.  However, he IS the evil one.  He feels you must 
+		die.  You do.";
+		2:
+		"You attempt to shove the frozen figure into the dark
+		pit.  Unfortunately, he has regained consciousness.  He 
+		uses your weight and momentum to send you hurtling into 
+		the bottomless pit.  Shocked, you fall helplessly into 
+		the abyss.  The speck of light above you disappears as 
+		you become part of the darkness.";
+		default:
+			"foo";
+		}
+	];
+
+
+Object -> -> DummyPassage "passage"
+	with name "passage",
+	description "Through the ice, you can see just a short distance 
+		down the passage.",
+	before [;
+	Search:
+		"All you can see are the stones walls of the passage.";
+	],
+	has static;
+
+
+Inside Cave2 "Cave"
+	with name "cave",
+	description "This oblong cave contains a strange stone altar.
+		In its center is a deep pit.  The southern end of 
+		this cave is covered in water, past which is a low 
+		passage.  To the north is another passage, but dry.",
+	s_to IceCave,
+	n_to CaveStairs,
+	d_to Pit,
+	in_to Pit;
+
+Object -> PitAltar "strange altar"
+	with name "strange" "stone" "altar",
+	description "It's very strange indeed.  The symbols inscribed on 
+		it are completely alien to you.",
+	has scenery;
+
+
+Object -> Pit "bottomless pit"
+	with name "bottomless" "pit" "abyss" "hole",
+	description "It's a bottomless pit.",
+	react_before [;
+	Jump:
+		<<Enter self>>;
+	Go:
+		if (noun == d_obj) <<Enter self>>;
+	],
+	before [;
+	Enter:
+		deadflag = 1;
+		"Your velocity increases as you tumble into the dark 
+		pit.  The light at the top disappears as you continue 
+		your rapid descent.  In total darkness you seem to 
+		experience a moment of weightlessness just before losing 
+		consciousness.  You continue to fall...";
+	Receive:
+		remove noun;
+		if (noun == Dracan) {
+			if (Dracan.mycount >= 5) {
+				Dracan.killplayer(2);
+				rtrue;
+			}
+			StopDaemon(Dracan);
+			"You push the robed man into the dark 
+			bottomless pit.  His moan echoes for quite some 
+			time, gradually fading.";
+		}
+		print_ret (The) noun, " gradually fades from sight.  You 
+			do not hear it hit anything.";
+	],
+	has scenery open container;	
+
+
+Inside CaveStairs "Stairway"
+	with name "stair" "stairs//p" "stairway" "staircase",
+	description "A dark, dirt-walled stairway leads up towards a 
+		door to the west.  Stone and dirt are tightly packed 
+		together to form the solid, damp walls.  You wonder how 
+		long this cavern has existed.  You cannot even venture 
+		a guess.  How old is the house?",
+	s_to Cave2,
+	down_to Cave2,
+	w_to StudyDoor;
+
+
+Moveclass OldMan "old man"
+	with name "old" "man",
+	move_type NO_MOVE,
+	mycue 0,
+	count 4,
+	startcount 4,
+	description "The old man is more of a misty apparition than a 
+		solid person.  He has an almost benevolent appearance.  
+		He is looking straight at you.",
+	before [;
+	Tell, Ask:
+		print_ret (The) self, " simply shakes his head.";
+	],
+	orders [;
+		print_ret (The) self, " simply shakes his head.";
+	],
+	daemon [;
+		switch (self.mycue) {
+		0:
+			print "An acrid mist rises from the frozen 
+			sludge of the ice-encrusted cave.  The misty 
+			tendrils form themselves into a robed human 
+			figure.  He has an almost benevolent 
+			appearance.  He speaks directly to you.^
+			^
+			~You've come.  I've been waiting for you... for 
+			you!~^
+			^
+			The mists reform and the old man disappears.";
+		1:
+			print "The robed man reappears and speaks 
+			directly to you.^
+			^~You must hurry, my son!  I've been waiting for 
+			a very long time.  So has HE.  We both lack 
+			patience.  Hurry and get rid of him -- as far 
+			away as possible!~^
+			^
+			The old man disappears again.";
+		}
+		self.mycue++;
+		StopDaemon(self);
+		remove self;
+		"";
+	],
+	has animate scenery;

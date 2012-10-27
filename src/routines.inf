@@ -1,0 +1,53 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+[ Randomize;
+	switch(random(4)) {
+	1:	give FoyerChair hides_key;
+	2:	give FoyerCouch hides_key;
+	3:	give StudyCouch hides_key;
+	4:	give ParlorChair hides_key;
+	}
+];
+
+! Returns the opposite direction
+[ OppositeDir dir;
+	if (dir == s_to) return n_to;
+	if (dir == n_to) return s_to;
+	if (dir == e_to) return w_to;
+	if (dir == w_to) return e_to;
+	if (dir == sw_to) return ne_to;
+	if (dir == ne_to) return sw_to;
+	if (dir == se_to) return nw_to;
+	if (dir == nw_to) return se_to;
+	if (dir == u_to) return d_to;
+	if (dir == in_to) return out_to;
+];
+
+
+! "look up dodo in fifi" will match case 3.  The parser must therefore 
+! say something intelligent instead of implying a programming error.
+[ TopicScope;
+	switch(scope_stage) {
+	1:	rfalse;
+	2:	ScopeWithin(Topics);
+		rtrue;
+!	3:	"Error: Parsing should have matched previous grammar line.";
+	3:	"I beg your pardon?";
+
+	}
+];
+
+Constant MAX_LOCATION_LENGTH 40;
+Array Case_Array buffer (MAX_LOCATION_LENGTH + WORDSIZE);
+
+[ToLower word i j;
+	j = PrintToBuffer(Case_Array, MAX_LOCATION_LENGTH, word);
+	for (i = WORDSIZE: (i < (j + WORDSIZE)) && (i < 
+	MAX_LOCATION_LENGTH + WORDSIZE): i++) {
+		Case_Array->(i) = LowerCase(Case_Array->(i));
+		print (char) Case_Array->(i);
+	}
+];

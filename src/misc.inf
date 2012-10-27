@@ -1,0 +1,49 @@
+! This is a smarter way of doing "if (player in LocationName)" which 
+! takes into account the player being in a chair in a room.
+
+! The code from http://www.firthworks.com/roger/informfaq/oo.html at the 
+! bottom needs to be adapted for this.
+
+[PlayerIn Loc i; 
+
+! Find highest-level of things we're examining
+	while (parent(Loc) ~= nothing)
+		Loc = parent(Loc);
+
+	R3(Loc)
+];
+
+
+
+
+
+[ R3 par   o;
+      objectloop (o in par) {
+          ProcessObject(o);
+          if (child(o)) R3(o);
+      }
+  ];
+
+
+[ R2 par   o;
+      for (o=child(par) : o : ) {
+          ProcessObject(o);
+          if (child(o)) o = child(o);
+          else
+              while (o) {
+                  if (sibling(o)) { o = sibling(o); break; }
+                  o = parent(o);
+                  if (o == par) return;
+              }
+      }
+  ];
+
+[ ProcessObject obj;
+	if ( 
+
+
+      print (name) obj, "^";
+      if ((obj has supporter or transparent) ||
+          (obj has container && obj has open)) rtrue;
+      rfalse;
+];

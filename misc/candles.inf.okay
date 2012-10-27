@@ -1,0 +1,158 @@
+
+Constant CANDLE_LIFE 	= 20;
+
+Constant CANDLE_DYING = 2;
+
+Class Candle
+	with name "candle" "candles//p",
+	short_name "candle",
+	plural "candles",
+	power,
+	daemon [ t newthing i;
+		t = self.power;
+		self.power--;
+		if (t == 0) {
+			StopDaemon(self);
+			newthing = DeadCandle.create();
+			give newthing moved;
+			if (parent(self))
+				move newthing to parent(self);
+			if (TestScope(self)) {
+				print "^", (The) self, "has now 
+					gone out.^";
+			}
+			remove self;
+		}
+		if (self in player || self in location) {
+			objectloop(i in player) {
+				if (i ofclass BurningCandle) {
+					if ( t <= CANDLE_DYING)
+						print "^", (The) self, 
+						" is going out.";
+				}
+			}			
+		}
+	],
+	powerguess [;
+
+		if (self.power == CANDLE_LIFE) {
+			"This candle has never been lit.";
+		}
+
+		if (self.power > CANDLE_LIFE - 5) {
+			"This candle has barely been used.";
+		}
+
+		if (self.power > CANDLE_LIFE / 2 &&
+			self.power < CANDLE_LIFE - 5) {
+			"This candle has burned about a 
+				quarter of its length.";
+			
+		}
+
+		if (self.power <= CANDLE_LIFE / 2) {
+			"This candle is about half gone.";
+		}
+	],
+
+	before [newthing;
+	Examine:
+		if (self ofclass NewCandle) {
+			"This candle has never been used before.";
+		}
+		else if (self ofclass GoodCandle) {
+			self.powerguess();
+			rtrue;
+		}
+		else if (self ofclass BurningCandle) {
+			self.powerguess();
+			"A flame dances atop it.";
+		}
+		else if (self ofclass DeadCandle) {
+			"It's the useless stump of a candle.";
+		}
+		"Error in Candle class (Examine)^";
+
+	Burn:
+		if (second ~= nothing) {
+			if (second hasnt on)
+				"You can't burn ", (the) self, " with ",
+				(the) second, ".";
+		}
+		if (self has on) "But it's already lit!";
+		<<SwitchOn self second>>;
+
+	SwitchOff:
+		if (verb_word == 'turn' or 'switch')
+			"Perhaps snuffing or blowing out ", (the) self, 
+			" would be more useful.";
+
+		if (self ofclass NewCandle or GoodCandle or DeadCandle)
+			"But it's not burning.";
+
+		if (self ofclass BurningCandle) {
+			newthing = GoodCandle.create();
+			move newthing to parent(self);
+			give newthing moved;
+			newthing.power = self.power;
+			StopDaemon(self);
+			remove self;
+			"You put out ", (the) self, ".";
+		}
+
+	SwitchOn:
+		if (verb_word == 'turn') {
+			"This isn't one of those newfangled electric 
+			candles.  You'll have to try something else.";
+		}
+
+		if (self ofclass NewCandle or GoodCandle) {
+			newthing = BurningCandle.create();
+			if (newthing == nothing) {
+				"Programming error!
+				Cannot light the candle!";
+			}
+			move newthing to parent(self);
+			if (self ofclass GoodCandle)
+				newthing.power = self.power;
+			else
+				newthing.power = CANDLE_LIFE;
+			remove self;
+			StartDaemon(newthing);
+			"You light ", (the) self, ".";
+		}
+
+		else if (self ofclass BurningCandle)
+			"But it's already burning.";
+		else if (self ofclass DeadCandle) {
+			give self ~on;
+			"Nothing happens.";
+		}
+		"Error in Candle class (SwitchOn)^";
+	],
+	has switchable tiny;
+
+Class NewCandle (6)
+	class Candle,
+	with name "new",
+	short_name "new candle",
+	plural "new candles";
+
+Class GoodCandle (6)
+	class Candle,
+	with name "good",
+	short_name "good candle",
+	plural "good candles";
+
+Class BurningCandle (6)
+	class Candle
+	with name "burning",
+	short_name "burning candle",
+	plural "burning candles",
+	has on light fire;
+
+Class DeadCandle (6)
+	class Candle
+	with name "burnt",
+	short_name "burnt candle",
+	plural "burnt candles";

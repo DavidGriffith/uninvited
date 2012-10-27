@@ -1,0 +1,438 @@
+Start of a transcript of
+UNINVITED
+(c) 1986 ICOM Simulations, Inc. 626 Wheeling Rd, Wheeling, IL  60090 
+An unauthorized adaptation by David Griffith.
+(Type "about" for more information.)
+Release 0 / Serial number 120722 / Inform v6.32 Library 6/12pre 
+Standard interpreter 1.0 (1F) / Library serial number 1208??
+
+>OPEN DOOR. OUT. OPEN FRONT DOOR. N. E. OPEN BOOK. TAKE BOOK, SCROLL. W. N
+You open the car door.
+
+Front Yard
+You stand at the front porch of a house. This old, Gothic mansion casts gloomy
+shadows all around you. A sharp wind cuts through your flesh to chill your
+bones. The pounding thunder grows louder and more threatening. A curiously-
+shaped knocker adorns the front door. Flanking the front door is a pair of
+marble statues. 
+
+You can see a mailbox (which is closed) here.
+The door creaks open.
+
+Entrance Hall
+As you enter the mansion, the door slams closed behind you. Welcome home. You
+are inside the mansion's foyer. This is a large and luxurious room, yet it feels
+strangely oppressive. A hallway lies to the north. Another passage leads east.
+
+Covering most of the floor is a room-sized carpet that displays a pentagram. In
+the east wall is a brick fireplace. Atop the rug is an expensive-looking wooden
+chair and a couch. A painting of a snake hangs above the fireplace. A painting
+of an eagle hangs on the west wall. A bust of a sailor stands on a pedestal by
+the fireplace.
+
+On the mantelpiece is a kerosene lamp.
+
+Library
+This room was designed for deep thought and research. Obviously it was once
+inhabited by a serious man of letters. The harsh silence in the rest of the
+house is muted in this room of contemplation. The east wall is completely
+covered with a bookcase. On the north wall is a framed star chart. A large,
+well-polished table dominates the middle of the room. Beside the table is an
+antique globe. The only exit is west.
+
+On the table is an ancient book.
+(the ancient book)
+As you open the ancient book, a tiny scroll slides out.
+ancient book (which is open): Taken.
+tiny scroll: Taken.
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+(first opening the hall door)
+
+Hall
+This room is devoid of any aesthetic warmth or beauty. It is purely functional,
+with no concern for the trivialities of interior design. To the south is the
+foyer. Two doors go southwest and west. One door goes east. A staircase leads
+up. A small painting hangs between the two west-facing doors.
+
+>UP. X FISH. SE. TAKE NO-GHOST, SPIDER CIDER
+
+Upstairs Hallway
+The old wooden floorboards creak under your weight. Your creaking footsteps echo
+through the emptiness of the huge house. Doors lead west, northwest, east,
+northeast, and southeast. A stuffed fish hangs on the wall at the end of the
+hallway.
+There's something fishy about this trophy.
+(first opening the closet door)
+
+Storage Closet
+This is a good-sized closet with lots of room for bric-a-brac. Several shelves
+line the walls. A bare light bulb hangs from the ceiling. You can leave the way
+you came in, to the north-west.
+
+You now have to question the reliability of your eyes. You think you see a
+somewhat cute, abstract creature with a brass key in its hand prance by. You're
+not sure whether it's your eyes or your mind playing tricks on you. It could be
+both.
+
+On the shelf are a filthy bowl, an ashtray, a bottle of No-Ghost, a detergent
+box, a cardboard box, a thin box, a hatbox, a can of pesticide and a can of
+spider cider.
+
+A mop leans against the wall.
+
+You can also see a broom and a tarp here.
+
+The gremlin rockets out of the room, waving a brass key.
+bottle of No-Ghost: Taken.
+can of spider cider: Taken.
+
+>NW. NE. X DRESSER. OPEN IT. TAKE STAR. SW. NW. TURN ON LAMP.
+
+Upstairs Hallway
+
+That was definitely not your imagination. This little creature is definitely
+running circles around you.
+
+The gremlin rockets out of the room, waving a brass key.
+(first opening the wooden door)
+
+Bedroom
+This room is like your typical, twentieth century bourgois bedroom -- a place to
+relax, perhaps? Against the far wall is a large bed. Next to it is a dresser.
+Hanging over the bed is a small mirror. A large, old radio stands against
+another wall. The only exit is to the south-west.
+This modest black dresser is of painted pine.
+I'm not sure what "it" refers to.
+
+>OPEN DRESSER. TAKE STAR. SW. NW. TURN ON LAMP.
+You open the top drawer in the dresser revealing an iron star.
+Taken.
+
+Upstairs Hallway
+(first opening the old door)
+
+Bedroom
+This room has a strange energy about it. There is a powerful presence in here.
+You do not feel alone, just insignificant.
+
+Against the north wall is a bed and bedside table. Above the bed is a small
+reading lamp. Opposite the bed, on the south wall, is a large, abstract
+painting. On the west wall is a large wardrobe. The hallway is to the east. A
+small door is in the north wall.
+
+On the bedside table are a red candle and a star diary.
+
+You can also see a bed (on which are a white pillow and a black pillow) here.
+Apparently the electricity has been turned off. The light does not activate.
+
+>N
+
+Bathroom
+This bathroom is cold and dark. You can see a white sink and a porcelain bathtub
+here. There is no toilet. Whoever lived here really did have a mysterious way of
+doing things. The door is to the south. Your attention is drawn to a strangly-
+shaped light fixture on the ceiling.
+
+You can see a soft towel, a drain, a laundry hamper and a marble shelf (on which
+is a bar of soap) here.
+
+>OPEN HAMPER
+You open the laundry hamper, revealing a bloody towel.
+
+>X BLOODY TOWEL
+This towel is damp and moldy. It is stained by what looks like blood
+
+>S. SE
+
+Bedroom
+
+On the bedside table are a red candle and a star diary.
+
+You can also see a bed (on which are a white pillow and a black pillow) here.
+
+Upstairs Hallway
+
+>D
+
+Hall
+
+>W
+As you touch the doorknob, a strange woman appears. She is dressed like Scarlett
+O'Hara and stands with her back to you. You pause in wonder.
+
+>SPRAY GHOST WITH N0-GHOST
+You see no n0-ghost here.
+
+>SPRAY GHOST WITH NO-GHOST
+You see no ghost here.
+
+>I
+You are carrying:
+  an iron star
+  a can of spider cider
+  a bottle of No-Ghost
+  a tiny scroll
+  an ancient book (which is open)
+
+>X GHOST
+You see no ghost here.
+
+>NW
+You can't go that way.
+
+>D
+You can't go that way.
+
+>SW
+(first opening the recroom door)
+You have gotten the attention of the mysterious lady. She turns to face you. Her
+face is devoid of any flesh. You are frozen with horror as she begins ripping
+your body into a bloody mess.
+
+
+    *** You have died ***
+
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+> RESTART
+
+Look out!!! The last thing you remember before the darkness rushed up to claim
+you is your brother's startled cry. You managed to swerve around the shadowy
+figure that appeared in the roadway, but lost control as the car jumped the
+shoulder and plunged headlong into this tree.
+
+Swiveling your battered head you survey the wreckage. You realize that you are
+alone: your kid brother must have gone off to get some help. As you pry yourself
+free of the steering wheel's embrace, you can't help but notice the pungent odor
+of gasoline as it leaks from the ruptured gas tank. 
+
+[Press any key to begin.] 
+
+UNINVITED
+(c) 1986 ICOM Simulations, Inc. 626 Wheeling Rd, Wheeling, IL  60090 
+An unauthorized adaptation by David Griffith.
+(Type "about" for more information.)
+Release 0 / Serial number 120722 / Inform v6.32 Library 6/12pre 
+
+Your Car
+You sit at the wheel of your car, the front of which is now wrapped around a
+large tree. You can hear the dripping of fluids as they escape beneath your
+vehicle. This auto is not going anywhere without a tow truck. Through the
+windshield you see the exterior of a mansion.
+
+The driver's side door looks bashed in.
+
+You can also see a glovebox (which is closed) here.
+
+>OPEN DOOR. OUT. OPEN FRONT DOOR. N. E. OPEN BOOK. TAKE BOOK, SCROLL. W. N
+You open the car door.
+
+Front Yard
+You stand at the front porch of a house. This old, Gothic mansion casts gloomy
+shadows all around you. A sharp wind cuts through your flesh to chill your
+bones. The pounding thunder grows louder and more threatening. A curiously-
+shaped knocker adorns the front door. Flanking the front door is a pair of
+marble statues. 
+
+You can see a mailbox (which is closed) here.
+The door creaks open.
+
+Entrance Hall
+As you enter the mansion, the door slams closed behind you. Welcome home. You
+are inside the mansion's foyer. This is a large and luxurious room, yet it feels
+strangely oppressive. A hallway lies to the north. Another passage leads east.
+
+Covering most of the floor is a room-sized carpet that displays a pentagram. In
+the east wall is a brick fireplace. Atop the rug is an expensive-looking wooden
+chair and a couch. A painting of a snake hangs above the fireplace. A painting
+of an eagle hangs on the west wall. A bust of a sailor stands on a pedestal by
+the fireplace.
+
+On the mantelpiece is a kerosene lamp.
+
+Library
+This room was designed for deep thought and research. Obviously it was once
+inhabited by a serious man of letters. The harsh silence in the rest of the
+house is muted in this room of contemplation. The east wall is completely
+covered with a bookcase. On the north wall is a framed star chart. A large,
+well-polished table dominates the middle of the room. Beside the table is an
+antique globe. The only exit is west.
+
+On the table is an ancient book.
+(the ancient book)
+As you open the ancient book, a tiny scroll slides out.
+ancient book (which is open): Taken.
+tiny scroll: Taken.
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+(first opening the hall door)
+
+Hall
+This room is devoid of any aesthetic warmth or beauty. It is purely functional,
+with no concern for the trivialities of interior design. To the south is the
+foyer. Two doors go southwest and west. One door goes east. A staircase leads
+up. A small painting hangs between the two west-facing doors.
+
+>UP. X FISH. SE. TAKE NO-GHOST, SPIDER CIDER
+
+Upstairs Hallway
+The old wooden floorboards creak under your weight. Your creaking footsteps echo
+through the emptiness of the huge house. Doors lead west, northwest, east,
+northeast, and southeast. A stuffed fish hangs on the wall at the end of the
+hallway.
+
+You now have to question the reliability of your eyes. You think you see a
+somewhat cute, abstract creature with a brass key in its hand prance by. You're
+not sure whether it's your eyes or your mind playing tricks on you. It could be
+both.
+
+The gremlin rockets out of the room, waving a brass key.
+There's something fishy about this trophy.
+(first opening the closet door)
+
+Storage Closet
+This is a good-sized closet with lots of room for bric-a-brac. Several shelves
+line the walls. A bare light bulb hangs from the ceiling. You can leave the way
+you came in, to the north-west.
+
+On the shelf are a filthy bowl, an ashtray, a bottle of No-Ghost, a detergent
+box, a cardboard box, a thin box, a hatbox, a can of pesticide and a can of
+spider cider.
+
+A mop leans against the wall.
+
+You can also see a broom and a tarp here.
+bottle of No-Ghost: Taken.
+can of spider cider: Taken.
+
+>NW. NE. X DRESSER. OPEN DRESSER. TAKE STAR. SW. NW. TURN ON LAMP.
+
+Upstairs Hallway
+
+That was definitely not your imagination. This little creature is definitely
+running circles around you.
+
+The gremlin scampers off, waving a brass key.
+(first opening the wooden door)
+
+Bedroom
+This room is like your typical, twentieth century bourgois bedroom -- a place to
+relax, perhaps? Against the far wall is a large bed. Next to it is a dresser.
+Hanging over the bed is a small mirror. A large, old radio stands against
+another wall. The only exit is to the south-west.
+This modest black dresser is of painted pine.
+You open the top drawer in the dresser revealing an iron star.
+Taken.
+
+Upstairs Hallway
+(first opening the old door)
+
+Bedroom
+This room has a strange energy about it. There is a powerful presence in here.
+You do not feel alone, just insignificant.
+
+Against the north wall is a bed and bedside table. Above the bed is a small
+reading lamp. Opposite the bed, on the south wall, is a large, abstract
+painting. On the west wall is a large wardrobe. The hallway is to the east. A
+small door is in the north wall.
+
+On the bedside table are a red candle and a star diary.
+
+You can also see a bed (on which are a white pillow and a black pillow) here.
+Apparently the electricity has been turned off. The light does not activate.
+
+>N
+
+Bathroom
+This bathroom is cold and dark. You can see a white sink and a porcelain bathtub
+here. There is no toilet. Whoever lived here really did have a mysterious way of
+doing things. The door is to the south. Your attention is drawn to a strangly-
+shaped light fixture on the ceiling.
+
+You can see a soft towel, a drain, a laundry hamper and a marble shelf (on which
+is a bar of soap) here.
+
+>S
+
+Bedroom
+
+On the bedside table are a red candle and a star diary.
+
+You can also see a bed (on which are a white pillow and a black pillow) here.
+
+>SE
+
+Upstairs Hallway
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>DOWN
+
+Hall
+
+>W
+As you touch the doorknob, a strange woman appears. She is dressed like Scarlett
+O'Hara and stands with her back to you. You pause in wonder.
+
+>X GHOST
+You see no ghost here.
+
+>! ???????
+
+>SPRAY GHOST
+You see no ghost here.
+
+>L
+
+Hall
+This room is devoid of any aesthetic warmth or beauty. It is purely functional,
+with no concern for the trivialities of interior design. To the south is the
+foyer. Two doors go southwest and west. One door goes east. A staircase leads
+up. A small painting hangs between the two west-facing doors.
+
+You can see a strange woman here.
+
+>X WOMAN
+This woman wears the dress of a southern belle.
+
+>SPRAY WOMAN
+(on the strange woman)
+Spraying the strange woman on the strange woman doesn't make sense.
+
+>SPRAY WOMAN WITH NO-GHOST
+Spraying the bottle of No-Ghost on the strange woman doesn't make sense.
+
+>! ?????????????
+
+>S
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+
+>N
+
+Hall
+
+You can see a strange woman here.
+
+>SW
+(first opening the recroom door)
+You have gotten the attention of the mysterious lady. She turns to face you. Her
+face is devoid of any flesh. You are frozen with horror as she begins ripping
+your body into a bloody mess.
+
+
+    *** You have died ***
+
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+> QUIT

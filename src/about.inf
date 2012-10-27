@@ -1,0 +1,107 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Menu main_menu 
+"Uninvited Info";
+
+Option -> "About Uninvited"
+	with description
+
+"This game is an unauthorized reimplementation of Uninvited as it 
+appeared on the Apple Macintosh as created by ICOM and published by 
+Mindscape in 1986.  No source code to Uninvited was used (I've never 
+seen it), nor was any decompilation done. The Macintosh game was 
+repeatedly played and referred to in the process of creating the Inform 
+code that creates this reimplementation.  Every effort has been made to 
+make sure this version remains faithful to the Macintosh version. Hints 
+and walkthroughs prepared for the Macintosh version will, for the most 
+part, work on this one.  Hints and walkthroughs for other versions may 
+work, but are untested.  No Invisiclues-style hints are included in this 
+version.^
+^
+This game was written in Inform (http://www.inform-fiction.org/) and 
+compiled with version 6.32 of the Inform compiler.  The original 
+development machine was an x86 machine with an AMD Athlon 1.2GHz and 768 
+megabytes of main memory running Ubuntu Linux.  Development began in 
+March 2007.  Development concluded on a Thinkpad T42.^
+^
+1) Descriptions have been expanded and/or completely rewritten to 
+compensate for lack of graphics.^
+^
+2) Some room exits have been moved around to make it easier for the
+player to visualize and for the author to describe in words.
+";
+
+Option -> "How to Play Interactive Fiction"
+	with description [;
+		howtoplay.description();
+	];
+
+Option -> "Playing Univited in Particular"
+	with description
+"Assuming that you already know how to play Interactive Fiction, there
+really isn't anything more you need to know. Just make sure you examine
+EVERYTHING. The solutions to puzzles are usually hidden in the scenery. 
+If you get stuck, any of the assorted walkthroughs for Univited one
+can find on the Internet will work as long as you keep in mind that some
+directions have changed and that some solutions have been randomized.
+That, however, will not detract from the game.";
+
+Option -> "Release History"
+	with description
+		"Release 0 / Serial number 120722^
+		Limited distribution beta test";
+
+Option -> "Credits"
+	with description
+"The Inform version of Univited was created by David Griffith 
+(davei@@64661.org) or (davidgriffith@@64acm.org).  Please visit 
+http://661.org/ for more of my stuff, including the 
+world-famous Frotz, which you may be using right now to play this game.  
+Portions of code used are from the 4th Edition of the Inform Designer's 
+Manual and are cited where they appear in the source code.^
+^
+Copyright is claimed on the source code, but not the game ~Uninvited~ 
+nor the game content.  It's not clear who owns the old ICOM games 
+anymore.  It used to be Infinite Ventures, but they appear to be out of 
+business.^
+^
+Sound effects were found in the public domain or downloaded from 
+http://www.freesfx.co.uk or http://www.soundjay.com.
+^
+I would like to thank (name), (name), and (name) for their gracious 
+help in betatesting.";
+
+Option -> "License"
+	with description
+"The source code to this Inform reimplementation of Uninvited is freely
+redistributable. Do with it what you will, but don't go about claiming
+you wrote it. I do not appreciate plagarism.  Give credit where credit
+is due.  Please let me know where and how you use code taken from this 
+game.^
+^
+This game may be included in a compilation (ie, a CD set containing the
+whole of the Interactive Fiction Archive), but it SHALL NOT be packaged 
+on its own without prior written approval.";
+
+Option -> "URLs"
+	with description
+"
+http://661.org/                    (My homepage)^
+http://www.ifarchive.org/          (The I-F Archive)^
+http://www.inform-fiction.org/     (Inform homepage)^
+http://www.intfiction.org/forum/   (Interactive Fiction Community Forums)
+";
+
+[ AboutSub;
+	ShowMenu(main_menu);
+	turns--;
+];
+
+Verb 'about'
+	*	-> About
+	* noun	-> About;
+
+

@@ -1,0 +1,177 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Verb 'limit'
+	*		-> TimeLimit;
+
+Verb meta '!'
+	*		-> Comment
+	* topic 	-> Comment;
+
+#Ifdef DEBUG;
+Verb 'zap'
+	*		-> Zap
+	* noun		-> Zap;
+
+Verb 'setsafe'
+	*		-> SetSafe;
+
+Verb 'reset'
+	*		-> Reset;
+#Endif;
+
+Verb 'spray'
+	*			-> Spray
+!	* noun			-> Spray
+	* noun 'on' noun	-> Spray
+	* noun 'with' noun	-> Spray reverse;
+
+Extend 'push' first
+	*			-> Push
+	* noun			-> Push
+	* noun 'in' noun	-> Transfer
+	* noun 'into' noun	-> Transfer;
+
+Extend 'put' first
+	* fluid 'in' noun		-> TakeLiquid
+	* noun 'before' noun		-> PutOn
+	* noun 'in' 'front' 'of' noun	-> PutOn
+	* noun 'by' noun		-> PutOn
+	* noun 'beside' noun		-> PutOn
+	* noun 'next' 'to' noun		-> PutOn;
+
+Extend 'cut' first
+	* noun 'with' held	-> Cut;
+
+Extend 'examine' first
+	* multi			-> Examine;
+
+Verb 'knock'
+	* 'on' noun		-> Knock;
+
+Verb 'ring'
+	* noun			-> Ring;
+
+Verb 'strike'
+	* noun			-> Strike
+	* held 'on' noun	-> Strike;
+
+Extend 'rub' replace
+	* noun			-> Rub
+	* held 'on' noun	-> Rub;
+
+Extend 'burn' replace
+	* noun			-> Burn
+	* noun 'with' noun	-> Burn
+	* held 'in' noun	-> Burn;
+
+Extend 'light' replace
+	* noun			-> SwitchOn
+	* noun 'with' noun	-> SwitchOn
+	* held 'on' noun	-> Strike;
+
+Extend 'i//' first
+	* 'don^t' 'know'	-> DontKnow
+	* 'do' 'not' 'know'	-> DontKnow
+	* 'dont' 'know'		-> DontKnow
+	* 'do' 'know'		-> DoKnow
+	* 'know'		-> DoKnow;
+
+Verb 'snuff' 
+	* noun          -> Snuff
+	* "out" noun    -> Snuff
+	* noun "out"    -> Snuff;
+
+Verb 'extinguish' * noun -> Snuff;
+
+Verb 'ignite' = 'burn';
+
+Verb 'kick' = 'attack';
+Verb 'smack' = 'attack';
+Verb 'slap' = 'attack';
+
+Verb 'grab' = 'take';
+
+Extend 'read' replace
+	* noun		-> Read;
+
+Extend 'kill' last
+	* noun 'with' noun -> Attack;
+
+Extend 'sing' last
+	* topic -> Sing;
+
+Verb 'chant'
+	*	-> ChantNothing
+	* topic	-> Chant
+	* noun	-> Chant;
+
+Verb 'shake'
+	*		-> Shake
+	* noun		-> Shake
+	* 'up' noun 	-> Shake
+	* 'out' noun 	-> Shake;
+
+Extend 'jump' replace
+	*		-> Jump
+	* 'on' noun	-> Jump;
+
+Verb 'catch'
+	* noun 'with' noun -> Catch
+	* noun 'in' noun -> Catch;
+
+Verb 'trap' = 'catch';
+
+Verb 'pour'
+	* noun					-> Pour
+	* noun 'in'/'into'/'on'/'onto' noun	-> Pour;
+
+Extend 'fill' replace
+	* noun 'from' noun			-> Fill
+	* noun 'with' fluid			-> FillWith
+	* noun 'with' noun			-> Fill;
+
+Verb 'focus'
+	*		-> Focus
+	* noun		-> Focus;
+
+! From info.h
+
+Extend 'consult' replace
+	* noun 'about' scope = TopicScope	-> Consult
+	* noun 'on' scope = TopicScope		-> Consult;
+
+Extend 'look' first
+	*					-> Look
+	* 'up' scope = TopicScope 'in' noun	-> Consult reverse;
+
+Extend 'read' first
+	* 'about' scope = TopicScope 'in' noun	-> Consult reverse;
+
+Extend 'ask' first
+	* creature 'about' scope = TopicScope 	-> Ask;
+
+Extend 'tell' first
+	* creature 'about' scope = TopicScope -> Tell;
+
+Extend 'answer' first
+	* scope = TopicScope 'to' creature -> Answer;
+
+Verb 'fart'
+	*		-> Fart
+	* 'on' noun	-> Fart
+	* 'at' noun	-> Fart;
+
+Verb 'spin'
+	*		-> Spin
+	* noun		-> Spin;
+
+Verb 'use'
+	* held			-> Use
+	* held 'with' noun	-> Use
+	* held 'on' noun	-> Use;
+
+Extend 'turn' first
+	* noun 'to' special	-> SetTo;

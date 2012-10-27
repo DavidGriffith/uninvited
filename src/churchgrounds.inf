@@ -1,0 +1,45 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside ChurchGrounds "Church Grounds"
+	with name "grounds",
+	description "You are standing on a path that leads up to a 
+		large stone structure.  Beyond the structure you see a 
+		forest that looks as if it has been ravaged by decay.",
+	s_to Chapel,
+	n_to MazeFront;
+
+Object -> ChapelGhost "ghost"
+	with name "ghost",
+	describe [;
+		if (WhiteCandle notin Player || WhiteCandle hasnt on) {
+			deadflag = 1;
+			print "^You step out of the ";
+			if (last_direction == n_to)
+				print "church";
+			else
+				print "maze";
+
+			" and immediately have 
+			another spiritual experience.  A horrifying 
+			apparition, in the shape of a classic ghost, 
+			swoops down upon you like a bird of prey.  You 
+			never had a ghost of a chance.  The strange 
+			amorphous creature quickly peels the skin from 
+			your skull.  Soon your system has lost enough 
+			blood to cause all your bodily functions to 
+			cease.";
+		}
+		print "^As you leave the ";
+		if (last_direction == n_to)
+			print "chapel";
+		else
+			print "maze";
+		", a strange ghost flies over you.  It does not attack 
+		you.  The glow of the candle dims the presence of the 
+		ghost.  It is offended by the flame and flies off to 
+		its supernatural home.";
+	],
+	has animate;

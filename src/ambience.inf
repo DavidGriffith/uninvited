@@ -1,0 +1,93 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Object Ambience
+	with
+	daemon [;
+		if (Location ofclass Maze)
+			self.amb_maze();
+		else if (Location ofclass Mansion)
+			self.amb_mansion();
+		else if (Location ofclass Outside)
+			self.amb_outside();
+	],
+	thunder [;
+		switch (random(3)) {
+			1: PlaySound(SOUND_Thunder1);
+			2: PlaySound(SOUND_Thunder2);
+			3: PlaySound(SOUND_Thunder3);
+		}
+	],
+	amb_mansion [;
+		self.zombies_off();
+		switch (random (20)) {
+		1:	self.thunder();
+			"^Loud thunder echoes all around you as the 
+			storm outside intensifies.";
+		2:	self.thunder();
+			print "^Lightning from the storm outside 
+			intensely illuminates the ";
+			ToLower(Location);
+			". There is loud thunder quickly following as 
+			the storm approaches.";
+		}
+	],
+	amb_maze [;
+		if (false) Sequencer(); ! make compiler shut up
+		self.zombies_on();
+	],
+	amb_outside [;
+		self.zombies_off();
+		! These might be displayed only on the veranda.  I need 
+		! to check further.
+		switch (random (20)) {
+		1: PlaySound(SOUND_Bark);
+		   "^From the sound of distant barking, you figure it 
+			must be a very large dog.";
+		2: "^You recall your childhood fears of thunder and 
+			lightning as you remember how your uncle was 
+			struck while out golfing in a rainstorm.";
+		3: "^A strange creature resembling an eyeball with wings
+			passes in front of you.  Did you ever get the
+			feeling that you were being watched?";
+		}
+	],
+	zombies_on [;
+		if (Zombie1 hasnt general) {
+			StartDaemon(Zombie1);
+			give Zombie1 general;
+		}
+		if (Zombie2 hasnt general) {
+			StartDaemon(Zombie2);
+			give Zombie2 general;
+		}
+		if (Zombie3 hasnt general) {
+			StartDaemon(Zombie3);
+			give Zombie3 general;
+		}
+		if (Zombie4 hasnt general) {
+			StartDaemon(Zombie4);
+			give Zombie4 general;
+		}
+
+	],
+	zombies_off [;
+		if (Zombie1 has general) {
+			StopDaemon(Zombie1);
+			give Zombie1 ~general;
+		}
+		if (Zombie2 has general) {
+			StopDaemon(Zombie2);
+			give Zombie2 ~general;
+		}
+		if (Zombie3 has general) {
+			StopDaemon(Zombie3);
+			give Zombie3 ~general;
+		}
+		if (Zombie4 has general) {
+			StopDaemon(Zombie4);
+			give Zombie4 ~general;
+		}
+	];

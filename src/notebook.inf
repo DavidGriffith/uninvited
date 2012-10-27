@@ -1,0 +1,647 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Class Topic
+	with has proper;
+
+Object Topics;
+
+Topic -> TopicAtomicNumber "atomic number" with name "atomic" "number";
+Topic -> TopicHydrogen "hydrogen" with name "hydrogen" "1";
+Topic -> TopicHelium "helium" with name "helium" "2";
+Topic -> TopicLithium "lithium" with name "lithium" "3";
+Topic -> TopicBeryllium "beryllium" with name "beryllium" "4";
+Topic -> TopicBoron "boron" with name "boron" "5";
+Topic -> TopicCarbon "carbon" with name "carbon" "6";
+Topic -> TopicNitrogen "nitrogen" with name "nitrogen" "7";
+Topic -> TopicOxygen "oxygen" with name "oxygen" "8";
+Topic -> TopicFluorine "fluorine" with name "fluorine" "9";
+Topic -> TopicNeon "neon" with name "neon" "10";
+Topic -> TopicSodium "sodium" with name "sodium" "11";
+Topic -> TopicMagnesium "magnesium" with name "magnesium" "12";
+Topic -> TopicAluminum "aluminum" with name "aluminum" "aluminium" "13";
+Topic -> TopicSilicon "silicon" with name "silicon" "14";
+Topic -> TopicPhosphorus "phosphorus" with name "phosphorus" "15";
+Topic -> TopicSulfur "sulfur" with name "sulfur" "sulphur" "16";
+Topic -> TopicChlorine "chlorine" with name "chlorine" "17";
+Topic -> TopicArgon "argon" with name "argon" "18";
+Topic -> TopicPotassium "potassium" with name "potassium" "19";
+Topic -> TopicCalcium "calcium" with name "calcium" "20";
+Topic -> TopicScandium "scandium" with name "scandium" "21";
+Topic -> TopicTitanium "titanium" with name "titanium" "22";
+Topic -> TopicVanadium "vanadium" with name "vanadium" "23";
+Topic -> TopicChromium "chromium" with name "chromium" "24";
+Topic -> TopicManganese "manganese" with name "manganese" "25";
+Topic -> TopicIron "iron" with name "iron" "26";
+Topic -> TopicCobalt "cobalt" with name "cobalt" "27";
+Topic -> TopicNickel "nickel" with name "nickel" "28";
+Topic -> TopicCopper "copper" with name "copper" "29";
+Topic -> TopicZinc "zinc" with name "zinc" "30";
+Topic -> TopicGallium "gallium" with name "gallium" "31";
+Topic -> TopicGermanium "germanium" with name "germanium" "32";
+Topic -> TopicArsenic "arsenic" with name "arsenic" "33";
+Topic -> TopicSelenium "selenium" with name "selenium" "34";
+Topic -> TopicBromine "bromine" with name "bromine" "35";
+Topic -> TopicKrypton "krypton" with name "krypton" "36";
+Topic -> TopicRubidium "rubidium" with name "rubidium" "37";
+Topic -> TopicStrontium "strontium" with name "strontium" "38";
+Topic -> TopicYttrium "yttrium" with name "yttrium" "39";
+Topic -> TopicZirconium "zirconium" with name "zirconium" "40";
+Topic -> TopicNiobium "niobium" with name "niobium" "41";
+Topic -> TopicMolybdenum "molybdenum" with name "molbdenum" "42";
+Topic -> TopicTechnetium "technetium" with name "technetium" "43";
+Topic -> TopicRuthenium "ruthenium" with name "ruthenium" "44";
+Topic -> TopicRhodium "rhodium" with name "rhodium" "45";
+Topic -> TopicPalladium "palladium" with name "palladium" "46";
+Topic -> TopicSilver "silver" with name "silver" "47";
+Topic -> TopicCadmium "cadmium" with name "cadmium" "48";
+Topic -> TopicIndium "indium" with name "indium" "49";
+Topic -> TopicTin "tin" with name "tin" "50";
+Topic -> TopicAntimony "antimony" with name "antimony" "51";
+Topic -> TopicTellurium "tellurium" with name "tellurium" "52";
+Topic -> TopicIodine "iodine" with name "iodine" "53";
+Topic -> TopicXenon "xenon" with name "xenon" "54";
+Topic -> TopicCesium "cesium" with name "cesium" "caesium" "55";
+Topic -> TopicBarium "barium" with name "barium" "56";
+Topic -> TopicLanthanum "lanthanum" with name "lanthanum" "57";
+Topic -> TopicCerium "cerium" with name "cerium" "58";
+Topic -> TopicPraseodymium "praseodymium" with name "praseodymium" "59";
+Topic -> TopicNeodymium "neodymium" with name "neodymium" "60";
+Topic -> TopicPromethium "promethium" with name "promethium" "61";
+Topic -> TopicSamarium "samarium" with name "samarium" "62";
+Topic -> TopicEuropium "europium" with name "europium" "63";
+Topic -> TopicGadolinium "gadolinium" with name "gadolinium" "64";
+Topic -> TopicTerbium "terbium" with name "terbium" "65";
+Topic -> TopicDysprosium "dysprosium" with name "dysprosium" "66";
+Topic -> TopicHolmium "holmium" with name "holmium" "67";
+Topic -> TopicErbium "erbium" with name "erbium" "68";
+Topic -> TopicThulium "thulium" with name "thulium" "69";
+Topic -> TopicYtterbium "ytterbium" with name "ytterbium" "70";
+Topic -> TopicLutetium "lutetium" with name "lutetium" "71";
+Topic -> TopicHafnium "hafnium" with name "hafnium" "72";
+Topic -> TopicTantalum "tantalum" with name "tantalum" "73";
+Topic -> TopicTungsten "tungsten" with name "tungsten" "74";
+Topic -> TopicRhenium "rhenium" with name "rhenium" "75";
+Topic -> TopicOsmium "osmium" with name "osmium" "76";
+Topic -> TopicIridium "iridium" with name "iridium" "77";
+Topic -> TopicPlatinum "platinum" with name "platinum" "78";
+Topic -> TopicGold "gold" with name "gold" "79";
+Topic -> TopicMercury "mercury" with name "mercury" "80";
+Topic -> TopicThallium "thallium" with name "thallium" "81";
+Topic -> TopicLead "lead" with name "lead" "82";
+Topic -> TopicBismuth "bismuth" with name "bismuth" "83";
+Topic -> TopicPolonium "polonium" with name "polonium" "84";
+Topic -> TopicAstatine "astatine" with name "astatine" "85";
+Topic -> TopicRadon "radon" with name "radon" "86";
+Topic -> TopicFrancium "francium" with name "francium" "87";
+Topic -> TopicRadium "radium" with name "radium" "88";
+Topic -> TopicActinium "actinium" with name "actinium" "89";
+Topic -> TopicThorium "thorium" with name "thorium" "90";
+Topic -> TopicProtactinium "protactinium" with name "protactinium" "91";
+Topic -> TopicUranium "uranium" with name "uranium" "92";
+Topic -> TopicNeptunium "neptunium" with name "neptunium" "93";
+Topic -> TopicPlutonium "plutonium" with name "plutonium" "94";
+Topic -> TopicAmericium "americium" with name "americium" "95";
+Topic -> TopicCurium "curium" with name "curium" "96";
+Topic -> TopicBerkelium "berkelium" with name "berkelium" "97";
+Topic -> TopicCalifornium "californium" with name "californium" "98";
+Topic -> TopicEinsteinium "einsteinium" with name "einsteinium" "99";
+
+Object Notebook "notebook"
+	with name "notebook",
+	description "This is a small hardbound notebook of some 100 or 
+		so pages.  On its cover are the words ~The Chemical 
+		Elements~.",
+	before [;
+	Search:
+		"Lots of stuff about the chemical elements.  Perhaps 
+		you'd like to read about some of them.";
+
+	Read, Open:
+		give self ~open;
+		"Flipping through the notebook, you see that each page 
+		contains a brief handwritten description of each of the 
+		chemical elements.  It seems to end with ~einsteinium~.  
+		You close the notebook.^^(If you want to read about a 
+		specific element, just do something like ~READ ABOUT 
+		CARBON IN THE NOTEBOOK~.)";
+
+	Consult:
+		switch(second) {
+		TopicAtomicNumber:
+			"The atomic number represents the number of 
+			protons present in an element's nucleus.  This 
+			number determines the basic identity of the 
+			element.";
+		TopicHydrogen:
+			"#1.  Hydrogen.  H.  This gaseous element 
+			combines with carbon and oxygen to form a 
+			plethora of different chemical compounds.";
+		TopicHelium:
+			"#2.  Helium.  He.  This is the lightest of the 
+			noble gases and the second-most common element 
+			in the universe after hydrogen.";
+		TopicLithium:
+			"#3.  Lithium.  Li.  A very light and reactive 
+			metal, lithium is important in nuclear chemistry 
+			and medicine.";
+		TopicBeryllium:
+			"#4.  Beryllium.  Be.  Drawing its name from 
+			the beryl family of minerals, beryllium is 
+			useful for making non-sparking tools, 
+			high-temperature ceramics and nuclear reactors.  
+			It is also quite toxic.";
+		TopicBoron:
+			"#5.  Boron.  B.  Commonly encountered as borax 
+			for doing laundry, this nonmetal is also used to 
+			make control rods for nuclear fission reactors.";
+		TopicCarbon:
+			"#6.  Carbon.  C.  Atoms of this element chain 
+			themselves to each other.  Other elements attach 
+			themselves to these chains to form more complex 
+			chemical compounds.  These carbon chains are 
+			the foundation of all life on this planet.";
+		TopicNitrogen:
+			"#7.  Nitrogen.  N.  This gaseous element is the 
+			most common gas in the Earth's atmosphere.  
+			It is very important to many life processes, but
+			most organisms cannot use it directly.";
+		TopicOxygen:
+			"#8.  Oxygen.  O.  This gaseous element inhabits 
+			nearly every corner of our environment.  It is 
+			an integral component of life as we know it.";
+		TopicFluorine:
+			"#9.  Fluorine.  F.  The lightest of the 
+			halogens, this gaseous element is yellowish, 
+			very poisonous, and very reactive.";
+		TopicNeon:
+			"#10.  Neon.  Ne.  The second of the noble gases 
+			is also unlikely to react with other elements.  A 
+			trace of it can be found in Earth's atmosphere.  
+			It's most commonly found in neon signs.";
+		TopicSodium:
+			"#11.  Sodium.  Na.  A very soft, highly reactive 
+			metal.  While it is vital for proper nerve
+			function, most people get too much.  When 
+			combined with the poisonous gas chlorine, table 
+			salt is the result.";
+		TopicMagnesium:
+			"#12.  Magnesium.  Mg.  A lightweight metal 
+			often used to make lightweight alloys.  Not as 
+			reactive as sodium, it can be handled by bare 
+			hand without injury.  It will burn fiercely if 
+			ignited.  Also a crucial nutritional mineral.";
+		TopicAluminum:
+			"#13.  Aluminum.  Al.  A very lightweight metal 
+			used for all sorts of things, most commonly drink 
+			containers.";
+		TopicSilicon:
+			"#14.  Silicon.  Si.  One of the most common 
+			elements in Earth's crust, this semimetal is a 
+			crucial ingredient in computer chips.";
+		TopicPhosphorus:
+			"#15.  Phosphorus.  P.  This reactive, white 
+			waxy solid is poisonous alone and in many of its 
+			compounds.  Nonetheless, it is a vital nutrient 
+			for many living things.";
+		TopicSulfur:
+			"#16.  Sulfur.  S.  This yellow crystalline 
+			substance was known to the ancients as 
+			~brimstone~ because it was commonly found 
+			around volcanic vents.  Foul-smelling when 
+			burning, it doesn't smell like anything when 
+			pure.";
+		TopicChlorine:
+			"#17.  Chlorine.  Cl.  A greenish, poisonous, 
+			and corrosive gas.  Many of its compounds are 
+			used as cleaners and disinfectants.  When 
+			combined with sodium, the result is table salt.";
+		TopicArgon:
+			"#18.  Argon.  Ar.  Another of the noble gases, 
+			this is sometimes used in lamps in the same 
+			fashion as neon.  It may also be used to 
+			provide a nonreactive atmosphere for welding 
+			aluminum.";
+		TopicPotassium:
+			"#19.  Potassium.  K.  Orginally isolated from 
+			potash, from where it gets its name, this highly 
+			reactive metal is vital to many life 
+			functions.";
+		TopicCalcium:
+			"#20.  Calcium.  Ca.  This element is best known 
+			as a building block of bones and of sea 
+			shells.";
+		TopicScandium:
+			"#21.  Scandium.  Sc.  One of the so-called 
+			~rare earth elements~, its only major use is in 
+			aluminum alloys.";
+		TopicTitanium:
+			"#22.  Titanium.  Ti.  Named for the Titans of 
+			old, this is a very lightweight and very strong 
+			metal.  As a dioxide, it is widely used as a 
+			white pigment.";
+		TopicVanadium:
+			"#23.  Vanadium.  V.  A metal most commonly used 
+			in making stainless steels and little else.";
+		TopicChromium:
+			"#24.  Chromium.  Ch.  A beautiful white metal 
+			that takes a fine shine.  Often found plated onto 
+			other metals as ~chrome~.  Its compounds occur 
+			in a wide variety of colors, which explains its 
+			name.  These compounds are often poisonous.";
+		TopicManganese:
+			"#25.  Manganese.  Mg.  Not to be confused with 
+			magnesium, this metal is brittle on its own.  It 
+			is often used to toughen steel alloys.";
+		TopicIron:
+			"#26.  Iron.  Fe.  A tremendously important and 
+			versatile metal.  The fact that many of its 
+			compounds are red is very significant to its 
+			alchemical and astrological properties.";
+		TopicCobalt:
+			"#27.  Cobalt.  Co.  A bluish-white metal often 
+			found as an impurity in iron ore.  Named after 
+			little goblins which were said to torment 
+			miners.";
+		TopicNickel:
+			"#28.  Nickel.  Ni.  Shiny and resistant to 
+			corrosion, nickel is frequently used to plate 
+			other metals.  Some people are allergic to it.";
+		TopicCopper:
+			"#29.  Copper.  Cu.  This is a soft, malleable 
+			metal.  It is commonly used in coins and wire.  
+			It is an efficient, inexpensive conductor.";
+		TopicZinc:
+			"#30.  Zinc.  Zn.  A brittle dull-grey metal, 
+			this is an important nutrient and a necessary 
+			component of brass.";
+		TopicGallium:
+			"#31.  Gallium.  Ga.  This metal's melting point 
+			is so low, that it will melt in your hand.  Its 
+			most common uses are in thermometers, computer 
+			chips, and low-melting alloys.";
+		TopicGermanium:
+			"#32.  Germanium.  Ge.  Named after the country 
+			of Germany, germanium is a glassy semimetal and 
+			is an important raw material for electronic 
+			components and special-purpose lenses.";
+		TopicArsenic:
+			"#33.  Arsenic.  As.  An earthy-looking 
+			semimetal well-known as a potent poison.";
+		TopicSelenium:
+			"#34.  Selenium.  Se.  A slightly shiny 
+			semimetal used for special-purpose alloys and 
+			for electronic components.";
+		TopicBromine:
+			"#35.  Bromine.  Br.  A foul-smelling,
+			highly-reactive liquid, bromine is the third of 
+			the halogens.  Its properties are very similar 
+			to those of chlorine and fluorine above.";
+		TopicKrypton:
+			"#36.  Krypton.  Kr.  A heavy noble gas commonly 
+			found as an inert filler gas in light bulbs.";
+		TopicRubidium:
+			"#37.  Rubidium.  Rb.  A highly-reactive soft 
+			metal in the same family as sodium.";
+		TopicStrontium:
+			"#38.  Strontium.  Sr.  This soft metal is 
+			highly reactive and similar to calcium.";
+		TopicYttrium:
+			"#39.  Yttrium.  Y.  Used to make the red color 
+			in television tubes.";
+		TopicZirconium:
+			"#40.  Zirconium.  Zr.  Mostly used to make fuel 
+			rods for nuclear fission reactors.";
+		TopicNiobium:
+			"#41.  Niobium.  Nb.  Very similar to tantalum.  
+			Niobium is an important ingredient for 
+			high-temperature applications like jet and 
+			rocket engines.";
+		TopicMolybdenum:
+			"#42.  Molybdenum.  Mo.  Used in high-strength 
+			steel alloys.  Molybdenum disulfide is used as a 
+			lubricant.";
+		TopicTechnetium:
+			"#43.  Technetium.  Tc.  Lightest chemical 
+			element with no stable isotope.";
+		TopicRuthenium:
+			"#44.  Ruthenium.  Ru.  Often found associated 
+			with platinum ores.  Frequently used as a 
+			catalyst in some platinum alloys.";
+		TopicRhodium:
+			"#45.  Rhodium.  Rh.  Often found associated 
+			with platinum ores.  Frequently used as a 
+			catalyst in some platinum alloys.";
+		TopicPalladium:
+			"#46.  Palladium.  One of the platium group of 
+			metals.  Able to absorb up to nine-hundred 
+			times its own volume of hydrogen.";
+		TopicSilver:
+			"#47.  Silver.  Ag.  Silver is one of the 
+			so-called 'precious metals'.  It is an excellent 
+			conductor and is commonly used in jewelry and 
+			other decorative ornaments.";
+		TopicCadmium:
+			"#48.  Cadmium.  Cd.  This soft, bluish-white 
+			metal is largely used in batteries and 
+			pigments.";
+		TopicIndium:
+			"#49.  Indium.  In.  Useful in electronics, 
+			low-melting alloys, and bearings.";
+		TopicTin:
+			"#50.  Tin.  Sn.  Tin was well-known to the 
+			ancients.  Commonly used for utensils, making 
+			bronze and pewter, and coating steel to prevent 
+			rust.";
+		TopicAntimony:
+			"#51.  Antimony.  Sb.  A semi-metal known to 
+			the ancients commonly used in hardening various 
+			alloys.  When heated, its vapours are poisonous.";
+		TopicTellurium:
+			"#52.  Tellurium.  Te.";
+		TopicIodine:
+			"#53.  Iodine.  I.  Pure iodine is a purple 
+			crystalline solid that readily sublimes to a 
+			purple vapour.  Minute quantities are required 
+			by most mammals for proper thyroid function.";
+		TopicXenon:
+			"#54.  Xenon.  Xe.  A noble gas.  Popular for 
+			making electronic flash tubes.";
+		TopicCesium:
+			"#55.  Cesium.  Cs.  A highly-reactive metal 
+			which is liquid at room temperatures.";
+		TopicBarium:
+			"#56.  Barium.  Ba.  Soft, silvery, and very 
+			reactive";
+		TopicLanthanum:
+			"#57.  Lanthanum.  La.  First of the lanthanide 
+			series, usually found in combination with cerium 
+			and other rare earth metals.";
+		TopicCerium:
+			"#58.  Cerium.  Ce.  Named after the asteroid 
+			Ceres.";
+		TopicPraseodymium:
+			"#59.  Praseodymium.  Pr.  A soft and very 
+			reactive rare-earth metal";
+		TopicNeodymium:
+			"#60.  Neodymium.  Nd.  It's called a 
+			~rare-earth~ metal, but is no rarer than 
+			copper.";
+		TopicPromethium:
+			"#61.  Promethium.  Pm.  Named for the Greek 
+			god who gave fire to mankind, this metal is 
+			unusual in that for so low an atomic number, it 
+			had no stable isotopes.";
+		TopicSamarium:
+			"#62.  Samarium.  Sa.  Only slightly toxic.  
+			More common than tin.";
+		TopicEuropium:
+			"#63.  Europium.  Eu.  Named after the 
+			continent of Europe.  Relatively non-toxic.";
+		TopicGadolinium:
+			"#64.  Gadolinium.  Gd.  Highly toxic.";
+		TopicTerbium:
+			"#65.  Terbium.  Tb.  Soft enough to be cut
+			with a knife.";
+		TopicDysprosium:
+			"#66.  Dysprosium, Dy.  Useful for making magnets.";
+		TopicHolmium:
+			"#67.  Holmium.  Ho.  Named after the city of 
+			Stockholm.  Stable in dry air, but reacts with
+			water.";
+		TopicErbium:
+			"#68.  Erbium.  Er.  Has pink ions and salts.";
+		TopicThulium:
+			"#69:  Thulium.  Tm.  Named for the mythical 
+			land of Thule";
+		TopicYtterbium:
+			"#70:  Ytterbium.  Yb.  Named for the Swedish 
+			village of Ytterby.";
+		TopicLutetium:
+			"#71:  Lutetium.  Lu.  Highest hardness and 
+			density among the lanthanides.";
+		TopicHafnium:
+			"#72:  Hafnium.  Hf.  Similar to zirconium.";
+		TopicTantalum:
+			"#73:  Tantalum.  Ta.  Highly corrosion resistant.";
+		TopicTungsten:
+			"#74:  Tungsten.  W.  Very hard with an extremely 
+			high melting point.";
+		TopicRhenium:
+			"#75:  Rhenium.  Re.  Named after the river Rhine 
+			in Europe.";
+		TopicOsmium:
+			"#76:  Osmium.  Os.  Useful wherever extreme 
+			durability and hardness are needed.";
+		TopicIridium:
+			"#77:  Iridium.  Ir.  Very hard, brittle.  Most 
+			corrosion-resistant metal.";
+		TopicPlatinum:
+			"#78:  Platinum.  Pt.  A precious metal commonly 
+			used as a catalyst.";
+		TopicGold:
+			"#79.  Gold.  Au.  This metallic element is an 
+			excellent conductor.  It is also quite 
+			malleable and easy to work with.  It is also 
+			one of the most precious of the 'precious 
+			metals'";
+		TopicMercury:
+			"#80.  Mercury.  Hg.  This silvery metal is 
+			liquid at room temperature.  It reacts visibly 
+			to changes in temperature.  Has a dangerous, 
+			cumulative effect if taken internally.";
+		TopicThallium:
+			"#81.  Thallium.  Tl.  An extremely poisonous 
+			heavy metal.  It was once commonly used in 
+			rodent poisons.";
+		TopicLead:
+			"#82.  Lead.  Pb.  This is a soft, heavy metal.
+			It can be used as a protective shield from stray 
+			particles from unstable elements.";
+		TopicBismuth:
+			"#83.  Bismuth.  Bi.  Though it's a heavy metal, 
+			it is surprisingly non-toxic.  It is used in 
+			low-melting alloys and in remedies for upset 
+			stomachs.  Bismuth has the highest atomic 
+			number of all the known stable elements.";
+		TopicPolonium:
+			"#84.  Polonium.  Po.  Named for her native 
+			Poland, Marie Curie discovered polonium at about 
+			the same time as she discovered radium.  It 
+			is highly radioactive and very toxic.";
+		TopicAstatine:
+			"#85.  Astatine.  At.  The heaviest known 
+			halogen.  Astatine is exceedingly rare, very 
+			unstable, and not very useful.";
+		TopicRadon:
+			"#86.  Radon.  Rn.  Radon is a heavy, radioactive 
+			member of the noble gases.  It is often found 
+			associated with uranium deposits.  It can 
+			percolate up through the planet's crust and 
+			collect in places like basements, particularly 
+			if the basement is not well ventilated.  
+			Continued exposure can lead to lung cancer.";
+		TopicFrancium:
+			"#87.  Francium.  Fr.  Exceedingly rare and 
+			highly radioactive.  It is most often found in 
+			minute quantities associated with nuclear 
+			fission.";
+		TopicRadium:
+			"#88.  Radium.  Ra.  It is a very unstable, 
+			radioactive element.  Given time it degenerates 
+			into lead.";
+		TopicActinium:
+			"#89.  Actinium.  Ac.  The first of the actinide 
+			series of elements.";
+		TopicThorium:
+			"#90.  Thorium.  Th.  Once commonly used in 
+			making lantern mantles.  Named for Thor, the 
+			Norse god of thunder.";
+		TopicProtactinium:
+			"#91.  Protactinium.  Pr.  Radioactive.";
+		TopicUranium:
+			"#92.  Uranium.  U.  This is the heaviest of 
+			all the natural elements.  Because its half-life 
+			is on the order of 4.5 billion years, it's not 
+			especially radioactive.  It is most commonly 
+			known as fuel for nuclear fission reactors.";
+		TopicNeptunium:
+			"#93.  Neptunium.  Np.  This radioactive metal 
+			is frequently found in minute quantities with 
+			uranium and plutonium.  Named for the planet 
+			Neptune.";
+		TopicPlutonium:
+			"#94.  Plutonium.  Pu.  Named for the planet 
+			Pluto.  This highly radioactive metal is a key 
+			component for modern fission weapons and some 
+			fission reactors.";
+		TopicAmericium:
+			"#95.  Americium.  Am.  Named for the United 
+			States of America, this radioactive element is 
+			best known as an ionzation source for smoke 
+			detectors.  For such purposes, the danger is 
+			nil.";
+		TopicCurium:
+			"#96.  Curium.  Cm.  Radioactive element named 
+			after Marie Curie.";
+		TopicBerkelium:
+			"#97.  Berkelium.  Bk.  Radioactive element 
+			named after the city of Berkeley.";
+		TopicCalifornium:
+			"#98.  Californium.  Radioactive element named 
+			after California.";
+		TopicEinsteinium:
+			"#99.  Einsteinium.  A very short-lived 
+			element.  Named after Albert Einstein.";
+		}
+	],
+	has openable transparent;
+
+! Returns the element corresponding to the supplied atomic number
+[ AtomicNumber num element;
+	switch(num) {
+	1:	element = TopicHydrogen;
+	2:	element = TopicHelium;
+	3:	element = TopicLithium;
+	4:	element = TopicBeryllium;
+	5:	element = TopicBoron;
+	6:	element = TopicCarbon;
+	7:	element = TopicNitrogen;
+	8:	element = TopicOxygen;
+	9:	element = TopicFluorine;
+	10:	element = TopicNeon;
+	11:	element = TopicSodium;
+	12:	element = TopicMagnesium;
+	13:	element = TopicAluminum;
+	14:	element = TopicSilicon;
+	15:	element = TopicPhosphorus;
+	16:	element = TopicSulfur;
+	17:	element = TopicChlorine;
+	18:	element = TopicArgon;
+	19:	element = TopicPotassium;
+	20:	element = TopicCalcium;
+	21:	element = TopicScandium;
+	22:	element = TopicTitanium;
+	23:	element = TopicVanadium;
+	24:	element = TopicChromium;
+	25:	element = TopicManganese;
+	26:	element = TopicIron;
+	27:	element = TopicCobalt;
+	28:	element = TopicNickel;
+	29:	element = TopicCopper;
+	30:	element = TopicZinc;
+	31:	element = TopicGallium;
+	32:	element = TopicGermanium;
+	33:	element = TopicArsenic;
+	34:	element = TopicSelenium;
+	35:	element = TopicBromine;
+	36:	element = TopicKrypton;
+	37:	element = TopicRubidium;
+	38:	element = TopicStrontium;
+	39:	element = TopicYttrium;
+	40:	element = TopicZirconium;
+	41:	element = TopicNiobium;
+	42:	element = TopicMolybdenum;
+	43:	element = TopicTechnetium;
+	44:	element = TopicRuthenium;
+	45:	element = TopicRhodium;
+	46:	element = TopicPalladium;
+	47:	element = TopicSilver;
+	48:	element = TopicCadmium;
+	49:	element = TopicIndium;
+	50:	element = TopicTin;
+	51:	element = TopicAntimony;
+	52: 	element = TopicTellurium;
+	53:	element = TopicIodine;
+	54:	element = TopicXenon;
+	55:	element = TopicCesium;
+	56:	element = TopicBarium;
+	57:	element = TopicLanthanum;
+	58:	element = TopicCerium;
+	59:	element = TopicPraseodymium;
+	60:	element = TopicNeodymium;
+	61:	element = TopicPromethium;
+	62:	element = TopicSamarium;
+	63:	element = TopicEuropium;
+	64:	element = TopicGadolinium;
+	65:	element = TopicTerbium;
+	66:	element = TopicDysprosium;
+	67:	element = TopicHolmium;
+	68:	element = TopicErbium;
+	69:	element = TopicThulium;
+	70:	element = TopicYtterbium;
+	71:	element = TopicLutetium;
+	72:	element = TopicHafnium;
+	73:	element = TopicTantalum;
+	74:	element = TopicTungsten;
+	75:	element = TopicRhenium;
+	76:	element = TopicOsmium;
+	77:	element = TopicIridium;
+	78:	element = TopicPlatinum;
+	79:	element = TopicGold;
+	80:	element = TopicMercury;
+	81:	element = TopicThallium;
+	82:	element = TopicLead;
+	83:	element = TopicBismuth;
+	84:	element = TopicPolonium;
+	85:	element = TopicAstatine;
+	86:	element = TopicRadon;
+	87:	element = TopicFrancium;
+	88:	element = TopicRadium;
+	89:	element = TopicActinium;
+	90:	element = TopicThorium;
+	91:	element = TopicProtactinium;
+	92:	element = TopicUranium;
+	93:	element = TopicNeptunium;
+	94:	element = TopicPlutonium;
+	95:	element = TopicAmericium;
+	96:	element = TopicCurium;
+	97:	element = TopicBerkelium;
+	98:	element = TopicCalifornium;
+	99:	element = TopicEinsteinium;
+	}
+	return element;
+
+];

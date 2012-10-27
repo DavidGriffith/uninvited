@@ -1,0 +1,162 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+! This file is done.  Don't mess with it anymore.
+
+! Later on, I need to write code to assign the "hides_key" attribute to 
+! a random chair.
+
+Attribute hides_key;
+
+Class KeyChair
+	with 
+	cut_count 0,
+	describe [;
+		if (child(self)) {
+			print "^On ", (the) self;
+			WriteListFrom(child(self), ENGLISH_BIT+
+                                TERSE_BIT+ISARE_BIT+CONCEAL_BIT);
+                        print ".^";
+		}
+		rtrue;
+	],
+	before [i;
+	Enter:
+		print "You ";
+
+		if (verb_word == 'lie')
+			print "lie down"; 
+		else if (verb_word == 'stand')
+			print "stand";
+		else
+			print "sit";
+
+		print " on ", (the) self,".";
+
+		if (self has hides_key) {
+			print " You feel something hard sewn into it.";
+		}
+		print "^";
+		PlayerTo(self);
+		rtrue;
+	Cut:
+		if (second ofclass Knife || second == Axe) {
+			print "You slash the upholstery of ", (the) 
+			self, " with ", (the) second;
+
+			switch (self.cut_count) {
+			0:
+			1: print " again";
+			2: print " yet again";
+			3: print " a third time";
+			4: print " and reduce it to ribbons";
+			default: print " and make a bigger mess";
+			}
+			self.cut_count++;
+			if (self has hides_key) {
+				move SkeletonKey to self;
+				give self ~hides_key;
+				" and discover a skeleton key.";
+			}
+			objectloop (i in self) {
+				move i to location;
+				" and knock ", (the) i, " to the floor";
+			}
+			".";
+		}
+	],
+	has enterable supporter;
+
+
+Class Dresser
+	with describe [ i;
+		if (self.topclean() == false) {
+			print "^On ", (the) self;
+			WriteListFrom(child(self), ENGLISH_BIT+
+				TERSE_BIT+ISARE_BIT+CONCEAL_BIT);
+			print ".^";
+		}
+		objectloop (i in self) {
+			if (i ofclass Drawer)
+				if (i has open) i.describe();
+		}
+		rtrue;
+	],
+	topclean [ i;
+		! I don't know why "if (~(i ofclass Drawer))" won't work.
+		objectloop (i in self) {
+			if ((i ofclass Drawer))
+				i = i;
+			else
+				rfalse;
+		}
+		rtrue;
+	],
+	getdrawercount [ i drawercount;
+		drawercount = 0;
+		objectloop (i in self) {
+			if (i ofclass Drawer)
+				drawercount++;
+		}
+		return drawercount;
+	],
+	getdrawer[ i;
+		objectloop (i in self) {
+			if (i ofclass Drawer) return i;
+		}
+		return nothing;
+	],			
+	before [ drawer drawercount;
+	Receive:
+		if (receive_action == ##Insert) {
+			drawercount = self.getdrawercount();
+			drawer = self.getdrawer();
+			if (drawercount > 1) {
+				"There are more than one drawer in ", (the) self, ".^";
+			}
+			if (drawercount == 1) {
+				<<insert noun drawer>>;
+			}
+		}
+	Open:
+		drawer = self.getdrawer();
+		<<open drawer>>;
+	Close:
+		drawer = self.getdrawer();
+		<<close drawer>>;
+	],
+	has container supporter open;
+
+
+Class Drawer
+	with name "drawer",
+	describe [;
+		if (self has open) {
+			print "^", (The) (self), " in ", (the) parent(self);
+			if (child(self)) {
+				print " contains ";
+				WriteListFrom(child(self), 
+					ENGLISH_BIT+TERSE_BIT+
+					CONCEAL_BIT);
+				".";
+			}
+			" is empty.";
+		}
+		rtrue;
+	],
+	after [;
+	Open:
+		print "You open ", (the) self, " in ", (the) 
+			parent(self), " revealing ";
+		if (child(self)) {
+			WriteListFrom(child(self),ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT);
+			".";
+		}
+		"nothing.";
+	Close:
+		"You close ", (the) self, " in ", (the) parent(self), ".";
+	],
+	has container openable concealed;
+

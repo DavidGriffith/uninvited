@@ -1,0 +1,107 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion ObservatoryCorridor "Observatory Corridor"
+	with name "observatory" "corridor",
+	description "You're in a short corridor in the observatory.  The 
+		door leading outside is to the east.  To the west is a 
+		door with a star on it.  To the north is a door with 
+		what appears to be a relief of the planet Saturn.  The 
+		door to the south has nothing on it.  There is a 
+		curious-looking light fixture on the ceiling.",
+	n_to ObservatoryDoor,
+	w_to LabDoor,
+	s_to ObservatoryDummyDoor,
+	e_to ObservatoryOuterDoor;
+
+! This is a very strange looking rug.  It is mostly black with polkadots 
+! around the edge.  It is quite ugly.
+
+! The ugly creature looks over the potted plant in the three-way 
+! corridor.  At this, the strange creature's hungry eyes light up.  It 
+! voraciously attacks the plant, seizing one of its fruits.  In one 
+! swallow it down the entire juicy, seed-bearer.  As it swallows the 
+! fruit the hideous creature disappears.  The cold, silent corridor now 
+! echoes its emptiness.
+
+Lamp -> ObservatoryFixture "light",
+	with name "light" "fixture",
+	description "This light fixture looks like a child's spinning top.",
+	has scenery;
+
+
+Object -> ObservatoryDummyDoor "plain door",
+	with name "plain" "door",
+	description "This door is unlike the others in that it does 
+		not have a special symbol on it.",
+	has door scenery openable lockable locked;
+
+MyDoor -> LabDoor "star door"
+	with name "star" "door",
+	description "On this door is a five-pointed star, an occult 
+		power symbol.",
+	w_to Laboratory,
+	e_to ObservatoryCorridor,
+	has scenery openable;
+
+MyDoor -> ObservatoryDoor "saturn door"
+	with name "saturn" "door",
+	description "This door is marked with the symbol of some 
+		foreign, ringed planet from an unfamiliar solar 
+		system.",
+	n_to Observatory,
+	s_to ObservatoryCorridor,
+	has scenery openable;
+
+
+Moveclass -> FruitDemon "ugly creature"
+	with name "demon" "ugly" "creature",
+	move_type NO_MOVE,
+	caprice 0,
+	describe "^A strange, hideous creature stares at you.",
+	description "This strange creature floating in midair has a long 
+		and waggling tongue and tail.  As it bares its teeth, 
+		you can see red and puffy gums.",
+	eat_fruit [;
+		StopDaemon(self);
+		remove Fruit;
+		remove self;
+		print_ret (The) self, "'s hungry eyes light up.  
+		It pounces on ", (the) Fruit, " and swallows it 
+		whole in one gulp.  While licking its lips with 
+		its long tongue, it fades and disappears.  The 
+		cold, silent corridor now echoes its emptiness";
+	],
+	react_before [;
+	Go:
+		if (noun == e_to) rfalse;
+		if (player in parent(self)) {
+			"The vicious-looking creature hisses 
+			threateningly at you as you move toward the door 
+			it seems to be guarding.  It wags its tail and 
+			tongue at you, preventing you from reaching that 
+			door.";
+		}
+	],
+	before_action [ mylocation playerlocation fruitlocation;
+		mylocation == parent(self);
+		playerlocation == parent(player);
+		fruitlocation == parent(Fruit);
+		if (mylocation ~= ObservatoryCorridor)
+			rtrue;	! shut up if player zaps self
+
+		if ((mylocation == playerlocation) == fruitlocation) {
+			self.eat_fruit();
+			rtrue;
+		}
+	],
+	life [;
+	Give, Show:
+		if (noun == Fruit) {
+			self.eat_fruit();
+			rtrue;
+		}
+	],
+	has animate;

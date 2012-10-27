@@ -1,0 +1,741 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Attribute tiny;
+Attribute fire;
+Attribute editable;
+Attribute fluid;
+
+Global last_location;
+Global last_direction;
+Global TimeLimit = true;
+
+Include "matches.inf";
+Include "candles.inf";
+
+Include "extra/doors.h";
+Include "extra/doors2.h";
+Include "chooseobjects.inf";
+Include "furniture.inf";
+Include "timekeeper.inf";
+
+Constant WATER_COUNT = 10;
+
+! Obliging Door from exercise 3 in the Inform Designers Manual 4th ed.
+!
+! Errata:
+! The parenthesis in calling noun.door_dir() and self.door_dir() were
+! missing from the DM4 example.  Omitting them caused the routine to not
+! work.
+!
+Class ObligingDoor
+	with name "door",
+	react_before [;
+	Go:
+!		print (name) noun.door_dir(), "^";
+!		print (name) self.door_dir(), "^";
+		if (noun.door_dir() == self.door_dir()) {
+			return self.open_by_myself();
+		}
+	Enter:
+		if (noun == self) {
+			return self.open_by_myself();
+		}
+	],
+	open_by_myself [ ks;
+		if (self has open) rfalse;
+		print "(first opening ", (the) self, ")^";
+		ks = keep_silent;
+		keep_silent = true;
+		<Open self>; 
+		keep_silent = ks;
+		if (self hasnt open) rtrue;
+	],
+	has door openable;
+
+Class MyDoor
+	class DirDoor
+	class ObligingDoor
+	with npc_open 2;
+
+! When a bowl, cup, or other similar non-closable container is empty, 
+! we really don't need to say so.
+
+Class BaseContainer
+	with
+	capacity 3,
+	invent [;
+		if (inventory_stage == 1) {
+			rfalse;
+		}
+		if (inventory_stage == 2) {
+			if (child(self) && self has open) rfalse;
+			if (self has openable && self has open) rfalse;
+			rtrue;
+		}
+	],
+	before [i;
+	Smell:
+		if ((self has openable && self has open) ||
+		     self hasnt openable) {
+			i = child(self);
+			<<smell i>>;
+		}
+        Empty:
+		if (self hasnt open && self has openable) {
+			give self open;
+			print "(first opening ", (the) self, ")^";
+		}
+		if (noun && second) {
+			move child(self) to second;
+			"You fill ", (the) second, " from ", (the) self, ".";
+		}
+
+		if ((self has openable && self has open) ||
+		     self hasnt openable) {
+			if (child(self) ofclass Liquid) {
+				i = child(self);
+				remove i;
+				print_ret (The) i, " dribbles out of ", 
+				(the) self, " and evaporates.";
+			}
+		}
+	Fill:
+		<<empty second self>>;
+	],
+	has container;
+	
+Class BaseBottle
+	class BaseContainer
+	with
+	before [i;
+	Smell:
+		if (self has open) {
+			i = child(self);
+			<<smell i>>;
+		}
+!        Empty:
+!		if (self hasnt open) {
+!			give self open;
+!			print "(first opening ", (the) self, ")^";
+!		}
+!		if (child(self) ofclass Liquid) {
+!			i = child(self);
+!			remove i;
+!			print_ret (The) i, " dribbles out of ", 
+!			(the) self, " and evaporates.";
+!		}
+	Receive:
+		if (noun ofclass Liquid || noun has tiny) {
+			move noun to self;
+			"You put ", (the) noun, " into ", (the) self, ".";
+		}
+		print_ret (The) noun, " is too big to fit in ",
+			(the) self, ".";
+	],
+	capacity 1,
+	has container openable;
+
+Class Bottle
+	class BaseBottle
+	with name "bottle" "bottles//p";
+
+Class Vial
+	class BaseBottle
+	with name "vial" "phial" "vials//p" "phials//p";
+
+Class Bowl
+	class BaseContainer
+	with name "bowl" "bowls//p",
+	has open;
+
+Class Jar
+	class BaseContainer
+	with name "jar" "jars//p",
+	has openable;
+
+Class Box
+	class BaseContainer
+	with name "box" "boxes//p",
+	has openable;
+
+Class Bag
+	class BaseContainer
+	with name "bag" "bags//p" "sack" "sacks//p",
+	has openable;
+
+Class Liquid
+	with before [i childcount;
+	Take:
+		if (parent(self) == parent(Player) || 
+		    parent(self) has static or scenery) {
+			"You'll need some sort of container to do that.";
+		}
+
+		i = parent(self);
+		<<Take i>>;
+
+	Pour:
+!		if (parent(self) notin Player)
+!			"But you aren't holding ", (the) parent(self), ".";
+
+		if (second ~= nothing) {
+			if (second hasnt open && second has container)
+				"But ", (the) second, " isn't open.";
+
+			if (second has container) {
+				childcount = children(second);
+				if (childcount >= second.capacity) {
+					"But ", (The) second, " is 
+					already contains ", 
+					(name) child(second), ".";
+				}
+				if (verb_word == 'fill') {
+					i = parent(self);
+					print "You fill ", (the) second,
+					" with ", (name) noun, ".^";
+				} else {
+					print "You pour ", (the) self,
+					" into ", (the) second, ".^";
+				}
+				move self to second;
+!				<<receive self second>>;
+				<<receive second self>>;
+			}
+			if (second has animate) <<attack second self>>;
+			remove self;
+		}
+		print (The) self, " dribbles onto the ";
+		if (parent(player) ofclass Outside)
+			print "ground";
+		else
+			print "floor";
+		" and disappears.";
+	Drink:
+		remove self;
+		"You drink ", (the) self, ".";
+	Eat:
+		"Eat a liquid?";
+	],
+	has fluid;
+
+! None of the lamps in this game actually work.  This class codes for 
+! one that does work mainly for later use, hence the commented-out code.
+!
+Class Lamp
+	with name "lamp" "socket" "fixture" "light",
+	description [;
+		print "A single light bulb hangs from the ceiling.  A 
+			slender chain hangs from the bulb to serve as 
+			its on/off switch.";
+		if (self has on)
+			" The bulb is glowing brightly.";
+		"";
+	],
+	toggle [;
+		if (self has on)
+			<<SwitchOff self>>;
+		else
+			<<SwitchOn self>>;
+	],
+	before [;
+	Take:
+		"Yanking on old electrical fixtures isn't a smart thing 
+		to do.";
+	SwitchOn:
+!		give self on light;
+!		"You pull the chain and the light turns on.";
+		"Apparently the electricity has been turned off.
+		The light does not activate.";
+	SwitchOff:
+!		give self ~on ~light;
+!		"You pull the chain and the light goes out.";
+		"But the light is already off.";
+	Receive:
+		"Putting things on ", (the) self, " would achive nothing.";
+	],
+	capacity 0,
+	has scenery supporter;
+
+Class LampChain
+	with name "chain",
+	description "A short chain hangs from the light bulb's socket.",
+	before [;
+	Pull:
+		parent(self).toggle();
+		rtrue;
+	Take:
+		"The chain is firmly attached to the socket.";
+	],
+	has scenery;
+
+Class LampBulb
+	with name "bulb",
+	description "This light bulb is covered with grime.",
+	before [;
+	Take:
+		"Over the years, grime has glued this bulb firmly into 
+		its socket.";
+	SwitchOn:
+		if (parent(self) ofclass Lamp) {
+			parent(self).toggle();
+			rtrue;
+		}
+	SwitchOff:
+		if (parent(self) ofclass Lamp) {
+			parent(self).toggle();
+			rtrue;
+		}
+	],
+	has scenery;
+
+
+Class Knife
+	with name "knife" "knives//p";
+
+Class Pan
+	with name "pan" "pans//p";
+
+Class Photo
+	with name "photo" "photos//p" "photograph" "photographs//p" 
+		"picture" "pictures//p";
+
+!Class Towel
+!	with name "towel" "towels//p";
+
+!Class Mult
+!	with parse_name [ i j w;
+!		if (parser_action == ##TheSame) {
+!			if ((parser_one.&name)-->0 == (parser_two.&name)-->0)
+!				return -1;
+!                        return -2;
+!		}
+!		w = (self.&name)-->0;
+!		for (:: i++) {
+!		j = NextWord();
+!		if (j == self.plural) parser_action=##PluralFound;
+!			else if (j~=self.short_name or w) return i;
+!		}
+!	];
+
+
+
+Class Towel
+	with name "towel" "towels//p",
+	short_name "towel",
+	plural "towels",
+	description "It's a soft and fluffy towel, as if straight from a 
+		box of Snowy.",
+	before [;
+	Smell:
+		"It smells fresh and clean.";
+	];
+
+
+
+! You remove the mask that you were wearing and replace it with this new 
+! one.  Fashion decisions are so difficult.
+
+Class Mask
+	with name "mask",
+	parse_name
+	[ i j w;
+		if (parser_action == ##TheSame) {
+			if ((parser_one.&name)-->0 == (parser_two.&name)-->0) return -1;
+			return -2;
+		}
+		w = (self.&name)-->0;
+		for (::i++) {
+			j = NextWord();
+			if (j == 'masks') parser_action=##PluralFound;
+			else if (j~='mask' or w) return i;
+		}
+	],
+	before [i;
+	Wear:
+		objectloop (i in Player) {
+			if (i ofclass Mask || i == Hat) {
+				if (i has worn) {
+					give i ~worn;
+					print "(first removing ",
+					(the) i, ")^";
+				}
+			}
+		}
+		give self worn;
+		"You put on the bizarre-looking ", (name) self, 
+		".  It's not Halloween yet, but you're all ready for it 
+		now.";
+	],
+	has clothing;
+
+
+! This is for random objects that simply disappear when they're burned.
+!
+Class Burnable
+	with before [;
+	Burn, SwitchOn:
+		if (second == nothing)
+			"You can't burn ", (the) noun, " with nothing.";
+		if (second && second has fire) {
+			remove self;
+			print_ret (The) self, " goes up in flames.";
+		}
+	];
+
+
+Class Mirror
+	with name "mirror",
+	short_name [;
+		if (self has general)
+			return "broken mirror";
+		return "mirror";
+	],
+	description [i ;
+		if (self has general)
+			"The small, broken pieces of mirrored glass 
+			reflect portions of your haggard face.";
+		objectloop (i in Player) {
+			if (i has worn && i ofclass Mask) {
+				"Fortunately for you, your face is 
+				hidden by the mask you put upon it.  
+				The mirror wonders about your intelligence.";
+			}
+			if (i has worn && i == Hat ) {
+				"As you admire yourself in the mirror, 
+				you note that the ridiculously tiny hat 
+				that rests upon your head gives you a 
+				really stupid appearance.";
+			}
+		}
+		if (self == MasterBathMirror) {
+			"You let out a silent scream at the sight of 
+			your own reflection.  You can't remember ever 
+			looking so awful.  Better be careful.  You 
+			wouldn't want to be caught dead looking like 
+			this.";
+		}
+		"You study yourself in this mirror.  You don't look at 
+		all well.";
+	],
+	before [;
+	Attack:
+		if (self has general)
+			"You already broke ", (the) self, ".";
+
+		give self general;
+
+		switch (random(2)) {
+		1: "SMASH!  Small particles of broken glass fly 
+			everywhere.";
+
+		2: "The evil forces in this place must be affecting your 
+			mind.  Level-headed people are not nearly so 
+			destructive.  As you break the mirror, the pieces 
+			sparkle beautifully.";
+		}
+	];
+
+
+Class Rock
+	with name "rock" "rocks//p",
+	short_name "rock",
+	plural "rocks",
+	has tiny;
+
+
+Class Powder
+	with before [;
+	Take:
+		"You carelessly spill ", (name) self, " all over the place.";
+	];
+
+
+Class Dirt
+	class Powder
+	with article "some",
+	name "dirt" "soil",
+	type 0,
+	water 0,
+	before [;
+	Examine:
+		"It's dirt.";
+	],
+	description [p;
+		p = parent(self);
+		switch (self.type) {
+		0:
+			"The dead plant in ", (the) p,
+			" has begun to decay.  It is covered by a fine 
+			white film.";
+		1:
+			"In ", (the) p, ", dead wood sticks poke out of 
+			rock-hard dirt.";
+		2:
+			"In ", (the) p, " this dead plant used to be a 
+			fern, perhaps.";
+		3:
+			"The plant in ", (the) p, " is seriously dead.";
+		4:
+			print_ret (The) p, " contains a plant skeleton.";
+		5:
+			self.plantgrow();
+	}
+	],
+	plantgrow [p;
+		p = parent(self);
+
+		if (Fruit in parent(self)) {
+			"The limber branches of this rapidly-growing 
+			plant bend under the weight of the heavy fruit 
+			it now bears.";
+		}
+
+		switch (self.water) {
+		0:
+			"Nothing is growing in the parched and thirsty 
+			soil contained in ", (the) p, ".";
+		1:
+			"A tiny sprout has pushed its nose out of the 
+			dry dirt of ", (the) p, ".  A tiny plant in its 
+			first stage of life now struggles for survival, 
+			hoping to grow into lush green vegetation.  It 
+			still seems thirsty.";
+		2:
+			"The previously lifeless ", (name) p, " now 
+			sports a lush green plant.  It displays proud, 
+			green leaves from strong, limber branches.  It 
+			has grown at an amazing rate.  It still seems 
+			thirsty.";
+		}
+	],
+	has concealed;
+
+
+Class PlantPot
+	! For some reason, this won't work if I try to catch a "Receive" 
+	! in the before() subroutine.
+	with react_before [i j;
+		objectloop (i in self) {
+			if (i ofclass MyWater) {
+				objectloop (j in self) {
+					if (j ofclass Dirt && j hasnt general) {
+						j.water++;
+						if (j.water > 2 && 
+						j.type == 5) { 
+							move fruit to self;
+							give j general;
+							j.water = 2;
+						}
+					}
+				}
+				remove i;
+				break;
+			}
+		}
+	],
+	before [i;
+	Take:
+		print_ret (The) self, " is too heavy.";
+
+	Examine:
+		! How can I chop off the trailing newline from this call?
+		self.Description();
+		<<search self>>;			
+	Search:
+		objectloop (i in self) {
+			if (i ofclass Dirt) {
+				i.description();
+				rtrue;
+			}
+		}
+	],
+	invent [;
+		if (inventory_stage == 1) rfalse;
+		if (inventory_stage == 2) {
+			if (child(self)) {
+				rfalse;
+			}
+			rtrue;
+		}
+	],
+	has container open;
+
+
+! WATER_COUNT is set at the top of this file.
+!
+Class MyWater (WATER_COUNT)
+	class Liquid,
+	with article "some",
+	name "water",
+	short_name "water",
+	description "Fresh, clear water.",
+	before [;
+	Drink:
+		"You eagerly drink the water.  Your thirst is quenched a bit.";
+	],
+	has fluid;
+
+Class Faucet
+	with 
+	before [newthing i;
+	Open, SwitchOn:
+		if (self has on)
+			"But it's already on.";
+		give self on;
+		objectloop (i in parent(self)) {
+			if (i ofclass MyWater)
+				remove i;
+		}
+		newthing = MyWater.create();
+		move newthing to parent(self);
+		PlaySound(SOUND_Faucet);
+		"You turn on ", (the) self, " and water comes out.";
+	Close, SwitchOff:
+		if (self hasnt on)
+			"But it isn't turned on.";
+		objectloop (i in parent(self)) {
+			if (i ofclass MyWater)
+				remove i;
+		}
+		give self ~on;
+		"You turn off ", (the) self, " and the water stops flowing.";
+	Empty:
+		if (self hasnt on)
+			"But nothing is coming out of ", (the) self, ".";
+		if (second && second has container) {
+			if (second hasnt open)
+				"Try opening ", (the) second, " first.";
+
+			newthing = MyWater.create();
+			move newthing to second;
+			"You fill ", (the) second, " from ", (the) self, ".";
+		}
+		"Water gushes out of ", (the) self, " and over
+		your hands.  If you want to carry the water 
+		somewhere, you'll have to think of something else.";
+	],
+	drain [i;
+		objectloop (i in parent(self)) {
+			if (i ofclass Liquid)
+				remove i;
+		}
+	],
+	has static;
+
+Class Sink
+	with
+	before [;
+	Receive:
+			if (second ofclass Liquid) {
+				remove second;
+				print_ret (The) second, " goes down the drain.";
+			}
+	],
+	has scenery container open transparent;
+
+
+Class TalkingStatue
+	with activated,
+	grammar [ w1 w2 w3 w4;
+		self.activated = false;
+		wn = verb_wordnum;
+
+		w1 = NextWord();
+		w2 = NextWord();
+		w3 = NextWord();
+		w4 = NextWord();
+
+		if (w1 == '"//') {
+			if (w2 == 'specan' && w3 == 'heafod' &&
+				w4 == 'abraxas') {
+				self.activated = true;
+			}
+		} else {
+			if (w1 == 'specan' && w2 == 'heafod' && w3 == 
+				'abraxas') {
+				self.activated = true;
+			}
+		}
+	],
+	life [;
+		if (self.activated) {
+			self.speech();
+			rtrue;
+		}
+	],
+	has talkable;
+
+
+Class Tombstone
+	with name "tombstone" "tomb" "stone" "slab" "marker" "gravestone" 
+		"grave",
+	before [;
+	Read:
+		"The writing is too weathered for you to make out.";
+	Receive:
+		if (noun == Bouquet) {
+			move noun to self;
+			"That certainly is thoughtful of you to leave 
+			flowers at a stranger's grave.";
+		}
+	Attack:
+		move Zombie to location;
+		"As you pummel the tombstone, a zombie shows up with a 
+		look of ire in its eye.  Although it cannot speak, the 
+		expression on its face cries out ~Why are you messing 
+		with my tombstone?~ ";
+		
+	],
+	has supporter static;
+
+
+Class WallCage
+	with name "cage",
+	description [i;
+		print "It's a small door set into the wall of the labyrinth.";
+		if (child(self)) {
+			objectloop (i in self) {
+				if (i has animate) {
+					" You can see something moving 
+					around inside.";
+				}
+			}
+		} else {
+			if (self has open)
+				" It is currently open.";
+		}
+		"";
+	],
+	has scenery container openable locked transparent;
+
+
+Class Animal
+	with 
+	count 3,
+	daemon [t;
+		t = --(self.count);
+		if (t <= 0) {
+			StopDaemon(self);
+			if (TestScope(self))
+				self.runaway();
+		}
+	],
+	react_before [i;
+	Catch:
+		objectloop (i in second) {
+			if (i ofclass Animal) {
+				"But there is already ", (a) i, " in ", 
+				(the) noun, ".";
+			}
+		}
+	],
+	escape [;
+		move self to parent(Player);
+		StartDaemon(self);
+		print_ret (The) self, " jumps out of the cage.";
+	],
+	has animate;
+

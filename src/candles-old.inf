@@ -1,0 +1,136 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Constant CANDLE_LIFE 	= 20;
+Constant CANDLE_DYING = 2;
+
+Constant CANDLE_GOOD	= 0;
+Constant CANDLE_BURNING	= 1;
+Constant CANDLE_DEAD	= 2;
+
+Class Candle with
+!	name "candle" "candles//p",
+!	short_name "candle",
+!	plural "candles",
+	power CANDLE_LIFE,
+	status CANDLE_GOOD,
+	daemon [ t;
+		t = self.power;
+		self.power--;
+		if (t == 0) {
+			StopDaemon(self);
+			self.status = CANDLE_DEAD;
+			give self ~on ~fire ~light;
+			if (TestScope(self)) {
+				print "^", (The) self, " has now 
+					gone out.^";
+			}
+		}
+		if (self in player || self in location) {
+			if (self.status == CANDLE_BURNING) {
+				if ( t <= CANDLE_DYING)
+					print "^", (The) self, 
+					" is going out.";
+			}			
+		}
+	],
+	powerguess [;
+		print (The) self;
+		if (self.power == CANDLE_LIFE) {
+			" has never been lit.";
+		}
+
+		else if (self.power > CANDLE_LIFE - 5) {
+			" has barely been used.";
+		}
+
+		else if (self.power > CANDLE_LIFE / 2 &&
+			self.power < CANDLE_LIFE - 5) {
+			" has burned about a quarter of its length.";
+			
+		}
+
+		else if (self.power <= CANDLE_LIFE / 2) {
+			" is about half gone.";
+		}
+		else
+			" is almost gone.";
+	],
+
+	before [;
+	Smell:
+		"It smells like wax.";
+
+	Examine:
+		if (self.status == CANDLE_GOOD) {
+			self.powerguess();
+			rtrue;
+		}
+		else if (self.status == CANDLE_BURNING) {
+			self.powerguess();
+			"A flame dances atop it.";
+		}
+		else if (self.status == CANDLE_DEAD) {
+			"It's the useless stump of a candle.";
+		}
+		"Error in Candle class (Examine)^";
+
+	Burn:
+		print "burning";
+		if (second hasnt fire) {
+			"You can't burn ", (the) self, " with ",
+				(the) second, ".";
+		}
+		if (self has on) "But it's already lit!";
+		<<SwitchOn self second>>;
+
+	SwitchOff:
+		if (verb_word == 'turn' or 'switch')
+			"Perhaps snuffing or blowing out ", (the) self, 
+			" would be more useful.";
+
+		if (self.status ~= CANDLE_BURNING)
+			"But it's not burning.";
+
+		if (self.status == CANDLE_BURNING) {
+			self.status = CANDLE_GOOD;
+			give self ~on ~fire ~light;
+			StopDaemon(self);
+			"You put out ", (the) self, ".";
+		}
+
+	SwitchOn:
+
+		if (second == nothing || second hasnt fire) {
+			print "You can't light ", (the) self, " with ";
+
+			if (second ofclass Match) 
+				"a match that isn't burning.";
+			print_ret (the) second, ".";
+		}
+
+		if (verb_word == 'turn') {
+			"This isn't one of those newfangled electric 
+			candles.  You'll have to try something else.";
+		}
+
+		if (self.status == CANDLE_GOOD) {
+			StartDaemon(self);
+			self.status = CANDLE_BURNING;
+			give self on fire light;
+			"You light ", (the) self, " with ", 
+			(the) second, ".";
+		}
+
+		else if (self.status == CANDLE_BURNING)
+			"But it's already burning.";
+		else if (self.status == CANDLE_DEAD) {
+			give self ~on ~fire ~light;
+			"Nothing happens.";
+		}
+		"Error in Candle class (SwitchOn)^";
+	],
+	has switchable tiny;
+

@@ -1,0 +1,61 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+! Need to do something about the door
+
+Outside ChapelEntrance "Chapel Entrance"
+	with name "entrance",
+	description [;
+		"To the east is a large, jewel-studded entrance.  
+		The wind attacks your exposed flesh.  Ears, fingers, 
+		and your nose are the premier casualties.";
+	],
+	w_to YardPath,
+	e_to [;
+		if (ChapelDogs in self)
+			"That would be suicidal.";
+		return ChapelDoor;
+	];
+
+
+MyDoor -> ChapelDoor "chapel door"
+	with name "chapel" "door",
+	description "This door is covered with gaudy, ornate, and 
+		expensive decorations.",
+	before [;
+	Open:
+		if (ChapelDogs in self)
+			"That would be suicidal.";
+	],
+	e_to Chapel,
+	w_to ChapelEntrance,
+	has openable scenery;
+
+Object -> ChapelDogs "vicious dogs"
+	with name "vicious" "dog" "dogs",
+	article "two",
+	description "You are confronted by two menacing dogs.  The 
+		vicious canines block your path, bare their teeth and 
+		snarl.  As the dogs look you over, they begin 
+		salivating profusely.  It seems an appropriate response 
+		to your arrival.",
+	killplayer [;
+		deadflag = 1;
+		"The dogs don't think you should play with them.  
+		They're not in the mood for love.  One sinks its fangs 
+		into your forearms as the other goes straight for your 
+		throat.  The three of you roll around, biting, kicking, 
+		and scratching until the dogs manage to sever your 
+		jugular vein.  The life force quickly abandons your
+		being, and you are reduced to dog food.";
+	],
+	before [;
+	Smell:
+		"The dogs smell awful.";
+	Attack, Take, Touch:
+		self.killplayer();
+		rtrue;
+	],
+	has animate pluralname;

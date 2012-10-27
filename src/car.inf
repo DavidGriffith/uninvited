@@ -1,0 +1,108 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Room Car "Your Car"
+	with
+	mycount,
+	description "You sit at the wheel of your car, the front of 
+		which is now wrapped around a large tree.  You can hear 
+		the dripping of fluids as they escape beneath your 
+		vehicle.  This auto is not going anywhere without a tow 
+		truck.  Through the windshield you see the exterior of 
+		a mansion.",
+	daemon [ t;
+		t = --(self.mycount);
+		if (player notin self) {
+			StopDaemon(self);
+			StartDaemon(Ambience);
+
+			! Skip rest if PC teleports immediately after
+			! starting the game (as in debugging)
+			if (player notin FrontOfHouse) rtrue;
+
+			PlaySound(SOUND_Explosion);
+			"^BOOM!  There is a mighty explosion behind you 
+			as your car bursts into flames.  That will at 
+			least save you the cost of a tow.  Better try 
+			to find your younger brother and have him call a 
+			cab instead of a tow truck.";
+		}
+		print "You smell leaking gasoline.^";
+		if (t <= 0) {
+			PlaySound(SOUND_Explosion);
+			deadflag = 1;
+			"^Your dawdling has cost you your life and 
+			possibly the life of your brother as well.  The 
+			cockpit of your car becomes a flaming inferno as 
+			gasoline-fed flames engulf it.  Your goose is 
+			now very well-cooked.";
+		}
+	],
+	out_to CarDoor,
+	has proper;
+
+Object -> Steering "steering wheel"
+	with name "wheel" "steering",
+	description "This steering wheel has guided you through several 
+		years of traffic.  Today, with your help, it has steered 
+		you wrong, much to your regret, the regret of your car, 
+		and the regret of this poor tree.  The tree seems to 
+		have gotten the best of the deal.",
+	has scenery;
+
+Object -> Windshield "windshield"
+	with name "windshield",
+	description "The windshield didn't survive the crash.  Behind 
+		it, you can see the brick wall of a large mansion.",
+	has scenery;
+
+Object -> Dashboard "dashboard"
+	with name "dashboard" "dash" "speedometer" "odometer" "gages",
+	description "Your high-tech dashboard still looks nice.  Its 
+		gages have nothing left to monitor.",
+	has scenery;
+
+Object -> CarMirror "rearview mirror"
+	with name "rear" "view" "rearview" "mirror",
+	description "In the rearview mirror, you now can see nothing but 
+		the darkness of the road behind you.  You wonder what it
+		was that appeared so quickly in front of your car.",
+	has scenery;
+
+Object -> Glovebox "glovebox"
+	with name "glovebox" "glove" "box" "compartment",
+	description "It's a glovebox.",
+	has static container openable;
+
+
+Object -> CarDoor "car door"
+	with name "car" "side" "door" "auto" "automobile",
+	description "In contrast to the rest of the car, the door seems 
+		to be in pretty good shape.  It should still function 
+		normally, even though the rest of the car doesn't.",
+	describe [;
+		print "^The driver's side door";
+		if (self has open)
+			print " (currently open)";
+		" looks bashed in.";
+	],
+	door_to FrontOfHouse,
+	door_dir out_to,
+	react_before [;
+	Exit:
+		<<go out_obj>>;
+	],
+	open_by_myself [ ks;
+		if (self has open) rfalse;
+		print "The car door opens with some effort.  The 
+			accident has caused some damage to the door.^";
+		ks = keep_silent;
+		keep_silent = true;
+		<Open self>; 
+		keep_silent = ks;
+		if (self hasnt open) rtrue;
+	],
+	has door static openable;
+

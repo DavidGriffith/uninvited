@@ -1,0 +1,241 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+! Note: the commented out direction routines don't play well with the 
+! moveclass.h NPC code for the gremlin.  Somehow the gremlin will 
+! attempt to move in an illegal direction and the player gets an 
+! incongruous "You can't go that way" error message.  If the player is 
+! present in the same room, the player gets dragged along to some random 
+! location.
+!
+! Solution: I'm giving up on having multiple exits here.  Code is left 
+! here, but commented out for future examination, possibly by other 
+! people.
+
+Mansion SecondHallCloset "Storage Closet"
+	with name "storage" "closet",
+	description "This is a good-sized closet with lots of room for 
+		bric-a-brac. Several shelves line the walls.  A bare 
+		light bulb hangs from the ceiling.  You can leave the 
+		way you came in, to the north-west.",
+	nw_to SecondHallClosetDoor;
+
+
+Lamp -> ClosetLamp "lamp";
+LampChain -> -> ClosetChain "chain";
+LampBulb -> -> ClosetBulb "bulb";
+
+
+Object -> SecondHallClosetShelf "shelf"
+	with name "shelf",
+	description "It's a plywood shelf.",
+	has supporter scenery;
+
+
+Bowl -> -> FilthyBowl "filthy bowl"
+	with name "filthy" "bowl",
+	description "This bowl has been used by some slob as a 
+		spittoon.  It smells like old chaw.  Disgusting.",
+	before [;
+	Smell:
+		"It smells disgustingly like old chewing tobacco.";
+	Taste:
+		"The though of doing so is revolting.";
+	];
+
+
+BaseContainer -> -> Ashtray "ashtray"
+	with name "ashtray" "ash" "tray",
+	description "It's a glass ashtray.  It definitely did not come 
+		from a Holiday Inn.",
+	before [;
+	Smell:
+		"It smells of old ashes.";
+	Taste:
+		"The thought of doing so is revolting.";
+	];
+
+
+! Needed
+Bottle -> -> BottleNoGhost "bottle of No-Ghost"
+	with name "bottle" "of" "noghost" "no-ghost",
+	description "The bottle's label reads, ~NO GHOST; for 
+		poltergeists, vampires and other undesirable, undead 
+		visitors.~.",
+	before [ thing;
+	Spray:
+!		if (self hasnt open) 
+!			"You can't do that when it's closed.";
+!		<<spray NoGhost second>>;
+
+	Smell:
+		if (self has open) {
+			thing = child(self);
+			<<smell thing>>;
+		}
+	],
+	after [;
+	Open:
+		"As you remove the cap from this small bottle, a foul 
+		odor bombards your olfactory senses.  The liquid 
+		contents of this nearly empty bottle produce a smell 
+		similar to that of an injured skunk.  It reminds you of 
+		the smell of decay that surrounds the house itself.";
+	],
+	capacity 1;
+
+Liquid -> -> -> NoGhost "thin greyish-white fluid"
+	with name "fluid",
+! "noghost" "no-ghost",
+	description "It's a thin greyish-white fluid.",
+	before [;
+	Spray:
+		<<attack HallWoman self>>;
+
+	Smell:
+		"It smells like an injured skunk.";
+
+	Drink:
+		remove self;
+		"You raise the malodorous bottle to your lips and slug 
+		the contents down like a veteran.  The liquid tastes 
+		like sewer water and makes you feel dizzy and sick to 
+		your stomach.  It probably was not meant to be taken 
+		internally.";
+
+	Taste:
+		"It tastes horrible.";
+	];
+
+
+Box -> -> DetergentBox "detergent box"
+	with name "soap" "box" "soapbox" "detergent",
+	description "It is a box of laundry detergent.  The box has a 
+		handy, resealable spout.";
+
+Powder -> -> -> Detergent "detergent"
+	with name "detergent",
+	article "some",
+	description "This looks like antique laundry detergent powder.";
+
+
+Box -> -> CardboardBox "cardboard box"
+	with name "cardboard" "box",
+	description "They don't make boxes like these anymore.  The 
+		Firmington Corrugated Box Company of Claypit, Minnesota, 
+		went out of business years ago.";
+
+Box -> -> ThinBox "thin box"
+	with name "thin" "box",
+	description "This tall, thin box looks like it used to house a 
+		bottle.";
+
+Box -> -> Hatbox "hatbox"
+	with name "hatbox",
+	description "Teeth marks riddle this old hatbox.";
+
+Object -> -> -> Hat "hat"
+	with name "hat",
+	description "It's a nice hat.  But it isn't you.",
+	before [i;
+	Smell:
+		"It smells like dust and hair tonic.";
+	Wear:
+		objectloop (i in Player) {
+			if (i ofclass Mask) {
+				if (i has worn) {
+					give i ~worn;
+					print "(first removing ", 
+					(the) i, ")^";
+				}
+			}
+		}
+		give self worn;
+		"You put on the strange-looking little product of the 
+		haberdasher.  It's much too small for you and makes you 
+		look silly.";
+	],
+	has clothing;
+
+
+Object -> -> Pesticide "can of pesticide"
+	with name "can" "of" "pesticide",
+	description "It's a spray can of pesticide.",
+	before [;
+	Open:
+		print_ret (The) self, " is permenantly sealed.";
+	Shake:
+		"It seems empty.";
+	];
+
+
+Object -> -> SpiderCider "can of spider cider"
+	with name "can" "of" "spider" "cider" "spidercider",
+	description "It's a spray can.  The label reads,^
+		~Spider Cider -- The arachnid anesthetizer recommended
+		by leading entomologists everywhere.~",
+	before [;
+	Open:
+		print_ret (The) self, " is permenantly sealed.";
+	Smell:
+		"It smells like pine oil.";
+	Taste:
+		"Bad idea.";
+	Shake:
+		"You hear something sloshing around inside.";
+	Empty, Pour:
+		"That's not the way to get something out of an aerosol can.";
+	Spray:
+		PlaySound(SOUND_Spray);
+		if (second == VerandaRail) {
+			give Veranda general;
+			give second general;
+			"A wide aerosol stream sprays from the ~Spider 
+			Cider~ can.  It leaves a wet, sticky film on the 
+			railing.";
+		}
+		print "WHOOOOSH!!!";
+
+		if (second == Spider)
+			" Missed!";
+		"";
+	];
+
+
+Object -> Mop "mop"
+	with name "mop",
+	description "This mop looks like it has been used to swab 
+		many a deck, as it were.",
+	initial "A mop leans against the wall.";
+
+Object -> Broom "broom"
+	with name "broom",
+	description "This broom has swept its fair share of floors.  It 
+		looks like a convertible for a witch.";
+
+Object -> Tarp "tarp"
+	with name "tarp" "tarpaulin",
+	capacity 0,
+	description "There are paint stains all over this tarp.",
+	before [;
+	Shake:
+		"You fail to get rid of the stains.";
+	Receive:
+		"Putting things on ", (the) self, " would achieve nothing.";
+	],
+	edit [;
+		"You add another splotch of paint to ", (the) self, ".";
+	],
+	has supporter editable;
+
+Object -> -> TarpStains "stains"
+	with name "paint" "stains",
+	article "",
+	description "Random splashes of paint.",
+	before [;
+	Take:
+		"It's not worth the effort to remove them.";
+	],
+	has scenery concealed;

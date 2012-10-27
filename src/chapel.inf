@@ -1,0 +1,212 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Inside Chapel "Chapel"
+	with name "chapel",
+	description [;
+		print "You stand in solemn awe in this abandoned house 
+		of worship.  In the silence you can hear the prayers of 
+		righteous predecessors.  You feel the presence of many 
+		long-dead worshippers.  You feel yourself a stranger, 
+		yet you feel protected.  Beside the altar is a statue 
+		upon a pedestal.  In the east wall, beside the altar is a ";
+
+		if (ChapelWindow hasnt general) {
+			print "beautiful and very large stained glass 
+			window.";
+		} else {
+			print "shattered stained glass window.";
+		}
+
+		print " There is a heavy-looking side door in the north 
+			wall";
+		if (ChapelSideDoor has open)
+			print ", which is open.  Through the open 
+			door, you can see a churchyard.";
+		else 
+			print ", which is closed.";
+
+		if (Altar has general) 
+			"^^The altar has moved sideways, to reveal a 
+			small hole.";
+		"";
+	],
+	e_to [;
+		if (ChapelWindow has general) {
+			deadflag = 1;
+			"The massive cuts that you have just acquired by 
+			scraping your body over the jagged and broken 
+			glass have drained your life's blood.";
+		}
+	],
+	w_to ChapelDoor,
+	n_to ChapelSideDoor,
+	d_to [;
+		if (AltarHole in location)
+			return AltarHole;		
+	],
+	in_to [;
+		if (AltarHole in location)
+			return AltarHole;
+	];
+
+Object -> ChapelPedestal "pedestal"
+	with name "column" "pedestal",
+	description "This splendid column brings to mind the splendid 
+		Doric columns of the Parthenon.",
+	has scenery;
+
+TalkingStatue -> ChapelBust "marble bust"
+	with name "marble" "bust" "statue",
+	description "This heavy bust displays a look of pious 
+		righteousness on its marble face.",
+	speech [;
+		print "The marble bust moans these words: 
+		~Master.  Please open thy door for this poor family 
+		man.  But do not let him travel in darkness.~";
+		if (ChapelSideDoor hasnt open) {		
+			give ChapelSideDoor open ~locked;
+			print "^^The side door swings open.";
+		}
+		"";
+	],
+	has scenery;
+
+Object -> Altar "stone altar"
+	with name "stone" "altar",
+	description "At the front of the chapel is a stone altar.  It is 
+		adorned with gold and silver plating and some large 
+		gems.  None of the decorations on the altar seem to 
+		have any religious significance.",
+	has scenery supporter;
+
+Object -> -> Cross "cross"
+	with name "cross",
+	description "The small wooden cross, although dry and warped, 
+		exudes a distinct aura of purity and good like nothing 
+		else on this estate.  It appears to be quite old.  It 
+		also has been handled considerably, as shown by the 
+		many smooth surfaces that once had detail.",
+	after [;
+	Take, Push, Pull:
+		if (Altar hasnt general) {
+			give Altar general;
+			move AltarHole to location;
+			"As you move the cross you see the altar move to
+			the side, revealing a small, dark hole.";
+		}
+	];
+
+Candle -> -> WhiteCandle "white candle"
+	with name "white" "candle";
+
+
+Object -> Crucifix "crucifix"
+	with name "crucifix",
+	description "This beautifully-crafted crucifix is attached 
+		firmly to the wall.",
+	has scenery;
+
+
+Object -> Pews "pews"
+	with name "pews" "pew",
+	description "The long, wooden benches offer a clear view of the 
+		altar and its adornments.  Here is where the 
+		congregation used to sit.  You wonder when was the 
+		last time anyone worshipped from these pews.  You wonder 
+		what they worshipped.  You wonder why you are wondering 
+		about such things.",
+	before [;
+	Enter:
+		print "You sit uneasily on one of the pews.";
+		rtrue;
+	],		
+	has scenery supporter;
+
+Object -> ChapelWindow "window"
+	with name "window" "stained" "glass",
+	description [;
+		if (self has general)
+			"Cold air floods the already chilly chapel.  It 
+			pours through the opening created by the broken 
+			stained-glass window.";
+		else
+			"The small pieces of stained glass form 
+			colorful geometric patterns.  When sunlight 
+			passes through it, it bathes the room in a 
+			rich, warm, rosy glow.";
+	],
+	before [;
+	Attack:
+		if (self hasnt general) {
+			give self general;
+			"Breaking glass gets your adrenaline flowing and 
+			gives you a false feeling of power.  You have 
+			just increased the amount of entropy in the
+			universe.  You should be ashamed of yourself.";
+		}
+		"But it's already broken.";
+	],
+	has scenery;
+
+
+! This heavy door looks as if it were intended to be the lid to a 
+! coffin.
+
+
+MyDoor ChapelSideDoor "side door"
+	with name "side" "door",
+	description "This heavy door looks as if it were intended to be 
+		the lid of a coffin.",
+	n_to ChurchGrounds,
+	s_to Chapel,
+	before [;
+	Unlock:
+		"You can't seem to find a keyhole.";
+	],
+	has scenery openable locked;
+
+
+
+DirDoor AltarHole "hole"
+	with name "hole",
+	count 0,
+	description "Under the altar is a dark hole, stretching down 
+		some seventy feet.  The stale, damp odor of stagnant 
+		water and decaying flesh rises up out of the hole and 
+		brutally assaults your olfactory senses.",
+	before [;
+	Search:
+		<<examine self>>;
+	],
+	react_before [;
+	Go:
+		if (noun == d_to || noun == in_to) {
+			if (player notin SpiderRoom)
+				return self.warn();
+		}
+	],
+	out_to Chapel,
+	in_to SpiderRoom,
+	warn [;
+		switch (self.count++) {
+		0:	print "Look, you really don't want to go down 
+			there.  There is a spider down there that's bigger 
+			than a bread box.";
+		1:	print "Really, that spider is bad news.  Don't 
+			try to go down there!";
+		2:	print "This is a warning.  Don't try to go down 
+			there again.";
+		3:	print "That spider that's down there would rip 
+			you to shreds.  Don't try to go down there.";
+		}
+		print "^";
+		if (self.count >= 4) {
+			StartDaemon(GiantSpider);
+			rfalse;
+		}
+		rtrue;
+	],
+	has container scenery open;

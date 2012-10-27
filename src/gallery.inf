@@ -1,0 +1,125 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Room Gallery "Art Gallery"
+	with name "art" "gallery",
+	description "The tasteful ~objects d'art~ that adorn this 
+		gallery might have been offensive to someone with a 
+		lesser intelligence.  However, having made it thus far, 
+		you won't have any problems.  There is but a single 
+		door leading out of this room, but it's not clear you 
+		even got in that way.  You can see some apparently 
+		frantically-written graffiti on one wall.",
+	out_to  GalleryDoor;
+
+Object -> GalleryDoor "door"
+	with name "door",
+	description [;
+		"The door has a very sturdy appearance.  The 
+		lock of the door only has a release from this 
+		side.  It seems that if you did happen to be on 
+		the other side, you would not be able to open it.";
+	],
+	react_before [;
+	Enter, Go:
+		if (self has open && self hasnt general) {
+			give self general;
+			give ObservatoryOuterDoor ~locked;
+			print "As you leave the art gallery through the 
+			door behind you, you feel your sense of Newtonian 
+			time and space returning once again.^";
+			rfalse;
+		}
+	],
+!	door_to ObservatoryCorridor,
+	door_to Library,
+	door_dir out_to,
+	found_in Gallery,
+	has scenery static door openable;
+
+
+!You have not returned to the same place from which you started your 
+!journey.  The door slams shut behind you bringing you a strong feeling 
+!of deja vu as you recall the door slamming behind you as you entered 
+!the mansion in search of your kid brother.
+
+TalkingStatue -> GalleryStatue "statue"
+	with name "statue",
+	description "At first glance this marble statue seems to be a 
+		great work of art.  You stroll around it to examine it 
+		from all possible angles.  You are now sure, this IS a 
+		great work of art.",
+	speech  "How did you get here?",
+	has scenery;
+
+BaseContainer -> GreekUrn "Greek urn"
+	with name "Greek" "urn",
+	description "This actual 3000 year old Greek urn shows paintings 
+		and designs of different activities.  Ever wonder why 
+		they NEVER showed any fat people?  Were all the ancient 
+		Greeks thin as rails?";
+
+Bowl -> GreekBowl "Greek bowl"
+	with name "Greek" "bowl",
+	description "This bowl probably was used in an ancient Athenian 
+		temple during rush hour, as an incense holder.  That, or 
+		the ancient Greeks ate some really HOT cereal, as
+		evidenced by the burn-marks on its bottom";
+
+Object -> GreekPlate "Greek plate"
+	with name "Greek" "plate",
+	description "The same motif as the urn and the bowl adorn this plate.",
+	has supporter;
+
+Object -> GalleryPainting1 "painting of a siren"
+	with name "painting" "of" "a" "siren",
+	description [;
+		if (self hasnt general) {
+			"The sultry and languid siren that adorns this 
+			canvas reminds you of some of Rembrandt's works.  
+			As you look into her eyes, you are drawn by her 
+			beckoning gaze.";
+		}
+		"The siren that looked so good before, looks even better 
+		with less clothing.  Your mind begins to wander... and 
+		so does your attention.";
+	],
+	edit [;
+		give self general;
+		"You add a few touches to the painting, transforming it 
+		into a true work of art.  It seems pretty obvious what 
+		you think is beautiful.";
+	],
+	has editable;
+
+Object -> GalleryPainting2 "painting of an emperor"
+	with name "painting" "of" "an" "emperor",
+	description "This painting is of the first emperor of the overly 
+		wealthy Rahngu Conetasch Dynasty.  He was always fond of 
+		tossing his gems to the peasants, in large crowds, to 
+		gain favor from his people.";
+
+Object -> Graffiti "graffiti"
+	with name "graffiti",
+	article "some",
+	description "The graffiti is composed of a crude drawing of a 
+		man in obvious distress and some writing.  It reads:^
+		^
+		~When I first arrived here, it was all in black and 
+		white.  Now all I see are words.  If I remember 
+		correctly, I put the two lamps on top of each other, 
+		closed my inventory, examined the black hole, opened 
+		it, closed it, talked to it, then walked through.  Then
+		I found myself here. -- Stan Kaufman~",
+	before [;
+	Read:
+		<<Examine self>>;
+	],
+	has scenery;
+
+Object -> OnyxKey "onyx key"
+        with name "onyx" "black" "key",
+        description "It's a brass key with a handle made of black onyx.  
+                Carved in the onyx is ~Property of Mangar~.";

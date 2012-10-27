@@ -1,0 +1,188 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion MasterBath "Master Bathroom"
+	with name "master" "bathroom",
+	description "Whoever decorated this bathroom certainly had 
+		ecelctic tastes.  There is a large granite bathtub at 
+		one end of the room and a marble sink at the other.  The 
+		decor could be described as ~African Art Deco~.  The 
+		only exit is north.",
+	n_to MasterBedroom;
+
+
+Mirror -> MasterBathMirror "mirror",
+	with name "mirror",
+	has scenery;
+
+Object -> MasterTub "granite tub"
+	with name "granite" "tub" "bathtub",
+	description "This large bathtub seems to have been cut from a 
+		single slab of granite.  Its supporting legs look like 
+		lion's feet.  It is the most stylish bathtub you have 
+		ever seen.  Its fixtures are gold.",
+	before [;
+	Enter:
+		"Now is not the time for a bath.";
+
+	Receive:
+		if (second ofclass Liquid) {
+			remove second;
+			print_ret (The) second, " goes down the drain.";
+		}
+	],
+	has scenery container open;
+
+Faucet -> -> MasterTubFaucet "gold faucet"
+	with name "faucet" "gold" "tap" "spigot",
+	description [;
+		print "It's a solid gold faucet mounted on the tub.";
+		if (self has on) {
+			PlaySound(SOUND_Faucet);
+			" It continues to gush water.";
+		}
+		"";
+	];
+
+Sink -> MasterBasin "marble basin"
+	with name "marble" "basin" "sink",
+	description "Mounted on the thick marble basin are white plumbing 
+		fixtures.  These seem to be among the newer items in the 
+		house.",
+	has scenery container open;
+
+Faucet -> -> MasterSinkFaucet "white faucet"
+	with name "faucet" "white" "tap" "spigot",
+	description [;
+		print "It's a faucet that has been painted white.";
+		if (self has on) {
+			PlaySound(SOUND_Faucet);
+			" It continues to gush water.";
+		}
+		"";
+	];
+
+Object -> MasterBathMat "bath mat"
+	with name "bath" "mat",
+	description "It used to be the skin of a zebra.  Now it serves 
+		as the mat on a bathroom floor.",
+	before [;
+	Enter:
+		"You can't help but stand on it.";
+	Exit:
+		"Okay.";
+	],
+	has scenery;
+
+Object -> MasterShelf "shelf"
+	with name "shelf",
+	description "This wall-mounted shelf supports small objects very 
+		efficiently.",
+	has supporter static;
+
+! Note: there are two yellow bottles here.  The second one is described 
+! as "It's a small bottle with a yellowish liquid inside."
+Bottle -> -> YellowBottle "yellow bottle"
+	with name "yellow" "bottle",
+	description "It's a small, purfume-sized bottle that contains a 
+		dark yellowish liquid.";
+
+Liquid -> -> -> YellowLiquid "yellow liquid"
+	with name "yellow" "liquid",
+	description "It's a dark yellowish liquid with a pleasant scent.",
+	before [;
+	Smell:
+		"It smells like a combination of roses and sandalwood.";
+	Drink:
+		remove self;
+		"The solution is quickly swallowed and does not have any 
+		noticable effect, except that now your breath smells 
+		like perfume.";
+	],
+	has edible;
+
+Bottle -> -> AmberBottle "amber bottle"
+	with name "amber" "bottle",
+	description "It's a small amber-colored bottle containing a 
+		dark liquid.";
+
+Liquid -> -> -> DarkLiquid "dark liquid"
+	with name "dark" "liquid",
+	description "It's a dark and opaque liquid.",
+	before [;
+	Smell:
+		"It has no smell whatsoever.";
+	Drink:
+		remove self;
+		"After drinking the dark liquid your mind begins to 
+		wander.  You find it hard to concentrate on what you 
+		are doing.  Everything you see starts to glow very 
+		brightly.  After a short time all returns to normal, 
+		without any ill effects.";
+	],
+	has edible;
+
+Bottle -> -> RedBottle "red bottle"
+	with name "red" "bottle",
+	description [;
+		print "This relatively plain bottle is stained red by 
+			its ";
+		if (RedLiquid in self)
+			print "current";
+		else
+			print "former";
+		" contents";
+	],
+	has transparent;
+
+Liquid -> -> -> RedLiquid "red liquid"
+	with name "red" "liquid",
+	description "It's a clear, red liquid.",
+	before [;
+	Smell:
+		"It smells fruity and alcoholic.";
+	Taste:
+		"It tastes fruity and alcoholic.";
+	Drink:
+		remove self;
+		"The red-colored liquid slides down your pipes like 
+		water.  Your head spins.  Everything is really grand 
+		for a while, then returns to normal.";
+	],
+	has edible;
+
+
+Mask -> AfricanMask "African mask"
+	class TalkingStatue
+	with name "african" "mask",
+	description "This is an ancient African ceremonial mask.  Its 
+		ugly face was not meant to frighten humans.  It was 
+		meant to scare off ill-willed spirits.",
+	speech "~Ooo!  Eee!  Ooo!  Ahh!  Ahh!  Ting-Tang!  Walla-Walla! Bing-Bang!~";
+
+Mask -> ClayMask "clay mask"
+	class TalkingStatue
+	with name "clay" "mask",
+	description "The face of this clay mask has extremely large ears.",
+	speech "~Please!  Don't shout!~";
+
+Mask -> MayanMask "Mayan mask"
+	class TalkingStatue
+	with name "mayan" "mask",
+	description "This Mayan mask has a cold, hard stare.",
+	speech "This mask doesn't seem to have anything to say.";
+
+
+Object -> VoodooDoll "Voodoo doll"
+	class TalkingStatue
+	with name "voodoo" "doll",
+	description "This little Indian man look like some kind of 
+		voodoo doll.  Wood, cloth, and small bits of silver 
+		leaf combine to create this anthropomorphic 
+		miniature.",
+	speech "On second thought, maybe it's not a good idea to talk to this mask.";
+
+Towel ->;
+Towel ->;

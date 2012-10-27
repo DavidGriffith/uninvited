@@ -1,0 +1,28 @@
+===============
+Current Work ||
+===============
+
+Playtest sequences:
+1) The house
+2) Chapel and maze
+3) Greenhouse
+4) Observatory and endgame (need more sound effects)
+
+Check to see if I missed anything in the lab.
+
+First few rooms need some sanity checking - leftovers from the NES
+
+Automatically opening doors appears to have broken.  I should also go 
+over the automatic opening of doors, particularly at the beginning.
+
+Remove superfluous doors
+
+The time limit needs work.  Exactly how long should it be?  My 
+betatester keeps getting timed out.
+
+Check over all the paintings and statues to see if they can be 
+vandalized with the paintbrush.
+
+Maybe add "An odd electrical smell draws your attention to this lamp" in 
+the servants quarters.
+

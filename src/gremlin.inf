@@ -1,0 +1,120 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Moveclass Gremlin "gremlin"
+	with name "gremlin" "creature",
+	move_type RANDOM_MOVE,
+	caprice 100,
+	describe [;
+!		print "^", (A) self, " is here";
+!		if (child(self)) {
+!			give self general;
+!			print ", holding ", (a) child(self);
+!		}
+!		".";
+		self.walkon();
+		rtrue;
+	],
+	count 0,
+	description [;
+		give self general;
+		print "This ugly, but cute little creature, barely a 
+			foot tall, appears to be on a sugar high.";
+		if (child(self))
+			" He is carrying ", (a) child(self), ".";
+		"";
+	],
+	life [;
+	Give, Show:
+		if (noun == Cookie)
+			print_ret (The) self, " stares hungrily at ", 
+			(the) noun, ", but he won't approach you to take it.";
+	],
+	before[;
+	LetGo:
+		give self general;
+		print_ret (The) self, " holds ", (the) noun, " out 
+		to you, but yanks it away just before you can take it.";
+	Take, Catch, Attack, Taste:
+		print_ret (The) self, " is too quick for you.";
+	Smell:
+		"He smells of burned electronics and bearing grease.";
+	],
+	walkoff [;
+		print "^", (The) self, " ";
+		switch(random(5)) {
+		1:	print "scampers off";
+		2:	print "prances away";
+		3:	print "skitters away";
+		4:	print "rockets out of the room";
+		5:	print "zooms away";
+		}
+
+		if (child(self) && self hasnt general) {
+			print ", waving ", (a) child(self);
+		}
+		give self ~general;
+		".";
+	],
+	before_action [;
+		if (parent(Cookie) == parent(self)) {
+			move child(self) to parent(self);
+			move Cookie to self;
+			if (parent(self) == parent(player)) {
+				"^The grinning gremlin finally stops 
+				running.  He drops his key, grabs the 
+				waiting cookie, and nibbles on it.";
+			}
+		}
+	],
+	walkon [;
+		print "^";
+		if (self.count <= 1) {
+			switch (self.count++) {
+			0:
+				"You now have to question the 
+				reliability of your eyes.  You think 
+				you see a somewhat cute, abstract 
+				creature with a ", (name) child(self), 
+				" in its hand prance by.  You're not 
+				sure whether it's your eyes or your 
+				mind playing tricks on you.  It could 
+				be both.";
+			1:
+				"That was definitely not your 
+				imagination.  This little creature is 
+				definitely running circles around you.";
+			}
+		}
+		switch(random(5)) {
+		1:
+			"The smiling, ", (name) child(self), "-bearing 
+			creature prances quickly past you again.  He 
+			grins childishly, as if taunting you.";
+		2:
+			"The quick creature seems to be playing a 
+			'catch-me-if-you-can' game.  He's winning.  He 
+			waves his ", (name) child(self), " wildly, 
+			teasing you with it as he runs through the 
+			room.";
+		3:
+			"The kiddie creature runs past waving his ", 
+			(name) child(self), ". The way he runs around he 
+			must get very hungry. This little devil must eat 
+			something that makes him awfully hyper.";
+		4:
+			"There goes your friend running by again.  He 
+			is not very sociable.  He didn't even say hello.";
+		5:
+			"The smiling, tiny, mischievous creature is 
+			back again.  This little guy just doesn't stop.";
+		}
+	],
+	has animate male;
+
+Object -> BrassKey "brass key"
+	with name "brass" "key",
+	description "This shiny brass key is a more modern 
+		pin-and-tumbler type.";

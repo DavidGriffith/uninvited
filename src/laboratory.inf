@@ -1,0 +1,296 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Inside Laboratory "Laboratory"
+	with name "laboratory" "lab",
+	description [;
+		print "This looks like Doctor Frankenstein's laboratory.  
+		You wonder what experiments were performed in here, and 
+		by whom.  You do not feel very comfortable in here.  
+		Embedded in one wall is a small iron safe.  In another 
+		wall is a small fireplace. A doorwal leads east.";
+	],
+	e_to ObservatoryCorridor,
+	d_to LabTrapDoor,
+	has scenery;
+
+DirDoor -> LabTrapDoor "trap door"
+	with name "trap" "door" "trapdoor",
+	description [;
+		if (self has open)
+			print "If closed, ", (the) self, " would rest";
+		else 
+			print (The) self, " rests";
+		" flush in the floor.";
+	],
+	describe [;
+		print " A ", (name) self, " set flush in the floor is ";
+		if (self has open)
+			"open";
+		"closed";
+	],
+	d_to Cave1,
+	u_to Laboratory,
+	has static openable;
+
+Object -> LabFireplace "fireplace"
+	with name "fireplace",
+	description [i;
+		print "This is an extremely ugly fireplace.";
+		if (child(self)) {
+			objectloop (i in self) {
+				print "^^In ", (the) self;
+				WriteListFrom(child(self), ENGLISH_BIT+
+					TERSE_BIT+ISARE_BIT+CONCEAL_BIT);
+				".";
+			}
+		}
+		"";
+	],
+        before[;
+        Receive:
+                if (Logs in self && Logs has fire)
+                        <<Insert noun Firelogs>>;       
+        ],
+        has scenery container open;
+
+Bowl -> -> Cauldron "cauldron"
+	with name "cauldron",
+	capacity 3,
+	description "This is a large cauldron, the likes of which may 
+		have been seen in ~Macbeth~.",
+	before [;
+	Take:
+		"It's too heavy to pick up.";
+	],
+	has static;
+
+Object -> LabTable "table"
+	with name "table",
+	description "This oak table seems to have been originally 
+		designed for use in a dining room.  Bon appetit!",
+	has supporter static;
+
+Object -> -> LabEquipment
+	with name "array" "of" "lab" "equipment" "flask" "flasks//p" 
+	"beaker" "beakers//p" "pile" "shattered" "glassware",
+	short_name [;
+		if (self has general)
+			print "pile of shattered glassware";
+		else
+			print "array of lab equipment";
+		rtrue;
+	],
+	description [;
+		if (self has general) {
+			"Your clumsy effort has badly damaged the
+			delicate glassware.  It is now a useless heap of 
+			sweet-smelling liquid and glass shards.  Nice 
+			move.";
+		}
+		"A formidable array of flasks and beakers are 
+		connected together. You can see different substances 
+		inside them.  You wonder what it is all for.";
+	],
+	before [;
+	Smell:
+		print_ret (The) self, " smells unnaturally sweet.";
+
+	Attack:
+		if (self hasnt general) {
+			give self general;
+			"You blast your fist into the equipment, 
+			shattering the test tubes and flasks -- 
+			spilling and mixing the different solutions.  
+			The concoction, which now lays all over the 
+			table, smells like a sweet perfume.";
+		}
+		<<take self>>;
+	Take, Touch:
+		if (self has general) {
+			deadflag = 1;
+			"Reaching out and touching the sweet-smelling 
+			concoction starts your skin itching and burning.  
+			You uncontrollably scratch most of the flesh 
+			from your body trying to stop it from itching.  
+			Then you die.";
+		}
+		give self general;
+		"When you try to ", (address) verb_word, " the sprawling 
+		equipment, all the pieces that were connected together 
+		fall like a chain of dominoes into a shattered heap of 
+		useless glassware.";
+	Eat, Taste, Drink:
+		deadflag = 1;
+		if (verb_word == 'taste')
+			print "Tasting";
+		else if (verb_word == 'drink')
+			print "Drinking";
+		else if (verb_word == 'eat')
+			print "Eating";
+		" the equipment proves to be extremely enlightening.  
+		You experience a death unlike anyone else.  You 
+		perceive pulsating Dante-like visions of the other 
+		side, and as all your limbs swell up to the size of 
+		king-sized garbage bags, you die... looking very much 
+		like the Pillbury Doughboy.";
+	],
+	has edible;
+
+Object -> LabWindow "window"
+	with name "window",
+	description "This window offers a wide-screen panorama of the 
+		estate.  It's not a pleasant view, but it is 
+		wide-screen.",
+	has scenery;
+
+! There is a huge log.  What was once the better part of a tree is now 
+! yours to reduce to ashes.
+
+Array SafeFlags -> 33;
+
+Object -> SafeDial "dial"
+	with name "dial" "combination" "lock",
+	max 99,
+	setting 1,
+	com1 1,
+	com2 2,
+	com3 3,
+	set false,
+	lock1 false,
+	lock2 false,
+	lock3 false,
+	description [;
+		if (self hasnt general) {
+			give self general;
+			self.setting = random(99);
+		}
+		"It appears to be a fairly ordinary combination 
+		lock dial with numbers from zero to ninety-nine.  It is 
+		currently set to ", (number) self.setting, ".";
+	],
+	set_combination [z;
+		! Zero out SafeFlags
+		for (z = 1 + (self.max - 1) / 8 : z >= 0 : z--)
+			SafeFlags->z = 0;
+		self.com1 = shuffle(self.max, SafeFlags);
+		self.com2 = shuffle(self.max, SafeFlags);
+		self.com3 = shuffle(self.max, SafeFlags);
+		self.set = true;
+	],
+	before [;
+	Attack:
+		<<Attack LabSafe>>;
+	Spin:
+		self.setting = random(99);
+		"You spin the dial, which stops on ", (number) 
+		self.setting, ".";
+
+	SetTo:
+		if (second > self.max || second < 1) {
+			"It appears that this dial doesn't have a
+			setting for that.";
+
+		}
+		self.setting = second;
+		print "You turn the dial around and stop at ", (number) 
+		second, ".";
+
+		! Don't react unless a combination is set.
+		if (self.set == false)
+			"";
+
+		if (second == self.com1) {
+			self.lock1 = true;
+		} else if ((second == self.com2) && self.lock1) {
+			self.lock2 = true;
+		} else if ((second == self.com3) && self.lock2) {
+			self.lock3 = true;
+		} else {
+			self.lock1 = false;
+			self.lock2 = false;
+			self.lock3 = false;
+		}
+
+		if (self.lock1 && self.lock2 && self.lock3) {
+			give LabSafe ~locked;
+			"^You hear a click.";
+		}
+		"";
+	Unlock:
+		"This is a plain combination safe.  There is no keyhole.
+		You have to enter the correct combination on the
+		dial one number at a time.";
+	],
+	has scenery;	
+
+BaseContainer -> LabSafe "safe"
+	with name "safe",
+	description "This heavy iron door is equipped with a large 
+		combination lock dial.  It forms an airtight seal with 
+		the casing of the wall.",
+	before [;
+	Open:
+		if (self has locked)
+			print_ret (The) self, " resists your efforts 
+			to open it.";
+	Attack:
+		if (self hasnt open)
+		print_ret (The) self, " resists your clumsy attempt to 
+			open it.";
+		give self locked ~open;
+		"In your clumsy attempt to injure the safe, you only 
+		manage to knock its door closed.";
+	Close:
+		give self locked ~open;
+		"As you close the safe, you hear clicking and whizzing 
+		noises from within.";
+	Unlock:
+		"This is a combination safe.  Try the dial instead.";
+	],
+	has scenery openable locked;
+
+Jar -> -> SafeCookieJar "cookie jar"
+	with name "cookie" "jar",
+	description "It's a nice big cookie jar.",
+	before [;
+	Shake:
+		"It sounds as if ", (the) self, " contains one solid 
+			object.";
+	Open:
+		"This cookie jar is sealed so tightly that you cannot 
+		open it.";
+	Drop:
+		if (verb_word == 'throw') {
+			move self to location;
+			"Astonishingly, ", (the) self, " fails to break.^";
+		}
+	Cut, Attack:
+		if (second ofclass Knife)
+			"Trying to cut ", (the) self, " with ", (the) 
+			second, " accomplishes nothing.";
+		if (second == Axe) {
+			move child(self) to parent(self);
+			remove self;
+			"You bring the axe down upon the jar.  The jar 
+			crumbles, but the contents remain intact.  
+			That's just how the cookie jar crumbles.";
+		}
+		"The cookie jar fails to break.";
+	];
+
+Object -> -> -> Cookie "cookie"
+	with name "cookie",
+	description "It is a very large cookie.  It looks tempting to eat.",
+	before [;
+	Smell:
+		"It smells delicious.";
+	Eat:
+		remove self;
+		"The cookie was delicious.  It tasted like devil's food 
+		cake.  You'll probably get a cavity.  You probably 
+		deserve to.";
+	],
+	has edible;

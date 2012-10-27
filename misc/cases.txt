@@ -1,0 +1,84 @@
+Sat, 03 Jan 2009 22:21:33     rec.arts.int-fiction         Thread  384 of  408
+Lines 18                   Re: I6: Capitalize a word       Article    2 of    3
+Roger Firth <roger@firthworks.com>
+
+Newsgroups: rec.arts.int-fiction
+
+Dave Griffith wrote:
+> Can someone provide a snippet of code that will take a string and 
+change
+> the first letter of each word to capital?
+
+For the general principle, look at PrintCapitalised() in parserm.h.
+You'll need PrintToBuffer() to break the string into its
+individual characters, and UpperCase() to perform the upcasing.
+
+> How about going the other way?
+
+Sorry, you'll have to be rather more specific.
+
+Sun, 04 Jan 2009 04:12:21     rec.arts.int-fiction         Thread  384 of  408
+Lines 34                   Re: I6: Capitalize a word       Article    3 of    3
+Mike <mikecall@sky.com>                             at http://groups.google.com
+
+Newsgroups: rec.arts.int-fiction
+
+On 3 Jan, 08:53, dgri...@cs.csbuak.edu (Dave Griffith) wrote:
+> Can someone provide a snippet of code that will take a string and 
+change
+> the first letter of each word to capital?  How about going the other
+> way?
+>
+> --
+> David Griffith
+> dgri...@cs.csbuak.edu  <-- Switch the 'b' and 'u'
+
+I have tried the following and it works for simple text strings up to
+256 characters long to create a string with each word beginning in
+capitals.
+
+<code>
+
+#ifndef printed_text;
+Array printed_text buffer 256;
+#endif;
+
+[ StringProperCase item i j ch sw;
+        j = PrintToBuffer(printed_text, 256, item);
+        sw = 1;
+        for (i=WORDSIZE:i<(j+WORDSIZE):i++)
+        {
+                if (sw==0) ch = LowerCase(printed_text->i);
+                if (sw==1) ch = UpperCase(printed_text->i);
+                if (ch==32 || ch==33 || ch==46 || ch==63) sw=1;
+                else {
+                        sw = 0;
+                }
+                print (char) ch;
+        }
+
+];
+
+Tue, 06 Jan 2009 06:46:13     rec.arts.int-fiction         Thread    1 of   11
+Lines 55                   Re: I6: Capitalize a word       Article    4 of    5
+Michael Coyne <coyneAT@mtsdot.net>
+
+>   Lightning fills the Master Bathroom.
+> I really want:
+>   Lightning fills the master bathroom.
+
+This should work under both ZCode and Glulx (Inf 6.31, anyway).
+
+
+Constant MAX_LOCATION_LENGTH 40;
+Array Case_Array buffer (MAX_LOCATION_LENGTH + WORDSIZE);
+
+[ToLower word i j;
+
+    j = PrintToBuffer(Case_Array, MAX_LOCATION_LENGTH, word);
+    for (i=WORDSIZE:(i < (j + WORDSIZE))
+        && (i < MAX_LOCATION_LENGTH + WORDSIZE): i++ ) {
+        Case_Array->(i) = LowerCase(Case_Array->(i));
+        print (char) Case_Array->(i);
+    }
+];

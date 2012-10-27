@@ -1,0 +1,876 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+
+Outside MazeFront "Stone Structure"
+	with
+	description "You stand just south of a large stone structure 
+		with no doors, just a rickety old door.",
+	n_to MazeDoor,
+	s_to ChurchGrounds;
+
+Object -> StoneStructure
+	with name "stone" "structure",
+	description "It looks like it might be the outside of a walled 
+		garden.  The stonework is in rather poor shape.",
+	has scenery;
+
+MyDoor -> MazeDoor "rickety door"
+	with name "rickety" "wooden" "door" "broken",
+	description [;
+		if (self hasnt open)
+			"This rickety wooden door looks like it would
+			collapse if you touch it.";
+		<<Open self>>;
+	],
+
+	before [;
+	Take, Attack, Push, Pull, Open:
+		if (self hasnt open) {
+			give self open;
+			"The door collapses into a heap of crumbled wood.";
+		}
+		"It's not a door anymore, but a pile of shattered wood.";
+        ],
+	n_to MazeEntrance,
+	s_to MazeFront,
+	npc_open false,
+	has scenery openable;
+
+Rock ->;
+
+
+
+Maze MazeEntrance "Maze Entrance"
+	with name "maze" "entrance",
+	mydescription "A doorway to the south leads to the churchyard.  
+		A passage leads north.",
+	before [;
+	],
+	s_to MazeDoor,
+	n_to Maze1;
+
+Maze Maze1 "Maze"
+	with
+	mydescription "This passage branches off to the 
+		west and east.  A short passage leads south.",
+	s_to MazeEntrance,
+	e_to ZombieDoor1,
+	w_to Maze14;
+
+DirDoor ZombieDoor1
+	with
+	e_to Maze2,
+	w_to Maze1,
+	npc_open false,
+	has scenery open;
+
+
+EWMaze Maze2 "Maze"
+	with
+	w_to ZombieDoor1,
+	e_to Maze3;
+
+Maze Maze3 "Maze"
+	with
+	mydescription "This is a north-south passage with a branch 
+		leading west.",
+	w_to Maze2,
+	s_to Maze4,
+	n_to Maze5;
+
+DeadEnd Maze4 "Dead End"
+	with
+	mydescription "The passage ends here.  The only exit is north.",
+	n_to Maze3;
+
+! Roving zombie starts here
+NSMaze Maze5 "Maze"
+	with
+	s_to Maze3,
+	n_to Maze6;
+
+Zombie -> Zombie1;
+
+Maze Maze6 "Maze"
+	with
+	mydescription "Depending on your perspective, this passage turns 
+		east or south.",
+	s_to Maze5,
+	e_to Maze7;
+
+Maze Maze7 "Maze"
+	with
+	mydescription "This is an east-west hallway.",
+	w_to Maze6,
+	e_to Maze8;
+
+Maze Maze8 "Maze"
+	with
+	mydescription "This is an east-west corridor with a path going 
+		off to the south.",
+	e_to Maze9,
+	w_to Maze7,
+	s_to Maze10;
+
+DeadEnd Maze9 "Dead End"
+	with
+	mydescription "You're at a dead end.  The only exit is to the 
+		west.",
+	w_to Maze8;
+
+Tombstone -> Tombstone1 "tombstone"
+	with
+	description "A square stone slab is all that is left to mark a 
+		man's coming and going.  This death mound is an 
+		appropriate element amidst the dark gloom of these 
+		paths.  The stench of decay that pervades the estate is 
+		particularly strong here in the maze.",
+	has static;
+
+NSMaze Maze10 "Maze"
+	with
+	n_to Maze8,
+	s_to Maze11;
+
+Maze Maze11 "Maze"
+	with
+	mydescription "This north-south passage branches off to the 
+		east.",
+	n_to Maze10,
+	e_to Maze12,
+	s_to Maze13;
+
+DeadEnd Maze12 "Dead End"
+	with
+	mydescription "You're at a dead end.  The only exit is west.",
+	w_to Maze11;
+
+DeadEnd Maze13 "Dead End"
+	with
+	mydescription "You're at a dead end.  The only exit is north.",
+	n_to Maze11;
+
+EWMaze Maze14 "Maze"
+	with
+	e_to Maze1,
+	w_to Maze15;
+
+Maze Maze15 "Maze"
+	with
+	mydescription "North, south, east, or west.",
+	e_to Maze14,
+	s_to Maze16,
+	w_to Maze17,
+	n_to ZombieDoor2;
+
+DirDoor ZombieDoor2
+	with
+	n_to Maze20,
+	s_to Maze15,
+	npc_open false,
+	has scenery open;
+
+Maze Maze16 "Dead End"
+	with
+	mydescription "You're at a dead end.  The only exit is north.",
+	n_to Maze15;
+
+! Roving zombie starts here
+!
+EWMaze Maze17 "Maze"
+	with
+	e_to Maze15,
+	w_to Maze18;
+
+Zombie -> Zombie2;
+
+Maze Maze18 "Maze"
+	with
+	mydescription "This small room has exits to the east and south.",
+	e_to Maze17,
+	s_to Maze19;
+
+DeadEnd Maze19 "Dead End"
+	with
+	mydescription "You're at a dead end.  The only exit is north.",
+	n_to Maze18;
+
+NSMaze Maze20 "Maze"
+	with
+	s_to ZombieDoor2,
+	n_to Maze21;
+
+Maze Maze21 "Maze"
+	with
+	mydescription "This small room has exits to the south and west.",
+	s_to Maze20,
+	w_to Maze22;
+
+Tombstone -> Tombstone2 "tombstone"
+	with description "A cracked tombstone juts from the hardened 
+		earth to mark a man's grave.  You begin to wonder how 
+		many graves inhabit this maze.  You also begin to 
+		wonder which came first, the labyrinth or the graves.";
+
+EWMaze Maze22 "Maze"
+	with
+	e_to Maze21,
+	w_to Maze23;
+
+Maze Maze23 "Maze"
+	with
+	mydescription "This small room has exits to the east and north.",
+	e_to Maze22,
+	n_to Maze24;
+
+NSMaze Maze24 "Maze"
+	with
+	s_to Maze23,
+	n_to Maze25;
+
+Maze Maze25 "Maze"
+	with
+	mydescription "This north-south passage branches off to the 
+		east.",
+	s_to Maze24,
+	e_to Maze39,
+	n_to Maze26;
+
+NSMaze Maze26 "Maze"
+	with
+	s_to Maze25,
+	n_to Maze27;
+
+Zombie -> Zombie3;
+
+Maze Maze27 "Maze"
+	with
+	mydescription "This north-south passage branches off to the 
+		east.",
+	s_to Maze26,
+	e_to Maze36,
+	n_to Maze28;
+
+
+NSMaze Maze28 "Maze"
+	with
+	s_to Maze27,
+	n_to ZombieDoor3;
+
+DirDoor ZombieDoor3
+	with
+	n_to Maze29,
+	s_to Maze28,
+	npc_open false,
+	has scenery open;
+
+! A group of zombies is always found here
+!
+Maze Maze29 "Maze"
+	with
+	mydescription "This is a small room with exits to the east and south.",
+	s_to ZombieDoor3,
+	e_to ZombieDoor4;
+
+DirDoor ZombieDoor4
+	with
+	e_to Maze30,
+	w_to Maze29,
+	npc_open false,
+	has scenery open;
+
+EWMaze Maze30 "Maze"
+	with
+	w_to ZombieDoor4,
+	e_to Maze31;
+
+Maze Maze31 "Maze"
+	with
+	mydescription "This is an east-west passage with a branch 
+		leading south.",
+	w_to Maze30,
+	s_to Maze34,
+	e_to Maze32;
+
+EWMaze Maze32 "Maze"
+	with
+	w_to Maze31,
+	e_to Maze33;
+
+DeadEnd Maze33 "Dead End"
+	with
+	mydescription "The passage ends here.  The only exit is west.",
+	w_to Maze32;
+
+Tombstone -> Tombstone3 "tombstone"
+	with description "A cross adorns the top of this tombstone like 
+		a hood ordament to Hell.  This grave indicates that 
+		these grounds once housed a cemetary before housing a 
+		maze.  ~Why build a labyrinth on a graveyard?~ you wonder.";
+
+NSMaze Maze34 "Maze"
+	with
+	n_to Maze33,
+	s_to Maze35;
+
+Maze Maze35 "Maze"
+	with
+	mydescription "North, south, east, or west.",
+	n_to Maze34,
+	w_to Maze36,
+	s_to Maze37,
+	e_to ZombieDoor6;
+
+DirDoor ZombieDoor6
+	with
+	e_to Maze41,
+	w_to Maze35,
+	npc_open false,
+	has scenery open;
+
+EWMaze Maze36 "Maze"
+	with
+	e_to Maze35,
+	w_to Maze27;
+
+NSMaze Maze37 "Maze"
+	with
+	n_to Maze35,
+	s_to Maze38;
+
+Maze Maze38 "Maze"
+	with
+	mydescription "This is an east-west passage with a branch 
+		leading north.",
+	n_to Maze37,
+	w_to Maze39,
+	e_to ZombieDoor5;
+
+DirDoor ZombieDoor5
+	with
+	e_to Maze40,
+	w_to Maze38,
+	npc_open false,
+	has scenery open;
+
+EWMaze Maze39 "Maze"
+	with
+	e_to Maze38,
+	w_to Maze25;
+
+! A pack of zombies is always here.
+EWMaze Maze40 "Maze"
+	with
+	w_to ZombieDoor5,
+	e_to Maze60;
+
+EWMaze Maze41 "Maze"
+	with
+	w_to ZombieDoor6,
+	e_to Maze42;
+
+EWMaze Maze42 "Maze"
+	with
+	w_to Maze41,
+	e_to Maze43;
+
+EWMaze Maze43 "Maze"
+	with
+	w_to Maze42,
+	e_to Maze44;
+
+
+! Roving zombie starts here.
+Maze Maze44 "Maze"
+	with
+	mydescription "This is a north-south passage with a branch 
+		leading west.",
+	w_to Maze43,
+	s_to Maze58,
+	n_to Maze45;
+
+Zombie -> Zombie4;
+
+NSMaze Maze45 "Maze"
+	with
+	n_to Maze46,
+	s_to Maze44;
+
+Maze Maze46 "Maze"
+	with
+	mydescription "This is a small room with exits to the east and south.",
+	s_to Maze45,
+	e_to Maze47;
+
+EWMaze Maze47 "Maze"
+	with
+	w_to Maze46,
+	e_to Maze48;
+
+Maze Maze48 "Maze"
+	with
+	mydescription "This is an east-west passage with a branch 
+		leading south.",
+	w_to Maze47,
+	e_to Maze49,
+	s_to Maze50;
+
+DeadEnd Maze49 "Dead End"
+	with
+	mydescription "The passage ends here.  The only exit is west.",
+	w_to Maze48;
+
+NSMaze Maze50 "Maze"
+	with
+	n_to Maze48,
+	s_to Maze51;
+
+Maze Maze51 "Maze"
+	with
+	mydescription "This north-south passage branches off to the east.",
+	n_to Maze50,
+	e_to Maze52,
+	s_to Maze53;
+
+DeadEnd Maze52 "Dead End"
+	with
+	mydescription "The passage ends here.  The only exit is west.",
+	w_to Maze51;
+
+NSMaze Maze53 "Maze"
+	with
+	n_to Maze51,
+	s_to Maze54;
+
+Maze Maze54 "Maze"
+	with
+	mydescription "This is an east-west passage with a branch 
+		leading north.",
+	n_to Maze53,
+	e_to Maze55,
+	w_to Maze56;
+
+DeadEnd Maze55 "Dead End"
+	with
+	mydescription "The passage ends here.  The only exit is west.",
+	w_to Maze54;
+
+EWMaze Maze56 "Maze"
+	with
+	e_to Maze54,
+	w_to Maze57;
+
+Maze Maze57 "Maze"
+	with
+	mydescription [;
+		print "This is a small room with passages leading north 
+			and east."; 
+		if (TombstoneDoor has open)
+			" There is a small tunnel leading west.";
+		"";
+	],
+	before [;
+!		StopDaemon(BouncingCreature);
+	],
+	e_to Maze56,
+	n_to Maze58,
+	w_to [;
+		if (TombstoneDoor has open)
+			return TombstoneDoor;
+		return false;
+	];
+
+
+Tombstone -> SpecialTombstone "tombstone"
+	with
+	description "A stone cross has been planted in the sterile, 
+		rock-hard dirt that carpens this maze.  This cross 
+		obviously marks a grave.  It seems that this sepulchral 
+		labyrinth could have been constructed upon a cemetary.",
+	before [;
+	Receive:
+		if (noun == Bouquet) {
+			give TombstoneDoor open;
+			move noun to self;
+			"As you place the flowers down to show respect 
+			for the dear departed, part of the west wall
+			gratingly slides aside, revealing a man-sized 
+			tunnel.";
+		}
+	],
+	npc_open false,
+	has static;
+
+
+MyDoor -> TombstoneDoor "hidden door"
+	with name "hidden" "door",
+	description "If you didn't know it was here, you wouldn't have 
+		suspected.",
+	w_to Maze59,
+	e_to Maze57,
+	before [;
+	Unlock:
+		"You can't seem to find a keyhole.";
+	],
+	npc_open false,
+	has scenery locked;
+
+NSMaze Maze58 "Maze"
+	with
+	s_to Maze57,
+	n_to Maze44;
+
+
+! The three cages are here.
+!
+Outside Maze59 "Three Cages"
+	with
+	description "Set into the north wall are three cages lined up 
+		in a row from left to right.  Beneath the middle one is 
+		a keyhole.",
+	before [;
+!		StartDaemon(BouncingCreature);
+	],
+	e_to TombstoneDoor,
+	w_to Maze60,
+	s_to Maze61;
+
+Object -> Cages "cages"
+	with name "cages",
+	description "There are three cages here lined up from left to 
+		right.",
+	before [;
+	Search:
+		<Search CageLeft>;
+		<Search CageMiddle>;
+		<<Search CageRight>>;
+	Receive, Unlock:
+		if (noun == SkeletonKey || second == SkeletonKey) {
+			Keyhole.release();
+			rtrue;
+		}
+	],
+	with_key SkeletonKey,
+	has scenery lockable locked;
+
+Object -> CagedAnimals "animals"
+	with name "animals",
+	description "They all look very hungry.",
+	before [;
+	Take, Catch:
+		"You'll have to do that one at a time.";
+	],
+	has scenery;
+
+! You bring the cage down upon the cat, trapping it in the archaic 
+! kennel.  The bird then flutters furiously as it grabs the snake in 
+! its sharp talons.  The viper struggles as the bird soars away, its 
+! serpentine dinner dangling in the wind.
+
+! If one of the animals is missing, that is being held or in the 
+! portable cage, the player is not killed.  Instead, one of the 
+! remaining animals kills the other.
+
+Object -> Keyhole "keyhole"
+	with name "keyhole" "hole",
+	count 3,
+	description "It looks like a keyhole.  It seems like this may 
+		control the three doors around it.",
+	daemon [t;
+		t = --(self.count);
+		if (t <= 0) {
+			self.killplayer(0);
+			rtrue;
+		}
+	],
+	killplayer [;
+		deadflag = 1;
+		"^The three hungry animals, now free from their 
+		cells, have spotted their dinner.  The animals 
+		attack you in a pecking, biting, snarling mass.  
+		You are unable to defend yourself against this 
+		vicious onslaught and perish in a flurry of 
+		feline, feathers, and fangs.";
+	],
+	release [;
+		move Bird to parent(self);
+		move Snake to parent(self);
+		move Cat to parent(self);
+		give CageLeft open ~locked;
+		give CageRight open ~locked;
+		give CageMiddle open ~locked;
+		StartDaemon(self);
+		"This one key unlocks the three cages 
+		simultaneously. The iron-barred doors spring 
+		open. Three animals jump out of the cages.  
+		They are bewildered by their freedom and new 
+		surroundings.  They also look hungry.";
+	],
+	before [;
+	Receive, Unlock:
+		if (noun == SkeletonKey || second == SkeletonKey) {
+			self.release();
+			rtrue;
+		}
+	],
+	with_key SkeletonKey,
+	has scenery lockable locked;
+
+
+WallCage -> CageLeft "left cage"
+	with name "left",
+	before [;
+	Unlock:
+		"You don't know where the keyhole for ", (the) self, " is.";
+	];
+
+Animal -> -> Bird "bird"
+	with name "animal" "bird",
+	description "The bird looks ready to fly away.",
+	runaway [;
+		StopDaemon(self);
+		remove(self);
+		print_ret "^", (The) self, " flies away.";
+	],
+	before [;
+	Take, Catch:
+		if (second == nothing) {
+			if (self.count <= 1) {
+				StopDaemon(self);
+				remove self;
+				print_ret (The) self, " was too quick 
+				and ran away.";
+			}
+			print_ret (The) self, " jumped out of your hands.";
+		}
+		if (second == Cage) {
+			move self to Cage;
+			StopDaemon(Keyhole);
+			StartDaemon(Snake);
+			remove Cat;
+			remove CagedAnimals;
+			give Snake general;
+			give Cage ~open;
+			"Before the dazed bird can spread its wings, you 
+			grab and quickly trap it in the portable cage.  
+			The bird is unharmed, but the uncaged animals 
+			then furiously attack each other.  The cat 
+			snarls but the snake counters with a quick, 
+			venomous strike.  The poison goes from the 
+			snake's fangs to the cat's bloodstream and 
+			easily disables and kills the formerly 
+			ferocious feline.  The snake then swallows the 
+			cat with surprising speed.";
+		}
+	];
+
+
+WallCage -> CageRight "right cage"
+	with name "right",
+	before [;
+	Unlock:
+		"You don't know where the keyhole for ", (the) self, " is.";
+	];
+
+Animal -> -> Cat "cat"
+	with name "animal" "cat",
+	description [;
+		if (self has general)
+			"The cat looks like it just ate.";
+		"The cat wants to eat.";
+	],
+	runaway [;
+		StopDaemon(self);
+		remove(self);
+		print_ret "^", (The) self, " runs away when you have 
+			your back turned.";
+	],
+	before [;
+	Take, Catch:
+		if (second == nothing) {
+			if (self.count <= 1) {
+				StopDaemon(self);
+				remove self;
+				print_ret (The) self, " is too quick 
+				and runs away.";
+			}
+			print_ret (The) self, " jumps out of your hands.";
+		}
+		if (second == Cage) {
+			move self to cage;
+			StopDaemon(Keyhole);
+			remove Bird;
+			remove Snake;
+			remove CagedAnimals;
+			give Cage ~open;
+			"You bring the cage down upon the cat, trapping 
+			it in the archaic kennel.  The bird then 
+			flutters furiously as it grabs the snake in its 
+			sharp talons.  The viper struggles as the bird 
+			soars away, its serpentine dinner dangling in 
+			the wind.";
+		}
+	];
+
+
+WallCage -> CageMiddle "middle cage"
+	with name "middle",
+	before [;
+	Unlock:
+		<<Unlock Keyhole second>>;
+	];
+
+	
+Animal -> -> Snake "snake"
+	with name "animal" "snake",
+	description [;
+		if (self has general)
+			"The snake looks like it just ate.";
+		"The snake seems hungry.";
+	],
+	runaway [;
+		StopDaemon(self);
+		remove(self);
+		print_ret (The) self, " silently slithers away when you 
+			aren't watching.";
+	],
+	before [;
+	Take, Catch:
+		if (second == nothing) {
+			if (self.count <= 1) {
+				StopDaemon(self);
+				remove self;
+				print_ret (The) self, " takes off.  Your 
+					reflexes are quite poor.";
+			}
+			print_ret (The) self, "jumps out of your hands.";
+		}
+		if (second == Cage) {
+			move self to cage;
+			StopDaemon(Keyhole);
+			StartDaemon(Cat);
+			remove Bird;
+			remove CagedAnimals;
+			give Cat general;
+			give Cage ~open;
+			"Moving quickly, you cage the venomous viper.  
+			The cat, meanwhile, makes quick sport and easy 
+			dinner of the bird.  Its hunger seems satiated 
+			for now.";
+		}
+	];
+
+
+
+! A pack of zombies is always here
+!
+EWMaze Maze60 "Maze"
+	with
+	e_to Maze59,
+	w_to Maze40;
+
+NSMaze Maze61 "Maze"
+	with
+	n_to Maze59,
+	s_to Maze62;
+
+! The bouncing creature is here.
+!
+DeadEnd Maze62 "Dead End"
+	with
+	mydescription "The passage ends here.  The only exit is north.",
+	n_to Maze61;
+
+
+Object -> Gem "Blothney Gem"
+	with name "blothney" "gem",
+	article "the",
+	description "This beautiful gem is large and heavy.  It looks
+		like one of the artifacts from the wealthy Rahngu
+		Conetasch dynasty.",
+	before [;
+	Take:
+		if (self hasnt general) {
+			move BouncingCreature to location;
+			move self to BouncingCreature;
+			"Before you can pick up the gem, ", (the) 
+			BouncingCreature, " bounces over and eats it.";
+		}
+	];
+
+
+Moveclass BouncingCreature "bouncing creature"
+	with name "bouncing" "creature",
+	move_type NO_MOVE,
+	caprice 0,
+	describe [;
+		if (self hasnt general) {
+			StartDaemon(self);
+			give self general;
+			"^Before your eyes is the biggest, 
+			strangest creature you've ever seen.  It 
+			bounces up and  down as if trying to tell you 
+			something. However you can't figure out what 
+			it's trying to say.  You don't even know if it is 
+			friendly.";
+		}
+	],
+	description  "The Cheshire grin of the huge, scaly orb matches 
+		your impatience, measure for measure.",
+	before_action [ animal;
+		if (parent(Cat) == parent(self))
+			animal = Cat;
+		else {
+			if (parent(Snake) == parent(self))
+				animal = Snake;
+			else {
+				if (parent(Bird) == parent(self))
+				animal = Bird;
+			}
+		}
+
+		if (animal == nothing) rtrue;
+
+		if (animal == Bird) {
+			remove animal;
+			StopDaemon(self);
+			remove self;
+			if (Gem in self) {
+				move Gem to location;
+				print "^", (The) self, " belches 
+				and spits out ", (the) Gem, ". It";
+			} else
+				print "^", (The) self;
+			give Gem general;
+			" is utterly fascinated by ", (the) animal, " 
+			and gives chase to eat it.";
+		}
+		else {
+			print_ret (The) self, " takes no notice of ",
+			(the) animal, ".";
+		}
+	],
+	life [;
+	Show:
+		print_ret (The) self, " drools a little.";
+	Give:
+		print_ret (The) self, " drools and bounces excitedly, 
+			but doesn't take ", (the) noun, ".";
+	Tell, Ask:
+		print_ret (The) self, " bounces up and down as if it's 
+			trying to tell you something.";
+	],
+	orders [;
+		print_ret (The) self, " bounces up and down as if it's 
+			trying to tell you something.";
+	],
+	before [;
+	Smell:
+		"Astonishingly, ", (the) self, " does not smell bad.";
+	Taste:
+		"That's probably not a good idea.";
+	],
+	has animate;

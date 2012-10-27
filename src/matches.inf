@@ -1,0 +1,212 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Constant MATCH_LIFE = 7;
+Constant MATCH_DYING = 2;
+
+Class Match
+	with name "match" "matches//p",
+	short_name "match",
+	plural "matches",
+	power,
+	daemon [ t newthing i;
+		t = self.power;
+		self.power--;
+		if (t == 0) {
+			StopDaemon(self);
+			newthing = DeadMatch.create();
+			give newthing moved;
+			if (parent(self))
+				move newthing to parent(self);
+			if (TestScope(self)) {
+				print "^The match you lit before has now 
+					gone out.^";
+			}
+			remove self;
+		}
+		if (self in player || self in location) {
+			objectloop(i in player) {
+				if (i ofclass BurningMatch) {
+					if ( t <= MATCH_DYING)
+						"^The match is going out.";
+					if (t < MATCH_LIFE && t > MATCH_DYING)
+						"^The match continues to burn.";
+				}
+			}			
+		}
+	],
+	before [newthing;
+	Smell:
+		if (self ofclass UnlitMatch)
+			"It smells just like a match.";
+		if (self ofclass BurningMatch)
+			"Sniffing fire isn't very smart.";
+		if (self ofclass DeadMatch)
+			"It smells burnt.";
+		"Error in Match class (Smell)^";
+	Examine:
+		if (self ofclass UnlitMatch) {
+			switch (random(6)) {
+			1:
+				"It's a reliable Blue Tip match.";
+			2:
+				"It looks like a tiny blue-tipped torch.";
+			3:
+				"It seems you've finally met your match.";
+			4:
+				"A perfect match.";
+			5:
+				"I don't want to set the world of fire.  
+				I just want to start a flame in your heart.";
+			6:
+				"Matchmaker, matchmaker, make me a match.  
+				Preferably a Blue Tip.";
+			}
+		}
+		else if (self ofclass BurningMatch) {
+			switch (random(6)) {
+			1:
+				"A small flame burns on the end of this 
+				stick.  It creeps steadily towards the 
+				other end.";
+			2:
+				"This match burns efficiently.";
+			3:
+				"You clutch a tiny torch between your 
+				fingers.  As it burns it threatens your 
+				flesh with heat.";
+			4:
+				"Mother always told you not to play with 
+				matches.  You could burn yourself, or 
+				someone else.";
+			5:
+				"A small fire burns at the end of a tiny 
+				stick.";
+			6:
+				"These Blue Tips can be a camper's best 
+				friend.  They always light up my life.";
+			}
+		}
+		else if (self ofclass DeadMatch) {
+			switch (random(6)) {
+			1:	"This charred stick is but the ashy
+				remains of a Blue Tip match.";
+			2:
+				"This match has burned itself into an 
+				ashy corpse.";
+			3:
+				"As is all that remains of this once 
+				proud match.";
+			4:
+				"This match is burnt out.";
+			5:
+				"Once lit, a match can never burn again.";
+			6:
+				"You've met your match, and it's a burnout.";
+			}
+		}
+		"Error in Match class (Examine)^";
+
+	Burn:
+		if (second ~= nothing) {
+			if (second hasnt on)
+				"You can't burn ", (the) self, " with ",
+				(the) second, ".";
+		}
+		if (self has on) "But it's already lit!";
+		<<SwitchOn self second>>;
+
+	Shake:
+		<<SwitchOff self>>;
+
+	SwitchOff:
+		if (verb_word == 'turn' or 'switch')
+			"Perhaps snuffing or shaking the match would be 
+			more useful.";
+
+		if (self ofclass UnlitMatch or DeadMatch)
+			"But it's not burning.";
+
+		if (self ofclass BurningMatch) {
+			newthing = DeadMatch.create();
+			move newthing to parent(self);
+			give newthing moved;
+			StopDaemon(self);
+			remove self;
+			"You put out the match.";
+		}
+
+	SwitchOn:
+		if (verb_word == 'turn') {
+			"This isn't one of those newfangled electric 
+			matches.  You'll have to try something else.";
+		}
+		if (second == nothing) {
+			"You rub ", (the) self, " on a random 
+			object, but you fail to end up with a burning 
+			match.";
+		}
+
+		if (self ofclass UnlitMatch) {
+			if (self notin player) {
+				print "(first taking ", (the) self, ")^";
+				move self to player;
+			}
+
+			newthing = BurningMatch.create();
+			if (newthing == nothing) {
+				"Programming error!
+				Cannot light the match!";
+			}
+			move newthing to parent(self);
+			newthing.power = MATCH_LIFE;
+			remove self;
+			switch (random(2)) {
+				1: PlaySound(SOUND_Match1);
+				2: PlaySound(SOUND_Match2);
+			}
+			StartDaemon(newthing);
+			"The blue tip on this short stick bursts into flame.";
+		}
+
+		if (self ofclass BurningMatch)
+			"But it's already burning.";
+		else if (self ofclass DeadMatch) {
+			give self ~on;
+			"Nothing happens.";
+		}
+		"Error in Match class (SwitchOn)^";
+
+	Rub:
+		if (second == nothing)
+			"Simply rubbing the match won't do any good.";
+		if (second == Matchbox)
+			<<SwitchOn self second>>;
+
+		"You can't light the match that way.";
+
+	Strike:
+		if (second ~= MatchBox)
+			"You can't strike the match on ", (the) second, ".";
+		<<SwitchOn self second>>;
+	],
+	has switchable tiny;
+
+Class UnlitMatch (6)
+	class Match,
+	with name "unlit";
+
+Class BurningMatch (6)
+	class Match
+	with name "burning",
+	short_name "burning match",
+	plural "burning matches",
+	has on light fire;
+
+Class DeadMatch (6)
+	class Match
+	with name "burnt",
+	short_name "burnt match",
+	plural "burnt matches";

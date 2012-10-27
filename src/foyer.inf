@@ -1,0 +1,334 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+! "light logs" doesn't work"
+
+! I need to make sure that putting the magic box on the logs, then
+! lighting the logs on fire will cause the box to burn up and leave
+! behind the brass pentagram.
+
+
+Object SkeletonKey "skeleton key"
+	with name "skeleton" "key",
+	description "It's an old and somewhat tarnished skeleton key.";
+
+
+! Front door locks itself with a react_before() rule when the player is 
+! in the foyer.
+Mansion Foyer "Entrance Hall"
+	with name "foyer" "entrance" "hall" "lobby",
+	description [;
+		if (self hasnt visited) {
+			PlaySound(SOUND_DoorClose);
+			print "As you enter the mansion, the door slams 
+			closed behind you.  Welcome home. ";
+		}
+		print "You are inside the mansion's foyer.  This 
+			is a large and luxurious room, yet it feels 
+			strangely oppressive.  A hallway lies to the 
+			north.  Another passage leads east.^
+			^
+			Covering most of the 
+			floor is a room-sized carpet that displays a 
+			pentagram.  In the east wall is a brick 
+			fireplace.  Atop the rug is an expensive-looking 
+			wooden chair and a couch.  A painting of a snake 
+			hangs above the fireplace.  A painting of an 
+			eagle hangs on the west wall.";
+		if (Logs in FoyerFireplace && Logs has light)
+			print " A roaring fire is burning in the 
+			fireplace.";
+
+		" A bust of a sailor stands on a pedestal by the fireplace.";
+
+	],
+	s_to FrontDoor,
+	e_to Library,
+	n_to HallDoor;
+
+Object -> FoyerRug "rug"
+	with name "rug" "carpet" "pentagram",
+	description "The pentagram is set against a circular star 
+		field.",
+	has scenery;
+
+Object -> FoyerStars "star field"
+	with name "star" "field" "of",
+	description "It's a field of stars.",
+	has scenery;
+
+KeyChair -> FoyerCouch "couch"
+	with name "couch" "sofa",
+	description [; 
+		if (self.cut_count > 0) {
+			print "Despite the slashes you made in it, the";
+		} else {
+			print "The";
+		}
+
+		" couch looks comfortable.  It is just long 
+		enough for you to lie down and stretch out upon.";
+	],
+	has scenery hides_key;
+
+
+KeyChair -> FoyerChair "chair"
+	with name "chair",
+	description [;
+		print "It's an early American chair -- very old and 
+			very valuable.  It looks soft and cushiony.";
+		if (self.cut_count > 0) {
+			" Too bad you ruined it by slashing at the upholstry.";
+		}
+		"";
+	],
+	has scenery;
+
+Object -> FoyerPaint1 "eagle painting"
+	with name "painting" "of" "eagle" "picture",
+	description "A great bird of prey is pictured swooping down, 
+		talons extended, upon some undepicted victim.  The 
+		painting is a striking work in oils on canvas.",
+	has scenery;
+
+Object -> FoyerPaint2 "snake painting"
+	with name "painting" "of" "snake" "picture",
+	description "This painting depicts a mighty python wrapping 
+		itself around a rather large egg.  The egg seems 
+		unphased as stares intently across the room.",
+	has scenery;
+
+Object -> FoyerPaint3 "landscape painting"
+	with name "landscape" "painting" "picture",
+	description "This oil is obviously the work of an amateur, 
+		without a strong command of chiaroscuro.  It is a bleak 
+		view of a barren landscape, under a night sky.  It 
+		looks like this estate.",
+	has scenery;
+
+Object -> BustPedestal "pedestal"
+	with name "marble" "pedestal",
+	description "It's a marble pedestal; nothing more.",
+	has scenery;
+
+TalkingStatue -> FoyerBust "bust"
+	with name "bust" "statue" "sailor",
+	description "It is the bust of a weathered sailor.  The seven 
+		seas are etched in his face.  It rests heavily on a 
+		marble pedestal.",
+	speech "The statue trembles and utters the words ~Help your 
+		brother!~",
+	has scenery;
+
+Object -> FoyerFireplace "fireplace"
+	with name "fireplace",
+	description [ i;
+		print "The fireplace is a welcome addition to the main 
+		hall entranceway.  You notice nothing unusual about it.";
+
+		if (child(self)) {
+			objectloop (i in self) {
+				print "^^In ", (the) self;
+				WriteListFrom(child(self), ENGLISH_BIT+
+					TERSE_BIT+ISARE_BIT+CONCEAL_BIT);
+				".";
+			}
+		}
+		"";
+	],
+	before[;
+	Receive:
+		if (Logs has fire)
+			<<Insert noun Firelogs>>;	
+		if (noun ofclass BurningMatch) {
+			remove noun;
+			<<Burn Logs noun>>;
+		}
+	],
+	has scenery container open;
+
+
+Object -> -> Logs "pile of logs"
+	with name "log" "logs" "wood" "firewood",
+	short_name [;
+		if (self has fire) {
+			print "pile of burning logs";
+			rtrue;
+		}
+		print "pile of logs";
+		rtrue;
+	],
+	description [;
+		if (self has fire) {
+			"Flames emerge from the logs, feeding on the 
+			dried wood.  Despite the radiant, warm glow that 
+			emanates from the fireplace, you still feel a 
+			penetrating chill very deep inside of you.  It 
+			is a cold that makes you tremble despite the 
+			warmth of the fire.";
+		}
+
+		print "Several dried logs, with some sticks thrown in as 
+		kindling";
+		if (self in FoyerFireplace)
+			", rest in the fireplace.";
+		".";
+	],
+	react_before[;
+	Take:
+		if (self in Player)
+			"Your load is too heavy.";
+	],
+	before [ i j;
+	Receive:
+		if (self has fire)
+			<<Insert noun Firelogs>>;	
+		if (noun ofclass BurningMatch) {
+			remove noun;
+			<<Burn self noun>>;
+		}
+	Take:
+
+		if (self has fire)
+			"The wood is too hot to handle.";
+
+		"Your load is too heavy.";
+	Burn, SwitchOn:
+		if (verb_word == 'turn') {
+			"This isn't one of those newfangled electric logs.
+			You'll have to try something else.";
+		}
+		if (second == nothing) {
+			"You can't light ", (the) self, " with nothing.";
+		}
+		j = false;
+
+		if (self has fire)
+			"But it's already burning.";
+
+		if (self notin FoyerFireplace or DiningFireplace)
+			"This isn't a very safe place to light a fire.";
+
+		if (second has fire) {
+			give self light fire;
+			give FireLogs general;
+			move FireLogs to self;
+			print "That's better.  The dry firewood quickly 
+			catches fire.  Now it's not so chilly.^";
+
+			objectloop (i in parent(self)) {
+				if (i == MagicBox) {
+					move child(i) to location;
+					remove i;
+					print "As the fire touches the 
+					box, a large thick puff of 
+					smoke jumps out.  As the smoke 
+					clears you notice a brass 
+					pentagram that apparently 
+					survived the burning of the box 
+					has jumped out as well.^";
+				}
+				if (i ~= self) {
+					remove i;
+					if (self hasnt general) {
+					give self general;
+					print "^It seems that you've 
+					carelessly burnt up some 
+					other things in the 
+					fireplace.^";
+					}
+				}
+			}
+			rtrue;
+		}
+	],
+	has supporter static;
+
+
+Object -> FoyerMantel "mantelpiece"
+	with name "mantel" "piece" "mantelpiece",
+	description "It's a brick mantelpiece directly over the fireplace.",
+	has supporter scenery;
+
+
+BaseBottle -> -> MantelLamp "kerosene lamp"
+	with name "kerosene" "lamp",
+	description "It is an old Victorian kerosene lamp.",
+	capacity 1,
+	before [;
+	Burn, SwitchOn:
+		if (verb_word == 'turn') {
+			"This isn't one of those newfangled electric lamps.  
+			You'll have to try something else.";
+		}
+
+		if (self has open) {
+			print "(first closing ", (the) self, ".)^";
+			give self ~open;
+		}
+
+		if (child(self)) {
+			print_ret (The) child(self), " you put in ", 
+			(the) self, " doesn't work as lamp fuel.";
+		}
+		"The lamp is useless.  It has no fuel.";
+	Smell:
+		"It smells of dust and kerosene.";
+	],
+	has transparent container;
+
+
+MyDoor HallDoor "hall door"
+	with name "hall" "door",
+	description "It's a wooden door.",
+	n_to FloorHall,
+	s_to Foyer,
+	found_in Foyer FloorHall,
+	has scenery openable;
+
+
+! Why does "LIGHT FIRE WITH MATCH" automatically assume that I want to 
+! set fire to the logs when I don't have any code to do this?
+!
+Object FireLogs "fire"
+	with name "fire",
+	description [obj;
+		if (self hasnt general) {
+			"The logs don't appear to be burning yet.";
+		}
+		obj = parent(self);
+		obj.description();
+	],
+	before [obj;
+	Take:
+		"That's a hot idea, but not a good one.";
+	Search:
+		if (parent(self) hasnt fire)
+			"There isn't any fire, at least not yet.";
+		"You see dancing flames.";
+
+	Receive:
+		if (noun == MagicBox) {
+			move child(MagicBox) to location;
+			remove noun;
+
+			"As you toss the box into the fire, a large 
+			thick, puff of smoke jumps out.  As the smoke 
+			clears you notice a brass pentagram that 
+			apparently survived the burning of the box 
+			has jumped out as well.";
+		}
+
+		remove noun;
+		print_ret (The) noun, " disappears into the flames.";
+
+	SwitchOn:
+		obj = parent(self);
+!		"noodle";
+		<<Burn obj self>>;
+	],
+	has container open fire;
+
+

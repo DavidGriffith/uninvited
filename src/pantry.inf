@@ -1,0 +1,158 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Pantry "Pantry"
+	with name "pantry",
+	description "This pantry smells musty and stuffy.  Patches of 
+		wallpaper are missing in several spots.  This tiny 
+		little room does not fit in with the rest of this 
+		sprawling palatial estate.  A lamp hangs from the 
+		ceiling.",
+	s_to Kitchen;
+
+Object -> PantryWallpaper "wallpaper"
+	with name "wallpaper",
+	description "This wallpaper is tan with dull green vertical 
+		stripes.",
+	before [;
+	Take:
+		"You pick at the wallpaper a bit.";
+	],
+	has scenery;
+
+Lamp -> PantryLamp "lamp"
+	with description "A simple, glass fixture hangs from the 
+		ceiling.  It frames a single light bulb.  A chain hangs 
+		down as its on/off switch.";
+LampChain -> -> PantryChain "chain";
+LampBulb -> -> PantryBulb "bulb";
+
+Object -> PantryShelf "shelf"
+	with name "shelf",
+	description "It's a plywood shelf.",
+	has supporter scenery;
+
+Object -> -> PewterPlate "pewter plate"
+	with name "pewter" "plate" "plates//p",
+	description "This solid, fine pewter plate is covered with 
+		embarassing water spots.",
+	has supporter;
+
+
+Object -> -> SilverTray "silver tray"
+	with name "silver" "plate" "plates//p",
+	description "This silver tray would be an impressive service at 
+		a dinner party.  To bad your friends are all on other 
+		continents.",
+	has supporter;
+
+Box -> -> MatchBox "matchbox"
+	class Burnable
+	with name "match" "matchbox",
+	capacity 6,
+	description "The representation of a flaming stick indicates 
+		that this is a box of matches.",
+	before [;
+	LetGo:
+		if (noun ofclass Match)
+			PlaySound(SOUND_MatchFumble);
+	Shake:
+		if (child(self))
+			"You hear something rattling around inside ", (the) self, ".";
+	Receive:
+		if (noun hasnt tiny) 
+			print_ret (The) noun, " is too big to fit in ", 
+			(the) self, ".";
+		if (noun has fire)
+			"That isn't terribly smart.";
+	Rub:
+		"Try taking a match first.";
+	Strike:
+		"You're supposed to strike matches, not boxes.";
+	];
+
+
+UnlitMatch -> -> ->;
+UnlitMatch -> -> ->;
+UnlitMatch -> -> ->;
+UnlitMatch -> -> ->;
+UnlitMatch -> -> ->;
+UnlitMatch -> -> ->;
+
+
+Object -> -> Salami "salami"
+	with name "salami",
+	description "Hmmmmm, an aged salami.",
+	before [;
+	Smell:
+		"It smells a bit too well-aged.";
+	Eat, Taste:
+		"You're not that hungry yet.";
+	];
+
+! The salami tasted pretty bad.  It was apparently very old.  But if 
+! your stomach can take it, more power to you.
+
+Knife -> -> KitchenKnife "kitchen knife"
+	with name "kitchen" "knife",
+	description "It's a sharp kitchen knife.";
+
+Object -> -> Beater "beater"
+	with name "beater",
+	description "Nice beater.";
+
+Object -> -> Baster "baster"
+	with name "baster",
+	description "This baster was designed to suck the grease off the 
+		tops of broths and gravies.  It looks like a mutated 
+		eye-dropper.";
+
+Object -> -> Spatula "spatula"
+	with name "spatula",
+	description "It is an old wooden spatula.";
+
+Object -> -> Thermometer "thermometer"
+	with name "thermometer",
+	description "This thermometer is of the type used for cooking.  
+		It probably does not work.";
+
+Bag ->  BagFlour "bag of flour"
+	with name "of" "flour",
+	description "It's one of those 20-pound economy-sized bags of 
+		white flour.";
+
+Powder -> -> Flour "flour"
+	with name "flour",
+	article "some",
+	description "You see enough flour here to bake a giant cake.";
+
+Bag -> BagRice "bag rice"
+	with name "bag" "of" "rice" "bags//p",
+	short_name "bag of rice",
+	description "It is a burlap sack labeled ~rice~.";
+
+Powder -> -> Rice "rice"
+	with name "rice",
+	article "some",
+	description "Looks like enough rice to start a Chinese restaurant.";
+
+Bag -> BagSugar "bag of sugar"
+	with name "bag" "of" "sugar",
+	description "This is a very big bag of sugar.";
+
+Powder -> -> Sugar "sugar"
+	with name "sugar",
+	article "some",
+	description "Sweet sugar.";
+
+Bag -> BagSalt "bag of salt"
+	with name "bag" "of" "salt",
+	description "This is a one-pound bag of iodized salt.  When it 
+		rain... it pours.";
+
+Powder -> -> Salt "salt"
+	with name "salt",
+	article "some",
+	description "These granules appear to be plain iodized salt.";

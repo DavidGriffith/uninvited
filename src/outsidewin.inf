@@ -1,0 +1,13 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside OutsideWin "Balcony"
+	with name "balcony",
+	description [;
+		deadflag = 2;
+		WinMessage();
+	],
+	in_to SecretRoom;
+

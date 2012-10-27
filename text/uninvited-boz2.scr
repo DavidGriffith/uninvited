@@ -1,0 +1,142 @@
+Start of a transcript of
+UNINVITED
+(c) 1986 ICOM Simulations, Inc. 626 Wheeling Rd, Wheeling, IL  60090 
+An unauthorized adaptation by David Griffith.
+(Type "about" for more information.)
+Release 0 / Serial number 120722 / Inform v6.32 Library 6/12pre 
+Standard interpreter 1.0 (1F) / Library serial number 1208??
+
+>i
+You are carrying:
+  a watering can
+  a small cage (which is closed)
+  a menacing knife
+  a bouquet of flowers
+  some artificial flowers
+  a black spider
+  a can of spider cider
+  an iron star
+  a brown bottle (which is closed)
+  a blue bottle
+  a black diary
+  a grey candle
+  a red candle
+  a star diary
+  an axe
+  a can of pesticide
+  a hat
+  a tarp
+    a stains
+  a broom
+  a mop
+  a tiny scroll
+  an ancient book (which is open)
+  a kerosene lamp
+  a pendant (being worn)
+  an envelope (which is open)
+    a letter
+
+You recall your childhood fears of thunder and lightning as you remember how
+your uncle was struck while out golfing in a rainstorm.
+
+>read book
+The book is opened to a page which seems to be filled with definitions. The ones
+that make the most sense to you are: 
+"Instantum: Sudden and momentary; here and gone in an instant. 
+Illuminaris: A bright, white light. 
+Projectum: The propulsion of an entity. 
+Spearca: A small flame or spark. 
+Specan: To talk, talking. 
+Heafod: The head, the skull, etc. 
+Magisterium: Mystery. 
+Abraxas: It is a magical word: a vehicle through which magic is directed."
+
+>learn spell
+That's not a verb I recognize.
+
+>e
+
+Yard Path
+
+>s
+
+Backyard
+
+>s
+
+Trophy Room
+
+>s
+You can't go that way.
+
+>l
+
+Trophy Room
+The walls of this room are lined with the heads of dead animals. A mounted bear
+stands in a corner. A tiger skin covers the middle of the floor. To the north is
+a door leading outside. You can go back to the rec room using the door to the
+east.
+
+Lightning from the storm outside intensely illuminates the trophy room. There is
+loud thunder quickly following as the storm approaches.
+
+>x bear
+This is one big bear, like in the "Addams Family". It stands about nine and a
+half feet tall.
+
+>x tiger skin
+The skin of this large jungle cat makes a handsome throw rug. However, thin
+tiger skin does not make as plush a carpet as thick bear skin.
+
+Lightning from the storm outside intensely illuminates the trophy room. There is
+loud thunder quickly following as the storm approaches.
+
+>i
+You are carrying:
+  a watering can
+  a small cage (which is closed)
+  a menacing knife
+  a bouquet of flowers
+  some artificial flowers
+  a black spider
+  a can of spider cider
+  an iron star
+  a brown bottle (which is closed)
+  a blue bottle
+  a black diary
+  a grey candle
+  a red candle
+  a star diary
+  an axe
+  a can of pesticide
+  a hat
+  a tarp
+    a stains
+  a broom
+  a mop
+  a tiny scroll
+  an ancient book (which is open)
+  a kerosene lamp
+  a pendant (being worn)
+  an envelope (which is open)
+    a letter
+
+>e
+
+Rec Room
+
+You can see a chess table, a gramophone and a cabinet (which is closed) here.
+
+The evil presence proves too much for you. You are now united with the massed
+assemblage of undead beings that inhabit the estate. Strangely, for the first
+time, you now feel at home here. Neither living nor dead, you are impervious to
+pain or pleasure. You feel no discomfort, you are nothing. You are but an undead
+pawn in the hands of an evil player. Life as you knew it is over.
+
+
+    *** You have died ***
+
+
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+> q

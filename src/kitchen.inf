@@ -1,0 +1,113 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Kitchen "Kitchen"
+	with name "kitchen",
+	description "Upon entering the kitchen, you realize that this 
+		room is probably the most modern room in the house.  
+		After all, it appears to have been remodeled sometime 
+		during the 20th century.  The cabinets are very 
+		well-made. Small doors head north and 
+		south.  The dining room is to the east.",
+	e_to DiningRoom,
+	n_to Pantry,
+	s_to ServantRoom;
+
+Object -> KitchenCounter "counter"
+	with name "counter",
+	description "The kitchen counter is made of a very dark granite.",
+	has supporter scenery;
+
+Knife -> -> MenacingKnife "menacing knife"
+	with name "menacing",
+	description "This knife catches the light and glints menacingly.  
+		It looks sharp and dangerous.";
+
+Knife -> -> LittleKnife "little knife"
+	with name "little" "small" "ginsu",
+	description "This is a very sharp little blade.  It has a sturdy 
+		little plastic handle.  It must be a famous Ginsu.";
+
+Knife -> -> CleaverKnife "cleaver"
+	with name "cleaver",
+	description "It's a meat cleaver, just like the butchers on T.V. 
+		commercials use.  This one has some dried blood on it.";
+
+Knife -> -> ChefKnife "chef knife"
+	with name "chef",
+	description "This is your basic, large, wooden-handled kitchen 
+		knife.  The blade has been dulled by time and use.";
+
+Jar -> -> CookieJar "stained cookie jar"
+	with name "stained" "bloody" "cookie",
+	description "This large cookie jar is stained by tiny droplets 
+		of blood around its upper edge.  It looks like an item 
+		from the Bates Motel rummage sale.";
+
+
+Object -> KitchenRack "pot rack"
+	with name "pot" "rack",
+	description "This wrought-iron rack is intended to keep pots and
+		pans at the ready.",
+	has supporter scenery;
+
+Pan -> -> FryingPan "frying pan"
+	with name "frying",
+	description "This frying pan has a nice, heat-dispersing handle.";
+
+Pan -> -> NonstickPan "nonstick pan"
+	with name "nonstick",
+	description "This pan is coated with one of those no-stick surfaces.";
+
+Pan -> -> ShinyPan "shiny pan"
+	with name "shiny",
+	description "This pan doesn't look like it was ever used.";
+
+Pan -> -> Saucepan "sauce pan"
+	with name "saucepan" "sauce",
+	description "This is a three-quart sauce pan";
+
+Pan -> -> RoastingPan "roasting pan"
+	with name "roasting",
+	description "This pan looks like it could hold a nice-sized 
+		roast.  You feel like you could eat one.";
+
+Object -> Stove "stove"
+	with name "stove" "range",
+	description "This stove is probably the most modern fixture in 
+		the entire mansion.",
+	has supporter scenery;
+
+BaseContainer -> OvenDoor "oven"
+	with name "oven",
+	description "This oven sits right below the stovetop.",
+	has scenery;
+
+
+
+BaseContainer -> Cabinet "cabinets"
+	with name "cabinet" "cupboard" "cabinets" "cupboards",
+	description "The cabinets have been carefully crafted.  The wood 
+		finish is nice and the construction is solid.",
+	has static container openable pluralname;
+
+Object -> -> Paintbrush "paintbrush"
+	with name "paint" "brush" "paintbrush",
+	description "This artisan's device can make a person into a 
+		Rembrandt or DaVinci.  On the other hand, it can also 
+		simply turn you into a person with a paintbrush.",
+	before [;
+	Use:
+		if (second has editable) {
+			second.edit();
+			rtrue;
+		}
+		print "Perhaps artistic talent runs in your blood, but
+		using ", (the) self;
+		if (second)
+			print " on ", (the) second;
+		" produces no effect.";
+	];
+	

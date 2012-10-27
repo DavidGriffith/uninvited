@@ -1,0 +1,60 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion GuestRoom "Bedroom"
+	with name "guest" "room" "bedroom",
+	description [;
+		print "This room is like your typical, twentieth century 
+		bourgois bedroom -- a place to relax, perhaps?
+		Against the far wall is a large bed.  
+		Next to it is a dresser.  Hanging over the bed 
+		is a small ";
+		if (SmallMirror has general)
+			print "broken ";
+		"mirror.  A large, old radio stands against another 
+		wall.  The only exit is to the south-west.";
+	],
+	sw_to GuestDoor;
+
+Object -> GuestRadio "radio"
+	with name "radio",
+	description "Before there was solid-state technology, there were 
+		big radios.  This one comes up to your chest.",
+	before [;
+	Smell:
+		"It smells like dust and old rubber.";
+	SwitchOn:
+		give self on;
+		"The big old radio is a nice piece of furniture, but not 
+		a very good radio.  There is no aural response 
+		from having turned it on.";
+	],
+	has scenery;
+
+Object -> GuestBed "bed"
+	with name "bed",
+	description "The cushy bed offers little support for your bad back.",
+	has scenery supporter enterable;
+
+Mirror -> SmallMirror "small mirror"
+	with name "small" "mirror",
+	has scenery;
+
+Dresser -> GuestDresser "dresser"
+	with name "dresser" "bureau",
+	description "This modest black dresser is of painted pine.",
+	has static;
+
+Drawer -> -> GuestDresserDrawer "top drawer"
+	with name "top" "drawer",
+	description "It's the top drawer in the dresser.",
+	has static;
+
+Object -> -> -> IronStar "iron star"
+	with name "iron" "star",
+	description "The symbol of the pentagram seems to be the major 
+		motif in the ornamentation of this mansion.  This 
+		five-pointed iron star fits in the palm of your hand.",
+	has tiny;

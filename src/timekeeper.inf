@@ -1,0 +1,95 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Constant WarnInterval = 50;
+
+Object Timekeeper
+	with
+	movecount 0,
+	warncount 0,
+	interval 0,
+	daemon [;
+		if (self hasnt general) {
+			give self general;
+			self.interval = WarnInterval - random(10);
+		}
+		if (self.movecount >= self.interval) {
+			self.movecount = 0;
+			self.interval = WarnInterval - random(20);
+			self.warn(self.warncount++);
+		} else
+			self.movecount++;
+	],
+	killplayer [;
+		deadflag = 1;
+		"The evil presence proves too much for you.  You are now 
+		united with the massed assemblage of undead beings that 
+		inhabit the estate.  Strangely, for the first time, you 
+		now feel at home here.  Neither living nor dead, you 
+		are impervious to pain or pleasure.  You feel no 
+		discomfort, you are nothing.  You are but an undead pawn 
+		in the hands of an evil player.  Life as you knew it is 
+		over.";
+	],
+	warn [ num;
+		print "^";
+		switch(num) {
+		0:
+			"The loneliness of this abandoned estate makes 
+			you long for the company of your little brother.  
+			You have seen neither hide nor hair of him in 
+			quite a while.  He should be somewhere on this 
+			estate.  You'd better find him.";
+		1:
+			"The evil air that pervades the estate seems to 
+			have infiltrated your very being.  Your head and 
+			chest feel heavy and thick.  You find it
+			increasingly difficult to execute your will. 
+			For a minute, your thoughts seemed influenced 
+			by another mind.";
+
+		2:	"You begin to feel a sense of urgency concerning 
+			your little brother.  You feel that all is not 
+			well.  Somewhere on this estate he waits for 
+			you to come save him.  You must get to him in 
+			time.";
+		3:
+			"At this point you begin to worry about your 
+			little brother.  You were supposed to take care 
+			of him, but you have not seen him for hours.  
+			You pray that no harm has come to him.";
+		4:
+			"Again, the evil that dwells within the estate 
+			vie for control of your spirit.  Its influence 
+			grows more and more powerful.  Soon you will 
+			not have the strength to fight it off.  You can 
+			feel the spirits collected here are anxiously 
+			anticipating your induction.";
+		5:
+			"Many of the voices in your mind are not your 
+			own.  You begin to feel almost at home here 
+			among the undead.  To your dismay the other
+			world is beginning to look more attractive to 
+			you than this one.  Its inhabitants beckon to 
+			you, but you are not yet ready to join them.  
+			You do not know where you found this final 
+			reserve of willpower.  It came not a moment too 
+			soon; it is almost too late.";
+		6:
+			"You still have not found your brother.  He 
+			needs your help.  You cannot suppress the 
+			growing sense of foreboding that now overwhelms 
+			you.";
+		default:
+			if (TimeLimit) {
+				self.killplayer();
+				rtrue;
+			}
+			self.movecount = 0;
+			self.warncount = 0;
+			self.interval = 0;
+			give self ~general;
+		}
+	];

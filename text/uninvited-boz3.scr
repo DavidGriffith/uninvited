@@ -1,0 +1,1406 @@
+Start of a transcript of
+UNINVITED
+(c) 1986 ICOM Simulations, Inc. 626 Wheeling Rd, Wheeling, IL  60090 
+An unauthorized adaptation by David Griffith.
+(Type "about" for more information.)
+Release 0 / Serial number 120722 / Inform v6.32 Library 6/12pre 
+Standard interpreter 1.0 (1F) / Library serial number 1208??
+
+>OPEN DOOR
+You open the car door.
+You smell leaking gasoline.
+
+>E
+You can't go that way.
+You smell leaking gasoline.
+
+>N
+You can't go that way.
+You smell leaking gasoline.
+
+>W
+You can't go that way.
+You smell leaking gasoline.
+
+>S
+You can't go that way.
+You smell leaking gasoline.
+
+Your dawdling has cost you your life and possibly the life of your brother as
+well. The cockpit of your car becomes a flaming inferno as gasoline-fed flames
+engulf it. Your goose is now very well-cooked.
+
+
+    *** You have died ***
+
+
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+> RESTART
+
+Look out!!! The last thing you remember before the darkness rushed up to claim
+you is your brother's startled cry. You managed to swerve around the shadowy
+figure that appeared in the roadway, but lost control as the car jumped the
+shoulder and plunged headlong into this tree.
+
+Swiveling your battered head you survey the wreckage. You realize that you are
+alone: your kid brother must have gone off to get some help. As you pry yourself
+free of the steering wheel's embrace, you can't help but notice the pungent odor
+of gasoline as it leaks from the ruptured gas tank. 
+
+[Press any key to begin.] 
+
+UNINVITED
+(c) 1986 ICOM Simulations, Inc. 626 Wheeling Rd, Wheeling, IL  60090 
+An unauthorized adaptation by David Griffith.
+(Type "about" for more information.)
+Release 0 / Serial number 120722 / Inform v6.32 Library 6/12pre 
+
+Your Car
+You sit at the wheel of your car, the front of which is now wrapped around a
+large tree. You can hear the dripping of fluids as they escape beneath your
+vehicle. This auto is not going anywhere without a tow truck. Through the
+windshield you see the exterior of a mansion.
+
+The driver's side door looks bashed in.
+
+You can also see a glovebox (which is closed) here.
+
+>OPEN DOOR. OUT.
+You open the car door.
+You smell leaking gasoline.
+
+Front Yard
+You stand at the front porch of a house. This old, Gothic mansion casts gloomy
+shadows all around you. A sharp wind cuts through your flesh to chill your
+bones. The pounding thunder grows louder and more threatening. A curiously-
+shaped knocker adorns the front door. Flanking the front door is a pair of
+marble statues. 
+
+You can see a mailbox (which is closed) here.
+
+BOOM! There is a mighty explosion behind you as your car bursts into flames.
+That will at least save you the cost of a tow. Better try to find your younger
+brother and have him call a cab instead of a tow truck.
+
+>OPEN MAILBOX
+You open the mailbox, revealing an envelope.
+
+>TAKE ENVELOPE
+Taken.
+
+>OPEN IT
+You open the envelope, revealing a letter and a pendant.
+
+From the sound of distant barking, you figure it must be a very large dog.
+
+>READ LETTER. WEAR PENDANT
+This note reads: 
+"Dear Master. Please forgive me. My health prevents me from aiding you in your
+battle against the evil one. You teach your students well; they become too
+powerful for their own good. Enclosed is an amulet that should look familiar.
+Wear this charm and think of me. The undead fear symbology. Still the Evil, my
+friend; set it free for the sake of the family."
+(first taking the pendant)
+You put the pendant around your neck.
+
+>N
+You can't, since the front door is in the way.
+
+>OPEN FRONT DOOR
+The door creaks open.
+
+>NORTH
+
+Entrance Hall
+As you enter the mansion, the door slams closed behind you. Welcome home. You
+are inside the mansion's foyer. This is a large and luxurious room, yet it feels
+strangely oppressive. A hallway lies to the north. Another passage leads east.
+
+Covering most of the floor is a room-sized carpet that displays a pentagram. In
+the east wall is a brick fireplace. Atop the rug is an expensive-looking wooden
+chair and a couch. A painting of a snake hangs above the fireplace. A painting
+of an eagle hangs on the west wall. A bust of a sailor stands on a pedestal by
+the fireplace.
+
+On the mantelpiece is a kerosene lamp.
+
+>ABOUT
+
+
+
+This game is an unauthorized reimplementation of Uninvited as it appeared on the
+Apple Macintosh presented by ICOM in 1986. No source code to Uninvited was used
+(I've never seen it), nor was any decompilation done. The Macintosh game was
+repeatedly played and referred to in the process of creating the Inform code
+that creates this reimplementation. Every effort has been made to make sure this
+version remains faithful to the Macintosh version. Hints and walkthroughs
+prepared for the Macintosh version will, for the most part, work on this one.
+Hints and walkthroughs for other versions may work, but are untested. No
+Invisiclues-style hints are included in this version.
+
+This game was written in Inform (http://www.inform-fiction.org/) and compiled
+with version 6.31 of the Inform compiler. The primary development machine was an
+x86 machine with an AMD Athlon 1.2GHz and 768 megabytes of main memory running
+Ubuntu Linux. Development began in March 2007.
+
+1) Descriptions have been expanded and/or completely rewritten to compensate for
+lack of graphics.
+
+2) Some room exits have been moved around to make it easier for the player to
+visualize and for the author to describe in words. 
+
+[Please press SPACE.]
+
+
+
+Assuming that you already know how to play Interactive Fiction, there really
+isn't anything more you need to know. Just make sure you examine EVERYTHING. The
+solutions to puzzles are usually hidden in the scenery. If you get stuck, any of
+the assorted walkthroughs for Univited one can find on the Internet will work as
+long as you keep in mind that some directions have changed and that some
+solutions have been randomized. That, however, will not detract from the game.
+
+[Please press SPACE.]
+
+
+
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+
+>E
+
+Library
+This room was designed for deep thought and research. Obviously it was once
+inhabited by a serious man of letters. The harsh silence in the rest of the
+house is muted in this room of contemplation. The east wall is completely
+covered with a bookcase. On the north wall is a framed star chart. A large,
+well-polished table dominates the middle of the room. Beside the table is an
+antique globe. The only exit is west.
+
+On the table is an ancient book.
+
+>OPEN BOOK
+(the ancient book)
+As you open the ancient book, a tiny scroll slides out.
+
+>TAKE SCROLL. READ IT.
+Taken.
+Carefully written in very tiny script is: 
+"Thaumaturgy 101 notes:
+Casting Spells:
+1) Check the meaning of the words.
+2) Say the words to the target of your spell. (target, plugh)
+3) Chant the words precisely when there is no target. (chant "xyzzy")
+
+Study for the exam!!!"
+
+>TAKE BOOK. READ IT.
+(the ancient book (which is open))
+Taken.
+The book is opened to a page which seems to be filled with definitions. The ones
+that make the most sense to you are: 
+"Instantum: Sudden and momentary; here and gone in an instant. 
+Illuminaris: A bright, white light. 
+Projectum: The propulsion of an entity. 
+Spearca: A small flame or spark. 
+Specan: To talk, talking. 
+Heafod: The head, the skull, etc. 
+Magisterium: Mystery. 
+Abraxas: It is a magical word: a vehicle through which magic is directed."
+
+>W
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+
+>N
+(first opening the hall door)
+
+Hall
+This room is devoid of any aesthetic warmth or beauty. It is purely functional,
+with no concern for the trivialities of interior design. To the south is the
+foyer. Two doors go southwest and west. One door goes east. A staircase leads
+up. A small painting hangs between the two west-facing doors.
+
+>E
+(first opening the parlor door)
+As you touch the doorknob, a strange woman appears. She is dressed like Scarlett
+O'Hara and stands with her back to you. You pause in wonder.
+
+>W
+You have gotten the attention of the mysterious lady. She turns to face you. Her
+face is devoid of any flesh. You are frozen with horror as she begins ripping
+your body into a bloody mess.
+
+
+    *** You have died ***
+
+
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+> RESTART
+
+Look out!!! The last thing you remember before the darkness rushed up to claim
+you is your brother's startled cry. You managed to swerve around the shadowy
+figure that appeared in the roadway, but lost control as the car jumped the
+shoulder and plunged headlong into this tree.
+
+Swiveling your battered head you survey the wreckage. You realize that you are
+alone: your kid brother must have gone off to get some help. As you pry yourself
+free of the steering wheel's embrace, you can't help but notice the pungent odor
+of gasoline as it leaks from the ruptured gas tank. 
+
+[Press any key to begin.] 
+
+UNINVITED
+(c) 1986 ICOM Simulations, Inc. 626 Wheeling Rd, Wheeling, IL  60090 
+An unauthorized adaptation by David Griffith.
+(Type "about" for more information.)
+Release 0 / Serial number 120722 / Inform v6.32 Library 6/12pre 
+
+Your Car
+You sit at the wheel of your car, the front of which is now wrapped around a
+large tree. You can hear the dripping of fluids as they escape beneath your
+vehicle. This auto is not going anywhere without a tow truck. Through the
+windshield you see the exterior of a mansion.
+
+The driver's side door looks bashed in.
+
+You can also see a glovebox (which is closed) here.
+
+>OPEN DOOR
+You open the car door.
+You smell leaking gasoline.
+
+>OUT
+
+Front Yard
+You stand at the front porch of a house. This old, Gothic mansion casts gloomy
+shadows all around you. A sharp wind cuts through your flesh to chill your
+bones. The pounding thunder grows louder and more threatening. A curiously-
+shaped knocker adorns the front door. Flanking the front door is a pair of
+marble statues. 
+
+You can see a mailbox (which is closed) here.
+
+BOOM! There is a mighty explosion behind you as your car bursts into flames.
+That will at least save you the cost of a tow. Better try to find your younger
+brother and have him call a cab instead of a tow truck.
+
+>N
+You can't, since the front door is in the way.
+
+>OPEN FRONT DOOR
+The door creaks open.
+
+>E
+You can't go that way.
+
+>N
+
+Entrance Hall
+As you enter the mansion, the door slams closed behind you. Welcome home. You
+are inside the mansion's foyer. This is a large and luxurious room, yet it feels
+strangely oppressive. A hallway lies to the north. Another passage leads east.
+
+Covering most of the floor is a room-sized carpet that displays a pentagram. In
+the east wall is a brick fireplace. Atop the rug is an expensive-looking wooden
+chair and a couch. A painting of a snake hangs above the fireplace. A painting
+of an eagle hangs on the west wall. A bust of a sailor stands on a pedestal by
+the fireplace.
+
+On the mantelpiece is a kerosene lamp.
+
+>E
+
+Library
+This room was designed for deep thought and research. Obviously it was once
+inhabited by a serious man of letters. The harsh silence in the rest of the
+house is muted in this room of contemplation. The east wall is completely
+covered with a bookcase. On the north wall is a framed star chart. A large,
+well-polished table dominates the middle of the room. Beside the table is an
+antique globe. The only exit is west.
+
+On the table is an ancient book.
+
+>OPEN BOOK
+(the ancient book)
+As you open the ancient book, a tiny scroll slides out.
+
+>TAKE ALL
+There are none at all available!
+
+>TAKE BOOK, SCROLL
+ancient book (which is open): Taken.
+tiny scroll: Taken.
+
+Loud thunder echoes all around you as the storm outside intensifies.
+
+>W
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>N
+(first opening the hall door)
+
+Hall
+This room is devoid of any aesthetic warmth or beauty. It is purely functional,
+with no concern for the trivialities of interior design. To the south is the
+foyer. Two doors go southwest and west. One door goes east. A staircase leads
+up. A small painting hangs between the two west-facing doors.
+
+>UP
+
+Upstairs Hallway
+The old wooden floorboards creak under your weight. Your creaking footsteps echo
+through the emptiness of the huge house. Doors lead west, northwest, east,
+northeast, and southeast. A stuffed fish hangs on the wall at the end of the
+hallway.
+
+You now have to question the reliability of your eyes. You think you see a
+somewhat cute, abstract creature with a brass key in its hand prance by. You're
+not sure whether it's your eyes or your mind playing tricks on you. It could be
+both.
+
+The gremlin rockets out of the room, waving a brass key.
+
+>X FISH
+There's something fishy about this trophy.
+
+>SE
+(first opening the closet door)
+
+Storage Closet
+This is a good-sized closet with lots of room for bric-a-brac. Several shelves
+line the walls. A bare light bulb hangs from the ceiling. You can leave the way
+you came in, to the north-west.
+
+That was definitely not your imagination. This little creature is definitely
+running circles around you.
+
+On the shelf are a filthy bowl, an ashtray, a bottle of No-Ghost (which is
+closed), a detergent box (which is closed), a cardboard box, a thin box, a
+hatbox (which is closed), a can of pesticide and a can of spider cider.
+
+A mop leans against the wall.
+
+You can also see a broom and a tarp here.
+
+The gremlin prances away, waving a brass key.
+
+>TAKE NO-GHOST, SPIDER CIDER
+bottle of No-Ghost: Taken.
+can of spider cider: Taken.
+
+>NW
+
+Upstairs Hallway
+
+The kiddie creature runs past waving his brass key. The way he runs around he
+must get very hungry. This little devil must eat something that makes him
+awfully hyper.
+
+>NE
+(first opening the wooden door)
+
+Bedroom
+This room is like your typical, twentieth century bourgois bedroom -- a place to
+relax, perhaps? Against the far wall is a large bed. Next to it is a dresser.
+Hanging over the bed is a small mirror. A large, old radio stands against
+another wall. The only exit is to the south-west.
+
+Loud thunder echoes all around you as the storm outside intensifies.
+
+>X RADIO
+Before there was solid-state technology, there were big radios. This one comes
+up to your chest.
+
+>OPEN IT
+That's not something you can open.
+
+>X DRESSER
+This modest black dresser is of painted pine.
+
+>OPEN IT
+You open the top drawer in the dresser revealing an iron star.
+
+>TAKE STAR
+Taken.
+
+>SW
+
+Upstairs Hallway
+
+The smiling, tiny, mischievous creature is back again. This little guy just
+doesn't stop.
+
+The gremlin scampers off, waving a brass key.
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>NW
+(first opening the old door)
+
+Bedroom
+This room has a strange energy about it. There is a powerful presence in here.
+You do not feel alone, just insignificant.
+
+Against the north wall is a bed and bedside table. Above the bed is a small
+reading lamp. Opposite the bed, on the south wall, is a large, abstract
+painting. On the west wall is a large wardrobe. The hallway is to the east. A
+small door is in the north wall.
+
+The quick creature seems to be playing a 'catch-me-if-you-can' game. He's
+winning. He waves his brass key wildly, teasing you with it as he runs through
+the room.
+
+On the bedside table are a red candle and a star diary.
+
+You can also see a bed (on which are a white pillow and a black pillow) here.
+
+The gremlin scampers off, waving a brass key.
+
+>X WARDROBE
+You see no wardrobe here.
+
+>TURN ON LAMP
+Apparently the electricity has been turned off. The light does not activate.
+
+>N
+
+Bathroom
+This bathroom is cold and dark. You can see a white sink and a porcelain bathtub
+here. There is no toilet. Whoever lived here really did have a mysterious way of
+doing things. The door is to the south. Your attention is drawn to a strangly-
+shaped light fixture on the ceiling.
+
+You can see a soft towel, a drain, a laundry hamper (which is closed) and a
+marble shelf (on which is a bar of soap) here.
+
+>X SOAP
+You wonder if this soap is 99 and 44/100 percent pure.
+
+>OPEN HAMPER
+You open the laundry hamper, revealing a bloody towel.
+
+>X BLOODY TOWEL
+This towel is damp and moldy. It is stained by what looks like blood
+
+>X FIXTURE
+This large light fixture vaguely resembles something from a playground that
+children like to hang and swing from.
+
+>S
+
+Bedroom
+
+On the bedside table are a red candle and a star diary.
+
+You can also see a bed (on which are a white pillow and a black pillow) here.
+
+The loneliness of this abandoned estate makes you long for the company of your
+little brother. You have seen neither hide nor hair of him in quite a while. He
+should be somewhere on this estate. You'd better find him.
+
+>LIMIT
+The time limit has been enabled. If you dawdle, you will be killed.
+
+>LIMIT
+The time limit has been disabled. You will not be killed if you take too long.
+
+>SE
+
+Upstairs Hallway
+
+Lightning from the storm outside intensely illuminates the upstairs hallway.
+There is loud thunder quickly following as the storm approaches.
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>DOWN
+
+Hall
+
+>W
+As you touch the doorknob, a strange woman appears. She is dressed like Scarlett
+O'Hara and stands with her back to you. You pause in wonder.
+
+>SPRAY GHOST WITH NO-GHOST
+You see no ghost here.
+
+>SPRAY WOMAN WITH NO-GHOST
+Please, try not to drool.
+
+>! 'Try not to drool?'
+
+>OPEN CAN
+That's not something you can open.
+
+>OPEN NO-GHOST
+As you remove the cap from this small bottle, a foul odor bombards your
+olfactory senses. The liquid contents of this nearly empty bottle produce a
+smell similar to that of an injured skunk. It reminds you of the smell of decay
+that surrounds the house itself.
+
+>POUR NO-GHOST ON WOMAN
+(the thin greyish-white fluid on the strange woman)
+You pour the foul-smelling liquid on the head of the over-dressed guest. The
+liquid seems to burn as it drips over her. She lets out a horrifying scream as
+she begins to melt helplessly. Suddenly you feel like Dorothy (and her little
+dog too).
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>SW
+(first opening the recroom door)
+
+Rec Room
+This looks like a room designed for fun and games. It seems out of place on this
+gloomy estate. To the west is a rustic-looking door. On the east and west walls
+are some rather ugly paintings. The dining room is to the north. The hallway is
+to the east.
+
+You can see a chess table, a gramophone and a cabinet (which is closed) here.
+
+>OPEN CABINET
+It seems to be locked.
+
+>X TABLE
+Inlaid on the face of this table is a chess board. You wonder if there are any
+chess pieces lying around.
+
+>X PAINTING
+Which do you mean, the west painting or the east painting?
+
+>WEST
+The face on this canvas is extremely ugly.
+
+>X PAINTING
+Which do you mean, the west painting or the east painting?
+
+>E
+I only understood you as far as wanting to examine the east.
+
+>X EAST PAINTING
+Despite the flat, art-school-dropout technique displayed on the canvas, you are
+deeply affected by the cold stare from the frightening eyes of the subject.
+
+>LOOK AT EYES
+You can't see any such thing.
+
+>W
+
+Trophy Room
+The walls of this room are lined with the heads of dead animals. A mounted bear
+stands in a corner. A tiger skin covers the middle of the floor. To the north is
+a door leading outside. You can go back to the rec room using the door to the
+east.
+
+You can see a small cage (which is closed and empty) here.
+
+>OPEN CAGE
+You open the small cage.
+
+>X IT
+It is a small cage with a handle to allow it to be transported.
+
+>TAKE CAGE
+Taken.
+
+>X TIGER
+The skin of this large jungle cat makes a handsome throw rug. However, thin
+tiger skin does not make as plush a carpet as thick bear skin.
+
+>N
+(first opening the back door)
+
+Backyard
+This large expanse of backyard reminds you of the "Wizard of Oz". A path leads
+north across the lawn to three buildings far in the distance.
+
+>N
+
+Yard Path
+You stand at a four-way intersection of paths. North is a greenhouse. West is an
+observatory. East is an old chapel.
+
+A strange creature resembling an eye with wings passes in front of you. Did you
+ever get the feeling that you were being watched?
+
+>WEST
+
+Observatory Entrance
+You stand at the entrance of a large domed building to the west. The ugly,
+elaborate doorway is endowed with a strange, eclectic mix of decorations from at
+least three different centuries. Two brass orbs atop spires are to the left and
+right of the door. Just above the door, in the doorframe is an oddly-shaped
+niche. On the wall above the doorway is a sign reading "Magisterium".
+
+From the sound of distant barking, you figure it must be a very large dog.
+
+>X NICHE
+This niche has a very peculiar shape. It's a square-tipped onto a point. The
+upper point is then cut off.
+
+>PULL IT
+You are unable to.
+
+>I
+You are carrying:
+  a small cage (which is open but empty)
+  an iron star
+  a can of spider cider
+  a bottle of No-Ghost
+  a tiny scroll
+  an ancient book (which is open)
+
+>PUT STAR IN NICHE
+That can't contain things.
+
+>X SCROLL
+This tiny scrap of paper looks like a student's cheat sheet.
+
+>READ IT
+Carefully written in very tiny script is: 
+"Thaumaturgy 101 notes:
+Casting Spells:
+1) Check the meaning of the words.
+2) Say the words to the target of your spell. (target, plugh)
+3) Chant the words precisely when there is no target. (chant "xyzzy")
+
+Study for the exam!!!"
+
+>X BOOK
+This large, ancient tome bears the symbol of the pentagram. This book is very,
+very, very old. Older than anything you've seen in this mansion, possibly older
+than the house itself.
+
+>READ IT
+The book is opened to a page which seems to be filled with definitions. The ones
+that make the most sense to you are: 
+"Instantum: Sudden and momentary; here and gone in an instant. 
+Illuminaris: A bright, white light. 
+Projectum: The propulsion of an entity. 
+Spearca: A small flame or spark. 
+Specan: To talk, talking. 
+Heafod: The head, the skull, etc. 
+Magisterium: Mystery. 
+Abraxas: It is a magical word: a vehicle through which magic is directed."
+
+>L
+
+Observatory Entrance
+You stand at the entrance of a large domed building to the west. The ugly,
+elaborate doorway is endowed with a strange, eclectic mix of decorations from at
+least three different centuries. Two brass orbs atop spires are to the left and
+right of the door. Just above the door, in the doorframe is an oddly-shaped
+niche. On the wall above the doorway is a sign reading "Magisterium".
+
+The evil air that pervades the estate seems to have infiltrated your very being.
+Your head and chest feel heavy and thick. You find it increasingly difficult to
+execute your will. For a minute, your thoughts seemed influenced by another
+mind.
+
+>NICHE, MAGISTERIUM
+You can't talk to the niche.
+
+>X SCROLL
+This tiny scrap of paper looks like a student's cheat sheet.
+
+>READ IT
+Carefully written in very tiny script is: 
+"Thaumaturgy 101 notes:
+Casting Spells:
+1) Check the meaning of the words.
+2) Say the words to the target of your spell. (target, plugh)
+3) Chant the words precisely when there is no target. (chant "xyzzy")
+
+Study for the exam!!!"
+
+>e
+
+Yard Path
+
+A strange creature resembling an eye with wings passes in front of you. Did you
+ever get the feeling that you were being watched?
+
+You can see a flying eye here.
+
+The flying eye flutters away.
+
+>s
+
+Backyard
+
+A strange creature resembling an eye with wings passes in front of you. Did you
+ever get the feeling that you were being watched?
+
+You can see a flying eye here.
+
+The flying eye flutters away.
+
+>s
+
+Trophy Room
+
+>e
+
+Rec Room
+
+You can see a chess table, a gramophone and a cabinet (which is closed) here.
+
+>ne
+
+Hall
+
+>e
+(first opening the parlor door)
+
+Parlor
+This parlor has lost its original charm. The cracked, dirty walls are a
+testament to the estate's state of disrepair. A simple chandelier hangs from the
+ceiling. An antique chair sits in a corner. In the opposite corner is a large
+vase of artificial flowers. A veranda can be seen outside to the east. The
+hallway is to the west.
+
+You can see a vase (in which are some artificial flowers) here.
+
+>e
+
+Veranda
+From here you have a splendid view of the desolate estate.
+
+From the sound of distant barking, you figure it must be a very large dog.
+
+A large black spider quickly runs by you along the railing.
+
+>SPRAY RAILING WITH CIDER
+A wide aerosol stream sprays from the "Spider Cider" can. It leaves a wet,
+sticky film on the railing.
+
+You see the spider continue its trek across the railing. It becomes paralyzed as
+it comes into contact with the "spider cider". It's not dead, but it's not going
+anywhere without your help.
+
+>TAKE SPIDER
+(the black spider)
+Taken.
+
+>DROP CAN
+Dropped.
+
+>W
+
+Parlor
+
+You can see a vase (in which are some artificial flowers) here.
+
+Loud thunder echoes all around you as the storm outside intensifies.
+
+>W
+
+Hall
+
+>L
+
+Hall
+This room is devoid of any aesthetic warmth or beauty. It is purely functional,
+with no concern for the trivialities of interior design. To the south is the
+foyer. Two doors go southwest and west. One door goes east. A staircase leads
+up. A small painting hangs between the two west-facing doors.
+
+>W
+
+Dining Room
+This is an impressive sight. You could throw a terrific birthday bash in this
+room. The odor of stale wine still permeates the air. On the north and south
+walls are large paintings. Doors lead east to the hallway, north, south, and
+west.
+
+You can see a dining table (on which are a bouquet of flowers, a champagne
+bottle, a pepper mill and a pewter bowl (in which are a banana, a plum and an
+apple)) here.
+
+>TAKE BOUQUET
+Taken.
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>W
+
+Kitchen
+Upon entering the kitchen, you realize that this room is probably the most
+modern room in the house. After all, it appears to have been remodeled sometime
+during the 20th century. Small doors head north and south. The dining room is to
+the east.
+
+On the counter are a menacing knife, a little knife, a cleaver, a chef knife and
+a stained cookie jar.
+
+On the pot rack are a frying pan, a nonstick pan, a shiny pan, a sauce pan and a
+roasting pan.
+
+>TAKE CHEF KNIFE
+Taken.
+
+>N
+
+Pantry
+This pantry smells musty and stuffy. Patches of wallpaper are missing in several
+spots. This tiny little room does not fit in with the rest of this sprawling
+palatial estate. A lamp hangs from the ceiling.
+
+On the shelf are a pewter plate, a silver tray, a matchbox (which is closed), a
+salami, a kitchen knife, a beater, a baster, a spatula and a thermometer.
+
+You can see a bag of flour (which is closed), a bag of rice (which is closed), a
+bag of sugar (which is closed) and a bag of salt (which is closed) here.
+
+>TAKE MATCHBOX
+You're carrying too many things already.
+
+>I
+You are carrying:
+  a chef knife
+  a bouquet of flowers
+  a black spider
+  a small cage (which is open but empty)
+  an iron star
+  a bottle of No-Ghost
+  a tiny scroll
+  an ancient book (which is open)
+
+>S
+
+Kitchen
+
+On the counter are a menacing knife, a little knife, a cleaver and a stained
+cookie jar.
+
+On the pot rack are a frying pan, a nonstick pan, a shiny pan, a sauce pan and a
+roasting pan.
+
+>E
+
+Dining Room
+
+You can see a dining table (on which are a champagne bottle, a pepper mill and a
+pewter bowl (in which are a banana, a plum and an apple)) here.
+
+>E
+
+Hall
+
+>DROP CAGE
+Dropped.
+
+>W
+
+Dining Room
+
+You can see a dining table (on which are a champagne bottle, a pepper mill and a
+pewter bowl (in which are a banana, a plum and an apple)) here.
+
+>W
+
+Kitchen
+
+On the counter are a menacing knife, a little knife, a cleaver and a stained
+cookie jar.
+
+On the pot rack are a frying pan, a nonstick pan, a shiny pan, a sauce pan and a
+roasting pan.
+
+Lightning from the storm outside intensely illuminates the kitchen. There is
+loud thunder quickly following as the storm approaches.
+
+>N
+
+Pantry
+
+On the shelf are a pewter plate, a silver tray, a matchbox (which is closed), a
+salami, a kitchen knife, a beater, a baster, a spatula and a thermometer.
+
+You can see a bag of flour (which is closed), a bag of rice (which is closed), a
+bag of sugar (which is closed) and a bag of salt (which is closed) here.
+
+You begin to feel a sense of urgency concerning your little brother. You feel
+that all is not well. Somewhere on this estate he waits for you to come save
+him. You must get to him in time.
+
+>TAKE MATCHBOX
+Taken.
+
+>s
+
+Kitchen
+
+On the counter are a menacing knife, a little knife, a cleaver and a stained
+cookie jar.
+
+On the pot rack are a frying pan, a nonstick pan, a shiny pan, a sauce pan and a
+roasting pan.
+
+>e
+
+Dining Room
+
+You can see a dining table (on which are a champagne bottle, a pepper mill and a
+pewter bowl (in which are a banana, a plum and an apple)) here.
+
+>n
+
+Study
+You're in a small study. A small desk squats in the middle of the room. To the
+east is a door. To the south is the dining room.
+
+Brrrr. There is no central heating in this old Gothic mansion. The curved outer
+wall of this room is exposed to the elements in three directions. It is colder
+in here than it is outside, and there is no fireplace. It must be awful during
+the winter.
+
+On the desk is a blotter.
+
+>S
+
+Dining Room
+
+You can see a dining table (on which are a champagne bottle, a pepper mill and a
+pewter bowl (in which are a banana, a plum and an apple)) here.
+
+>W
+
+Kitchen
+
+On the counter are a menacing knife, a little knife, a cleaver and a stained
+cookie jar.
+
+On the pot rack are a frying pan, a nonstick pan, a shiny pan, a sauce pan and a
+roasting pan.
+
+>S
+
+Bedroom
+Whoever had occupied this room must have been quite satisfied with the small
+accomodations. There is a simple bed, a floor lamp, and a dresser. This room
+does not seem quite as untidy as the rest of the house. You see no dust or
+cobwebs.
+
+On the bed is a little pillow.
+
+On the dresser are a brush, a spray bottle and a cologne bottle.
+
+>TURN ON LAMP
+As you turn on the lamp, you see the picture on the wall slide to your left,
+revealing a small niche in the wall. Your tired eyes are having trouble focusing
+on the ghostly figure before you. An angry man's spirit hovers, in chains, in
+front of you. The ghost speaks: "This is my room. Who let you in here?! These
+are not the Master's things. They're mine. MINE. MINE. MINE...
+
+>SPRAY COLOGNE
+What do you want to spray the cologne bottle on?
+
+>GHOST
+(first taking the cologne bottle)
+You're carrying too many things already.
+
+>DROP SPIDER
+Dropped.
+
+>TAKE IT
+Taken.
+
+>SHOW IT TO GHOST
+The posessive ghost shrieks at the sight of the stunned spider. Flustered and
+frightened, the spirit dissolves from view, leaving you alone again.
+
+>! Perhaps you can add 'check dropping the spider when this ghost is visible' fo
+
+>! r the same result
+
+>OPEN BOOK
+You open the ancient book (which is open).
+
+>L
+
+Bedroom
+Whoever had occupied this room must have been quite satisfied with the small
+accomodations. There is a simple bed, a floor lamp, and a dresser. This room
+does not seem quite as untidy as the rest of the house. You see no dust or
+cobwebs.
+
+The niche previously behind the painting contains a journal.
+
+On the bed is a little pillow.
+
+On the dresser are a brush, a spray bottle and a cologne bottle.
+
+>READ JOURNAL
+The journal doesn't seem to bear any writing.
+
+>OPEN IT
+That's not something you can open.
+
+>X IT
+It seems to be a journal of some kind, perhaps an old diary. It reads:
+
+"The Master would, or could, not, so I have stolen Dracan's star. He is an evil
+soul. Unlike the Master, he uses his power for amusement and profit. He is not
+concerned with spiritual enlightenment. There is no compassion with his power. I
+grow weak. I am dying. I have hidden the star in Master's special box. It never
+opens, it has no locks. Dracan's star never discerns. In fire, it freezes. In
+ice, it burns."
+
+>! Should be able to read the journal too
+
+>N
+
+Kitchen
+
+On the counter are a menacing knife, a little knife, a cleaver and a stained
+cookie jar.
+
+On the pot rack are a frying pan, a nonstick pan, a shiny pan, a sauce pan and a
+roasting pan.
+
+>R
+That's not a verb I recognize.
+
+>E
+
+Dining Room
+
+You can see a dining table (on which are a champagne bottle, a pepper mill and a
+pewter bowl (in which are a banana, a plum and an apple)) here.
+
+>E
+
+Hall
+
+You can see a small cage (which is empty) here.
+
+>L
+
+Hall
+This room is devoid of any aesthetic warmth or beauty. It is purely functional,
+with no concern for the trivialities of interior design. To the south is the
+foyer. Two doors go southwest and west. One door goes east. A staircase leads
+up. A small painting hangs between the two west-facing doors.
+
+You can see a small cage (which is empty) here.
+
+>S
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+
+>L
+
+Entrance Hall
+You are inside the mansion's foyer. This is a large and luxurious room, yet it
+feels strangely oppressive. A hallway lies to the north. Another passage leads
+east.
+
+Covering most of the floor is a room-sized carpet that displays a pentagram. In
+the east wall is a brick fireplace. Atop the rug is an expensive-looking wooden
+chair and a couch. A painting of a snake hangs above the fireplace. A painting
+of an eagle hangs on the west wall. A bust of a sailor stands on a pedestal by
+the fireplace.
+
+On the mantelpiece is a kerosene lamp.
+
+>X CHAIR
+It's an early American chair -- very old and very valuable. It looks soft and
+cushiony.
+
+>X COUCH
+The couch looks comfortable. It is just long enough for you to lie down and
+stretch out upon.
+
+>CUT COUCH
+(first taking the pile of logs)
+Your load is too heavy.
+
+>! Huh. wonder why it tried to take the logs?
+
+>CUT CHAIR
+(first taking the pile of logs)
+Your load is too heavy.
+
+>! Uh-oh.
+
+>DROP ALL
+black spider: Dropped.
+matchbox: Dropped.
+chef knife: Dropped.
+bouquet of flowers: Dropped.
+iron star: Dropped.
+bottle of No-Ghost: Dropped.
+tiny scroll: Dropped.
+ancient book (which is open): Dropped.
+
+>TAKE KNIFE
+Taken.
+
+>CUT CHAIR
+(with the chef knife)
+You slash the upholstery of the chair with the chef knife.
+
+>L
+
+Entrance Hall
+You are inside the mansion's foyer. This is a large and luxurious room, yet it
+feels strangely oppressive. A hallway lies to the north. Another passage leads
+east.
+
+Covering most of the floor is a room-sized carpet that displays a pentagram. In
+the east wall is a brick fireplace. Atop the rug is an expensive-looking wooden
+chair and a couch. A painting of a snake hangs above the fireplace. A painting
+of an eagle hangs on the west wall. A bust of a sailor stands on a pedestal by
+the fireplace.
+
+On the mantelpiece is a kerosene lamp.
+
+You can see an ancient book (which is open), a tiny scroll, a bottle of No-
+Ghost, an iron star, a bouquet of flowers, a matchbox (which is closed) and a
+black spider here.
+
+>X LOGS
+Several dried logs, with some sticks thrown in as kindling, rest in the
+fireplace.
+
+>TAKE ALL BUT LOGS, LAMP
+ancient book (which is open): Taken.
+tiny scroll: Taken.
+bottle of No-Ghost: Taken.
+iron star: Taken.
+bouquet of flowers: Taken.
+matchbox: Taken.
+black spider: Taken.
+
+>OPEN CHAIR
+That's not something you can open.
+
+>RIP CHAIR
+That's not a verb I recognize.
+
+>CUT COUCH
+(first taking the pile of logs)
+Your load is too heavy.
+
+>! Doh.
+
+>DROP ALL BUT KNIFE
+black spider: Dropped.
+matchbox: Dropped.
+bouquet of flowers: Dropped.
+iron star: Dropped.
+bottle of No-Ghost: Dropped.
+tiny scroll: Dropped.
+ancient book (which is open): Dropped.
+
+At this point you begin to worry about your little brother. You were supposed to
+take care of him, but you have not seen him for hours. You pray that no harm has
+come to him.
+
+>CUT COUCH
+(with the chef knife)
+You slash the upholstery of the couch with the chef knife and discover a
+skeleton key.
+
+>TAKE KEY
+Taken.
+
+Loud thunder echoes all around you as the storm outside intensifies.
+
+>L
+
+Entrance Hall
+You are inside the mansion's foyer. This is a large and luxurious room, yet it
+feels strangely oppressive. A hallway lies to the north. Another passage leads
+east.
+
+Covering most of the floor is a room-sized carpet that displays a pentagram. In
+the east wall is a brick fireplace. Atop the rug is an expensive-looking wooden
+chair and a couch. A painting of a snake hangs above the fireplace. A painting
+of an eagle hangs on the west wall. A bust of a sailor stands on a pedestal by
+the fireplace.
+
+On the mantelpiece is a kerosene lamp.
+
+You can see an ancient book (which is open), a tiny scroll, a bottle of No-
+Ghost, an iron star, a bouquet of flowers, a matchbox (which is closed) and a
+black spider here.
+
+>TAKE ALL BUT SPIDER
+ancient book (which is open): Taken.
+tiny scroll: Taken.
+bottle of No-Ghost: Taken.
+iron star: Taken.
+bouquet of flowers: Taken.
+matchbox: Taken.
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>N
+
+Hall
+
+You can see a small cage (which is empty) here.
+
+>UP
+
+Upstairs Hallway
+
+>W
+
+Master Bedroom
+This must be the master bedroom. Interesting decor. There is a stale smell about
+this room, as if it hasn't been opened for years. Along the west wall are a row
+of photographs and a large wardrobe. Pushed up against the north wall is a
+large, comfortable-looking bed. Beside it is a floor-standing lamp. The hallway
+lies east. Another doorway faces south.
+
+You can see a wheelchair and a table (on which are a black diary, a grey candle,
+a blue bottle and a brown bottle (which is closed)) here.
+
+>READ DIARY
+There isn't anything to read on the cover.
+
+>OPEN IT
+You open the black diary.
+
+>READ IT
+This diary is filled with ramblings that you can barely understand. The only
+meaningful page is the last one:
+
+"I have lost control of Dracan. My star student now fancies himself a master.
+Though his power is strong, his spirit is weak. He is easily corrupted by the
+dark spirits of greed and power. My servant, more aware than I, sealed his star
+in my hingeless box. They're locked away beyond his stare. I've hidden the key,
+a chair knows where."
+
+>L
+
+Master Bedroom
+This must be the master bedroom. Interesting decor. There is a stale smell about
+this room, as if it hasn't been opened for years. Along the west wall are a row
+of photographs and a large wardrobe. Pushed up against the north wall is a
+large, comfortable-looking bed. Beside it is a floor-standing lamp. The hallway
+lies east. Another doorway faces south.
+
+You can see a wheelchair and a table (on which are a black diary, a grey candle,
+a blue bottle and a brown bottle (which is closed)) here.
+
+>OPEN WARDROBE
+It seems to be locked.
+
+>UNLOCK IT
+What do you want to unlock the wardrobe with?
+
+>KEY
+You unlock the wardrobe.
+
+>OPEN IT
+You open the wardrobe, revealing a small papyrus scroll, a large papyrus scroll,
+a wooden box and a golden vial.
+
+>TAKE BOX
+You're carrying too many things already.
+
+Lightning from the storm outside intensely illuminates the master bedroom. There
+is loud thunder quickly following as the storm approaches.
+
+>DROP KEY
+Dropped.
+
+>TAKE BOX
+Taken.
+
+>READ SMALL SCROLL
+"Together these form a key: argon, copper, and tellurium".
+
+>READ LARGE SCROLL
+"The heart of the garden maze contains the Blothney Gem. There are certain
+places you cannot go, 'till you unlock the 'mystery'".
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>E
+
+Upstairs Hallway
+
+>D
+
+Hall
+
+You can see a small cage (which is empty) here.
+
+>S
+
+Entrance Hall
+
+On the mantelpiece is a kerosene lamp.
+
+You can see a black spider here.
+
+>OPEN MATCHBOX
+You open the matchbox, revealing six matches.
+
+>LIGHT MATCH
+You rub the match on a random object, but you fail to end up with a burning
+match.
+
+>LIGHT MATCH ON MATCHBOX
+Violence isn't the answer to this one.
+
+>! Lighting the match is violent?
+
+>RUB MATCH ON MATCHBOX
+(the matchbox on the matchbox)
+You achieve nothing by this.
+
+>STRIKE MATCH ON MATCHBOX
+(the matchbox on the matchbox)
+Violence isn't the answer to this one.
+
+>OPERATE
+That's not a verb I recognize.
+
+>SAVE
+Enter a file name.
+Default is "/home/administrator/.infocom/uninvited.sav": 
+Ok.
+
+>quit
+Are you sure you want to quit? y

@@ -1,0 +1,29 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside MazeFront "Stone Structure"
+	with name "stone" "structure",
+	description "You stand just south of a large stone structure 
+		with no doors, just a rickety old door.",
+	n_to MazeDoor,
+	s_to ChurchGrounds;
+
+
+MyDoor MazeDoor "rickety door"
+	with name "rickety" "wooden" "door" "broken",
+	description "This rickety wooden door looks like it would
+		collapse if you touch it.",
+	before [;
+	Take, Attack, Push, Pull:
+		if (self hasnt general)
+			"The door collapses into a heap of crumbled wood.";
+		"It's not a door anymore, but a pile of shattered wood.";
+        ],
+	n_to MazeEntrance,
+	s_to MazeFront,
+	npc_open false,
+	has scenery openable;
+
+

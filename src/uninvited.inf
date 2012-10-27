@@ -1,0 +1,72 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+! Library 6/12 is required due to the use of no_infer_message.
+
+
+#Ifdef DEBUG;
+message "Debugging code enabled.";
+Constant INFIX;
+#endif;
+
+Constant NO_SCORE;
+Constant DIALECT_US;
+Constant NO_HOWTO_GRAMMAR = 1;
+Constant NO_IMPLICIT_ACTIONS;
+
+!Constant NOISY_DIR_TOS;		! NPC does not follow *_to routines
+
+Constant Story "UNINVITED";
+Constant Headline
+"^(c) 1986 ICOM Simulations, Inc.  626 Wheeling Rd, Wheeling, IL  60090
+^An unauthorized adaptation by David Griffith.
+^(Type ~about~ for more information.)^";
+
+Release 1;
+Serial "121026";
+
+replace ScoreSub;
+replace CutSub;
+replace RubSub;
+replace BurnSub;
+replace LightSub;
+replace ReadSub;
+replace JumpSub;
+replace Afterlife;
+replace FillSub;
+replace PushSub;
+replace ConsultSub;
+
+! First, the parser, verbs library.
+Include "abbreviations.inf";
+Include "blurb.inf";
+Include "parser";
+Include "extra/seeno.h";
+Include "extra/sound.h";
+Include "verblib";
+
+! Second, add-ons and alterations.
+Include "extra/moveclass.h";
+Include "extra/DMenus.h";
+Include "extra/howtoplay.h";
+Include "extra/shuffle.h";
+Include "about.inf";
+
+! Third, the actual content of the game.
+Include "classes.inf";
+Include "gremlin.inf";
+Include "zombie.inf";
+Include "ambience.inf";
+Include "routines.inf";
+Include "rooms.inf";
+Include "initialize.inf";
+
+!Include "extra/info.h";
+Include "notebook.inf";
+
+! These belong at the end in this order.
+Include "grammar";
+Include "verbsub.inf";
+Include "verbs.inf";
+

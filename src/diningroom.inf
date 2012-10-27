@@ -1,0 +1,138 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion DiningRoom "Dining Room"
+	with name "dining" "room",
+	description "This is an impressive sight.  You could throw a 
+		terrific birthday bash in this room.  The odor of 
+		stale wine still permeates the air.  On the 
+		north and south walls are large paintings.  Doors lead 
+		east to the hallway, north, south, and west.",
+	e_to FloorHall,
+	n_to Study,
+	w_to Kitchen,
+	s_to RecRoom,
+	before [;
+	Examine:
+		if (noun == w_obj)
+			<<examine DiningWestPainting>>;
+		if (noun == e_obj)
+			<<examine DiningEastPainting>>;
+
+	];
+
+Object -> DiningFireplace "fireplace"
+	with name "fireplace",
+	description "This stone alcove serves as a source for both heat 
+		and drafts.  It is currently barren of firewood.",
+	has scenery;
+
+
+Object -> DiningChandelier "chandelier"
+	with name "chandelier",
+	description "The finely-cut crystals, dangling around the light, 
+		act as prisms.  They throw tiny rainbows about the 
+		room.",
+	has scenery;
+
+
+Object -> DiningWestPainting "eagle painting"
+	with name "eagle" "painting",
+	description "This painting shows an eagle flying off with a 
+		snake in its talons.",
+	has scenery;
+
+Object -> DiningWest2Painting "small painting"
+	with name "small" "painting",
+	description "This smaller painting shows a mill on the floss.",
+	has scenery;
+
+Object -> DiningRelativePainting "portrait"
+	with name "portrait" "painting",
+	description "It appears to be a painting of a distant relative, 
+		perhaps from the Neanderthal period -- perhaps not quite 
+		so distant.",
+	has scenery;
+
+Object -> Shield "shield"
+	with name "shield",
+	description "It is a shield sporting the image of what looks 
+		like a lion or something with claws and fur.  You wonder 
+		what significance it has.",
+	has scenery;
+
+Object -> DiningEastPainting "landscape painting"
+	with name "landscape" "painting",
+	description "This large landscape is more stylized than the 
+		rest of the artwork in the house.  The pastel 
+		brushstrokes form indistinct lines reminiscent of a 
+		Monet or Cezanne.  The lines are blurred, but the 
+		images are clear.  Now that's art!",
+	has scenery;
+
+Object -> DiningChair "chair",
+	with name "chair",
+	description "The chair just sits there.",
+	has scenery supporter enterable;
+
+Object -> DiningTable "dining table"
+	with name "dining" "table",
+	description "It's a large oak table.",
+	has supporter static;
+
+Object -> -> Bouquet "bouquet of flowers"
+	with name "bouquet" "of" "flowers" "flower",	
+	description "It's a pretty bouquet of flowers.  They're just 
+		right for a funeral -- or your senior prom.",
+	before [;
+	Smell:
+		"The flowers smell old and dried up.";
+	];
+
+Bottle -> -> ChampagneBottle "champagne bottle"
+	with name "bottle" "champagne",
+	description "According to the label, it contained Dom Perignon 
+		'61, an excellent year.  The bottle is empty and 
+		corkless.  Someone here must have had a good time.",
+	has open;
+
+Object -> -> Peppermill "pepper mill"
+	with name "peppermill" "pepper" "mill",
+	description "It looks like an ordinary pepper mill.",
+	before [;
+	Open:
+		"You are unable to unscrew to the top of "
+			, (the) self, ".";
+	Turn:
+		if (verb_word == 'unscrew')
+			"You are unable to unscrew to the top of "
+				, (the) self, ".";
+		"Bits of stale pepper fall out of the bottom of ", 
+			(the) self, ".";
+	];
+
+! You twist the two halves of the mill.  There is the sound of small 
+! gears grinding.
+
+
+Bowl -> -> PewterBowl "pewter bowl"
+	with name "pewter" "bowl",
+	description "It's an old, large, pewter bowl.";
+
+Object -> -> -> Banana "banana"
+	with name "banana",
+	description "These things usually travel in bunches.",
+	has edible;
+
+Object -> -> -> Plum "plum"
+	with name "plum",
+	description "This plum reminds you of Japanese wine.",
+	has edible;
+
+Object -> -> -> Apple "apple"
+	with name "apple",
+	description "This apple look like a McIntosh.",
+	has edible;
+

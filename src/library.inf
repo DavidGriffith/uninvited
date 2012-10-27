@@ -1,0 +1,211 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Library "Library"
+	with name "library",
+	description "This room was designed for deep thought and
+		research.  Obviously it was once inhabited by a serious
+		man of letters.  The harsh silence in the rest of the
+		house is muted in this room of contemplation.
+		The east wall is completely covered with a
+		bookcase.  On the north wall is a framed star chart.  A
+		large, well-polished table dominates the middle of the
+		room.  Beside the table is an antique globe.  The only
+		exit is west.",
+	w_to Foyer;
+
+Object -> StarChart "star chart"
+	with name "star" "chart" "map",
+	description [;
+		print "It's a map of the heavens -- a place you've 
+		always wanted to visit.";
+
+		if (OddStar in parent(self) && self has general) {
+			print " You notice a very odd looking star on this 
+			chart that you didn't notice before.";
+		}
+		give self general;
+		"";
+	],
+	has scenery;
+
+Object -> Globe "globe"
+	with name "globe",
+	description "This antique globe is rusted into position and no 
+		longer spins.",
+	before [;
+	Spin:
+		"Ahem, I clearly pointed out that the globe ~no longer 
+		spins.~.";
+	],
+	has scenery;
+
+Object -> LibraryCase "bookcase"
+	with name "bookcase" "shelf" "book" "case",
+	description "It's a bookcase filled with many fine books.  You 
+		see the works of Bacon, Poe, Lovecraft, and Nostradamus.  
+		Many of the books seem to be hundreds of years old.  
+		Many are in ancient languages and are indecipherable to 
+		you.",
+	before [;
+	Push, Pull, Turn, Take:
+		"It's fastened firmly to the wall.";
+	],
+	has scenery;
+
+Object -> LibraryTable "table"
+	with name "table",
+	description "The wood of this table glows with a 
+		deep, lustrous shine.",
+	after [;
+	LetGo:
+		if (noun == MantelLamp) {
+			remove OddStar;
+			rfalse;
+		}
+	Receive:
+		if (noun == MantelLamp) {
+			if (BlackHole notin parent(self))
+				move OddStar to parent(self);
+			"As you put ", (the) noun, " on ", (the) self, 
+			", it emits a faint hum.";
+		}
+	],
+	has supporter scenery;
+
+TalkingStatue -> -> LibraryStatue "bronze statue"
+	with name "bronze" "statue" "thinker",
+	description "This statue, about the size of a large lamp, is one 
+		of many bronze copies of ~The Thinker~ by Auguste Rodin.",
+	speech "The statue trembles and utters the words ~What?  I 
+		didn't say anything!~",
+	has static;
+
+
+Object -> -> AncientBook "ancient book"
+	with name "spell" "book" "spellbook" "ancient",
+	short_name [;
+		print "ancient book";
+		if (self has open)
+			print " (which is open)";
+		rtrue;
+	],
+	description "This large, ancient tome bears the symbol of 
+		the pentagram.  This book is very, very, very 
+		old.  Older than anything you've seen in this 
+		mansion, possibly older than the house itself.",
+	before [;
+	Open:
+		if (TinyScroll hasnt general) {
+			move TinyScroll to parent(self);
+			give TinyScroll general;
+			print "As you open ", (the) self, ", a tiny 
+				scroll slides out.^";
+			give self open;
+			rtrue;
+		} else {
+			if (self hasnt open) {
+				print "You open ", (the) self, ".^";
+				give self open;
+				rtrue;
+			}
+			"But it's already open.";
+		}
+	Read:
+		if (self hasnt open)
+			"There isn't anything on the cover to read.";
+
+		"The book is opened to a page which seems to be filled 
+		with definitions.  The ones that make the most sense to 
+		you are:
+		^~Instantum: Sudden and momentary; here and gone in an instant.
+		^Illuminaris: A bright, white light.
+		^Projectum: The propulsion of an entity.
+		^Spearca: A small flame or spark.
+		^Specan: To talk, talking.
+		^Heafod: The head, the skull, etc.
+		^Magisterium: Mystery.
+		^Abraxas: It is a magical word: a vehicle through which 
+		magic is directed.~";
+	],
+	after [;
+	Open:
+	],
+	has openable;
+
+
+Object TinyScroll "tiny scroll"
+	with name "tiny" "scroll",
+	description "This tiny scrap of paper looks like a student's 
+		cheat sheet.",
+	before [;
+	Read:
+		"Carefully written in very tiny script is:
+		^~Thaumaturgy 101 notes:^
+		Casting Spells:^
+		1) Check the meaning of the words.^
+		2) Say the words to the target of your spell.
+		(target, plugh)^
+		3) Chant the words precisely when there is no target. 
+		(chant ~xyzzy~)^
+		^
+		Study for the exam!!!^~
+		^
+		On the back is some scrawl that reads, ~What happened 
+		to my notebook?  I need to to LOOK UP some chemical 
+		elements.~";
+
+
+	];
+
+
+TalkingStatue OddStar "odd star"
+	with name "odd" "looking" "star",
+	description [;
+		give self general;
+		"It's a very odd star indeed.  It's not at all an 
+		ordinary mark on paper.  It's almost like it's not even 
+		there.  There's no label or anything to tell you what 
+		it is.";
+	],
+	speech [;
+		move BlackHole to Library;
+		remove self;
+		"The star, doesn't say anything, but you now realize 
+		you're looking at a black hole.";
+	],
+	has scenery;
+
+Object BlackHole "black hole"
+	with name "black" "hole",
+	description [;
+		give self general;
+		"It look a lot of very powerful magic to retain
+		an actual reduced version of a real black hole here on
+		this star map in this old mansion -- probably an even
+		greater amount to transport it here.";
+	],
+	react_before [;
+	Search:
+		"You see absolutely nothing.";
+	Enter:
+		if (noun == self && 
+			self has general &&
+			MantelLamp in LibraryTable) {
+			print "Suddenly you experience a feeling quite 
+			unlike anything you've ever experienced before.  
+			Time and space as you know it are now foreign 
+			concepts.  You feel what you think is a 
+			tremendous acceleration toward the black hole, 
+			but you don't know for sure what is happening 
+			to you.  You're not sure if this experience 
+			will ever end.  Then suddenly...^";
+			PlayerTo(Gallery);
+			remove self;
+			rtrue;
+		}
+	],
+	has scenery;
+

@@ -1,0 +1,81 @@
+This game is an unauthorized reimplementation of Uninvited as it 
+appeared on the Apple Macintosh presented by ICOM in 1986. No source 
+code to Uninvited was used (I've never seen it), nor was any 
+decompilation done. The Macintosh game was repeatedly played and 
+referred to in the process of creating the Inform code that creates this 
+reimplementation. Every effort has been made to make sure this version 
+remains faithful to the Macintosh version. Hints and walkthroughs 
+prepared for the Macintosh version will, for the most part, work on this 
+one. Hints and walkthroughs for other versions may work, but are 
+untested.  No Invisiclues-style hints are included in this version.
+
+This game was written in Inform (http://www.inform-fiction.org/) and 
+compiled with version 6.30 of the Inform compiler.  The primary 
+development machine was an x86 machine with an AMD Athlon 1.2GHz and 768 
+megabytes of main memory running Ubuntu Linux.  Development began in 
+March 2007 and concluded in July 2012.  By that time, the primary 
+development machine was a Thinkpad T42 running Debian Linux 6.0.
+
+This version differs from the Macintosh version in three respects:
+
+1) Descriptions have been expanded and/or completely rewritten to 
+compensate for lack of graphics.
+
+2) Some room exits have been moved around to make it easier for the 
+player to visualize and for the author to describe in words.
+
+3) Several doors have been removed as they contribute nothing to the 
+story or gameplay and only get in the way.
+
+
+=========
+Build  ||
+=========
+
+If you're on a Unix system (Linux, *BSD, MacOS 10.x, etc), a Makefile is 
+provided for automatically compiling Uninvited.  Simply unpack the 
+tarball, go into the directory created, and type "make help".  This will 
+show you the possible build targets.  All you need to build this game is 
+a default installation of Inform and the "make" utility.  Most, if not 
+all, modern flavors of Unix already have make.  You will also need a 
+Z-machine interpreter of some sort.
+
+If you're on a non-Unix platform, then go into the src directory and 
+execute the following command:
+  inform -iecd2 '$MAX_OBJECTS=768' uninvited.inf
+
+If you want to build with the debugging commands included, do this:
+  inform -iecd2 '$MAX_OBJECTS=768' -D uninvited.inf
+
+
+===================
+Release History  ||
+===================
+
+Release 0 / Serial number 120722
+Undistributed development release
+
+
+==============================
+Notes on Writing Uninvited  ||
+==============================
+
+In order to keep things organized, I gave each room a seperate source 
+file.  These files are tied together with rooms.inf which does 
+"Include"s for all the room source files.  There are also seperate files 
+for verbs, spells, about-info, and objects.  Tying this all together is 
+uninvited.inf, which contains the usual beginnings and headers of an 
+Inform program.
+
+This source distribution makes no assumptions about any preinstalled 
+extensions, nor are they used.  Extensions required to compile this game 
+are included in src/extra.  To compile this game, you need an 
+installation of Inform 6.31 or 6.32 and version 6/12 of the Inform 
+Library.
+
+===============
+Attributions ||
+===============
+
+For the sound pack, sound effects were downloaded from 
+http://www.freesfx.co.uk and http://www.soundjay.com

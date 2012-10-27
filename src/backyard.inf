@@ -1,0 +1,45 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Outside Backyard "Backyard"
+	with name "room",
+	description "This large expanse of backyard reminds you of the 
+		~Wizard of Oz~.  A path leads north across the lawn to 
+		three buildings far in the distance.",
+	s_to BackDoor,
+	n_to YardPath;
+
+Object -> BackyardBuildings "buildings"
+	with name "buildings",
+	description "You are facing north.  From left to right, you see 
+		three buildings.  The far left one is square with a 
+		dome on top.  The middle one appears to be made 
+		entirely of glass.  The one on the right is made of 
+		stone with small stained-glass windows.",
+	found_in Backyard YardPath,
+	has scenery;
+
+Object -> DomeView "dome"
+	with name "dome" "domed" "building",
+	description "The functionally-shaped dome, atop the far-removed 
+		building, implies that whoever lived here had an 
+		interest in astronomy.",
+	found_in Backyard YardPath,
+	has scenery;
+
+Object -> GreenhouseView "greenhouse"
+	with name "greenhouse" "glass" "building",
+	description "In the distance, you see what appears to be a 
+		building constructed mainly out of glass.",
+	found_in Backyard YardPath,
+	has scenery;
+
+Object -> ChapelView "chapel"
+	with name "chapel",
+	description "In the distance, there looms the shadowly remnant 
+		of an old chapel.  You sense movement in the pools of 
+		darkness around the building.",
+	found_in Backyard YardPath,
+	has scenery;

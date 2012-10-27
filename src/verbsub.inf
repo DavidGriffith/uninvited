@@ -1,0 +1,313 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+[ TimeLimitSub;
+	if (TimeLimit) {
+		TimeLimit = false;
+		"The time limit has been disabled.  You will not be 
+		killed if you take too long.";
+	}
+	TimeLimit = true;
+	"The time limit has been enabled.  If you dawdle, you will be 
+	killed.";
+];
+
+[ CommentSub; ];
+
+#Ifdef DEBUG;
+! Note, zapping yourself or directions can be mildly amusing.
+[ ZapSub;
+	if (noun == nothing)
+		"Nothing to zap.";
+	remove noun;
+	print (The) noun, " disappear";
+	if (noun hasnt pluralname && noun ~= Player)
+		print "s";
+	" in a puff of smoke.";
+];
+
+[SetSafeSub;
+	SafeDial.set_combination();
+	"The safe's combination has been reset.";
+];
+
+[ResetSub z;
+	for (z = 1 + (99 - 1) / 8 : z >= 0 : z--)
+		SafeFlags->z = 0;
+	"Reset shuffle on SafeFlags.";
+];
+
+#Endif;
+
+[ FocusSub;
+	print "You seem to have trouble focusing ";
+	if (noun == nothing) noun = Player;
+	print_ret (the) noun, ".";
+];
+
+[ PushSub;
+	if (noun == Player || noun == nothing)
+		"Shall we ", (address) verb_word, " on?";
+		
+	"You push ", (the) noun, ". Nothing happens.";
+];
+
+[ SpraySub;
+	if (noun == nothing)
+		"Please, try not to drool.";
+
+	if (second == nothing)
+		"What would you like to spray ", (the) noun, " with?";
+	"Spraying ", (the) noun, " on ", (the) second, " doesn't make sense.";
+];
+
+
+[ KnockSub;
+	"Knocking on ", (the) noun, " doesn't seem very helpful.";
+];
+
+
+[ RingSub;
+	"Be serious.";
+];
+
+
+[ TakeLiquidSub thing;
+	thing = parent(noun);
+	if (noun hasnt fluid || thing == second)
+		print "** ERROR - Someone called TakeLiquidSub the wrong way.^";
+
+	if (second hasnt container) {
+		print_ret (The) second, " can't contain things.";
+	}
+	<Letgo thing noun>;
+	move noun to second;
+	"You fill ", (the) second, " with ", (the) noun, " from ", (the) thing, ".";
+];
+
+
+[ PourSub;
+	"Trying to pour a non-liquid isn't going to work.";
+
+!	print "Pouring ", (the) noun;
+!	if (second ~= null)
+!		print " on ", (the) second;
+!	" doesn't seem to make sense.";
+];
+
+[FillSub myliquid;
+	print "noun   == ", (name) noun, ".^";
+	print "second == ", (name) second, ".^";
+
+	myliquid = child(second);
+	if ((myliquid ofclass Liquid) == false) {
+		"Filling ", (the) noun, " from ", (the) second, " 
+		doesn't make sense.";
+	}
+];
+
+[FillWithSub thing;
+	thing = parent(second);
+
+	if (~ObjectIsUntouchable(thing) && thing hasnt open && 
+		thing has openable && thing hasnt locked) {
+		print "(first opening ", (the) thing, ")^";
+		give thing open;
+	}
+
+	if (ObjectIsUntouchable(second)) {
+		print "fart^";
+		rfalse;
+	}
+
+	move second to noun;
+	<LetGo thing second>;
+	"You fill ", (the) noun, " with ", (the) second, ".";
+];
+
+[CutSub;
+	if (second ofclass Knife)
+		"Cutting that up would achieve little.";
+	"Be serious.";
+];
+
+
+[StrikeSub;
+	<<attack noun second>>;
+];
+
+
+[RubSub;
+	"You achieve nothing by this.";
+];
+
+
+[BurnSub;
+	if (second) {
+		if (second ofclass UnlitMatch)
+			"You won't start a fire with a match in that state.";
+		if (second hasnt fire)
+			"That doesn't seem to make sense.";
+		"Setting fire to ", (the) noun, " is not a good idea.";
+	}
+	"You can't burn ", (the) noun, " by itself.";
+];
+
+
+[DontKnowSub;
+	"I thought so.";
+];
+
+
+[DoKnowSub;
+	switch (random(4)) {
+	1:	"Really?";
+	2:	"How profound.";
+	3:	"You're really smart.";
+	4:	"Who are you talking to?";
+	}
+];
+
+
+[SnuffSub;
+	<<SwitchOff noun>>;
+];
+
+
+[ReadSub;
+	print (The) noun;
+	if (noun == player)
+		print " don't"; 
+	else
+		print " doesn't";
+
+	" seem to bear any writing.";
+];
+
+
+[ShakeSub;
+	if (noun == nothing || noun == Player)
+		"You're already shaking with fear.";
+
+	"Shaking ", (the) noun, " doesn't seem helpful.";
+];
+
+
+[JumpSub;
+	if (noun == nothing)
+		"You jump on the spot, fruitlessly.";
+
+	"Jumping on ", (the) noun, " doesn't seem helpful.";
+];
+
+[CatchSub;
+	"You won't catch ", (a) noun, " with ", (a) second, ".";
+];
+
+[FartSub;
+	if (noun && noun ~= Player) {
+		if (noun has animate) {
+			print "In return, ", (the) noun, " fart";
+			if (noun hasnt pluralname)
+				print "s";
+			" in your general direction.";
+		}
+		if (noun has fire) {
+			print "Blue flames erupt from your bottom.";
+			switch (random(5)) {
+			1:	deadflag = 1;
+				" Unfortunately for you, farting on ",
+				(the) noun, " has resulted in fatal 
+				burns.";
+			}
+			"";
+		}
+
+		"Farting on ", (the) noun, " doesn't seem helpful.";
+	}
+	"A loud noise erupts from your bottom.";
+];
+
+
+[ConsultSub;
+	"You discover nothing of interest in ", (the) noun, ".";
+];
+
+
+[SpinSub;
+	"Spinning ", (the) noun, " doesn't seem helpful.";
+];
+
+[UseSub;
+	"I'm not sure how you intend to use ", (the) noun, ".";
+];
+
+[ChantNothingSub;
+	"You open your mouth to ", (address) verb_word, " but you don't 
+	know what to say.";
+];
+
+[ChantSub w1 w2 w3 w4 w5 w6 quotes i;
+
+	wn = consult_from;
+	quotes = false;
+
+	! Catch the first quote mark
+	w1 = NextWord();
+	w2 = NextWord();
+	w3 = NextWord();
+	w4 = NextWord();
+	w5 = NextWord();
+	w6 = NextWord();
+
+	if (w1 == '"//') { 
+		quotes = true;
+	}
+
+	if (quotes) {
+		w1 = w2;
+		w2 = w3;
+		w3 = w4;
+		w4 = w5;
+		w5 = w6;
+	}
+
+	! Now match various incantations
+	!
+	if ((w1 == 'plugh') || (w1 == 'xyzzy'))
+		"A hollow voice says, ~Fool!~.";
+
+	! Scare the dogs away from the chapel entrance.
+	!
+	if (w1 == 'instantum' && w2 == 'illuminaris' && w3 == 'abraxas') {
+		Ambience.thunder();
+		print "With the utterance of these magic words comes a 
+		blinding bolt of lightning and a blast of thunder.";
+
+		if (Player in ChapelEntrance && ChapelDogs in ChapelEntrance) {
+			remove ChapelDogs;
+			"^^At this, the dogs recoil.  They put their tails 
+			between their legs and scamper across the
+			grounds of the estate.  You now have access to 
+			the chapel door.  From now on you might want to 
+			watch where you step.";
+		}
+		else "";
+	}
+
+	! For talking statues.
+	!
+	if (w1 == 'specan' && w2 == 'heafod' && w3 == 'abraxas') {
+		objectloop (i in parent(Player)) {
+			if (i ofclass TalkingStatue) 
+				"You hear rasping, incoherent speech 
+				coming from nearby.";
+		}
+		"Nothing happens.";
+	}
+	"That's just gibberish.";
+];
+
+

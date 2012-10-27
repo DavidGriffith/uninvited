@@ -1,0 +1,140 @@
+! UNINVITED
+! Copyright (c) 1986 by Icom.
+! Reimplemented in Inform by David Griffith (c) 2012
+!
+
+Mansion Bedroom "Bedroom"
+	with name "bedroom" "room",
+	description [; 
+		if (self hasnt visited) {
+			print "This room has a strange energy about it.  
+			There is a powerful presence in here.  You do 
+			not feel alone, just insignificant.^^";
+		} else 
+			print "This seems to be an ordinary bedroom. ";
+
+		print "Against the north wall is a bed and bedside 
+			table.  Above the bed is a small reading lamp.  
+			Opposite the bed, on the south wall, is a
+			large, abstract painting.  On the west wall is 
+			a large wardrobe.  The hallway is to the east.  
+			A small door is in the north wall.";
+		"";
+	],
+	w_to BedroomCloset,
+	se_to BedDoor,
+	n_to Bathroom;
+
+BaseContainer -> Wardrobe "wardrobe"
+	with name "chest" "wardrobe" "closet",
+	description "It is a large, antique closet.  It is made of dark 
+		oak and is very heavy.",
+	has scenery openable;
+
+Lamp -> ReadingLamp "reading lamp"
+	with name "reading" "lamp",
+	description "A small reading lamp is mounted on the wall above 
+		the bed.  A thin chain hangs down, serving as an on/off 
+		switch.",
+	before [;
+	SwitchOn, SwitchOff:
+		"Apparently the electricity has been turned off.  The 
+		light does not activate.";
+	],
+	has scenery;
+
+LampChain ->;
+LampBulb ->;
+
+Object -> BedroomBed "bed"
+	with name "bed",
+	description "This is half of a set of twin beds.  The polkadot 
+		bedspread almost matches the room's decor.",
+	has supporter enterable;
+
+Object -> -> WhitePillow "white pillow"
+	with name "white" "pillow",
+	description "This fluffy white pillow seems like a nice place to 
+		rest your head.";
+
+Object -> -> BlackPillow "black pillow"
+	with name "black" "pillow",
+	description "You could rest your head on this pillow to take a 
+		load off your shoulders.";
+
+BaseContainer -> BedroomCloset "closet door"
+	with name "closet" "door",
+	description "It is a large, antique closet.  It is made of dark 
+		oak and is very heavy.",
+!	with_key OnyxKey,
+	has scenery openable lockable locked;
+
+Object -> BedPainting "abstract painting"
+	with name "abstract" "painting",
+	description "Shadows and light.  This unsigned painting is an 
+		abstract pattern of blacks, whites, and greys.",
+	has scenery;
+
+Dresser -> BedsideTable "bedside table"
+	with name "bedside" "table",
+	description "The solid-looking table makes a hollow ring when 
+		you knock on it.",
+	has static;
+
+
+Candle -> -> RedCandle "red candle"
+	with name "red" "candle";
+
+
+Object -> -> StarDiary "star diary"
+	with name "diary" "star",
+	description "A star adorns this leather-covered diary.",
+	before [;
+	Open:
+		<<read self>>;
+	Read:
+		"Several pages are torn out.  The only remaining page 
+		with writing on it reads:^^
+		~My star is gone, but not lost.  Master's servant will 
+		pay for his betrayal.  The vehicle of my power has not 
+		yet served its purpose.  When it sets me free, I will 
+		have a chance to realize my unlimited potential.  The 
+		forces of the technological society will be unprepared 
+		for the likes of me.  I will not be denied.  My 
+		omnipotence is inevitable.~";
+	];
+
+
+Drawer -> -> BedsideDrawer "bedside drawer"
+	with name "bedside" "drawer" "drawers",
+	description "It's a single drawer neatly mounted in the bedside 
+		table.",
+	has static;
+
+
+Object -> -> -> SnakeScroll "snake scroll"
+	with name "snake" "scroll",
+	description "The seal on this scroll looks familiar.  It displays a 
+		self-consuming snake.",
+	before [;
+	Read:
+		"On this old paper there are but six words spread over 
+		two lines.  It reads: ~Specan Heafod Abraxas~ and 
+		~Instantum Illuminaris Abraxas~.";
+	];
+
+
+!Scroll -> -> -> DollDollScroll "rolled scroll"
+!	with name "rolled scroll";
+
+!Spell -> -> -> -> dolldoll_spell
+!	with name "dolldoll",
+!	purpose "Doll, Doll...  Wilt thou lead the lost...",
+!	magic [;
+!		"Nothing happens.";
+!	];
+
+! It's a rolled up scroll sealed with wax
+
+! The scroll reads, "Doll, Doll...  Wilt thou lead the lost."
+!dolldoll
