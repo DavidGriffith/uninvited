@@ -70,8 +70,9 @@ Inform program.
 This source distribution makes no assumptions about any preinstalled 
 extensions, nor are they used.  Extensions required to compile this game 
 are included in src/extra.  To compile this game, you need an 
-installation of Inform 6.31 or 6.32 and version 6/12 of the Inform 
-Library.
+installation of Inform 6.33 and version 6/12 of the Inform Library.  Any 
+later version should work as well.  Release 1 was built with a 
+pre-release of 6.33, which is why it reports as being compiled by 6.32.
 
 ===============
 Attributions ||
