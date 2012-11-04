@@ -51,8 +51,8 @@ That, however, will not detract from the game.";
 
 Option -> "Release History"
 	with description
-		"Release 0 / Serial number 120722^
-		Limited distribution beta test";
+		"Release 1 / Serial number 121026^
+		First Release";
 
 Option -> "Credits"
 	with description
