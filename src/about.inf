@@ -69,10 +69,9 @@ anymore.  It used to be Infinite Ventures, but they appear to be out of
 business.^
 ^
 Sound effects were found in the public domain or downloaded from 
-http://www.freesfx.co.uk or http://www.soundjay.com.
+http://www.freesfx.co.uk or http://www.soundjay.com.^
 ^
-I would like to thank (name), (name), and (name) for their gracious 
-help in betatesting.";
+I would like to thank Stan Kaufman for his gracious help in betatesting.";
 
 Option -> "License"
 	with description
