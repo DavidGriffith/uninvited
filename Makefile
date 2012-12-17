@@ -8,6 +8,9 @@ EXTENSION = .z5
 BLORB_EXTENSION = .zblorb
 
 INFORM = inform
+BLORB  = perlBlorb.pl
+#BLORB = pblorb.pl
+#BLORB = cblorb
 
 NODEBUG = -~D~S
 DEBUG = -D
@@ -20,14 +23,17 @@ distdir = $(DISTNAME)
 
 #exclude = --exclude=misc --exclude=junk
 
-$(BINNAME):
+blurbfile = src/blurb.inf
+
+$(BINNAME): blorb
 	cd src ; $(INFORM) $(SWITCHES) $(DEBUG) $(BINNAME).inf ../$(BINNAME)$(EXTENSION)
 
-nodebug:
+nodebug: blorb
 	cd src ; $(INFORM) $(SWITCHES) $(NODEBUG) $(BINNAME).inf ../$(BINNAME)$(EXTENSION)
 
 blorb:
-	pblorb.pl sound/uninvited.blurb $(BINNAME)$(BLORB_EXTENSION) > src/blurb.inf
+	touch $(BINNAME)$(EXTENSION) $(BINNAME)$(BLORB_EXTENSION)
+	$(BLORB) sound/$(BINNAME).blurb $(BINNAME)$(BLORB_EXTENSION) > src/blurb.inf
 
 abbrev:
 	rm -f src/abbreviations.inf
@@ -65,6 +71,7 @@ clean:
 #	rm -f *.ulx
 
 distclean: clean
+	-rm -f src/blurb.inf
 	-rm -rf $(distdir)
 	-rm -f $(distdir).tar $(distdir).tar.gz
 
@@ -75,6 +82,7 @@ help:
 	@echo "  $(BINNAME)	Build the game."
 	@echo "  nodebug	Build the game without debugging code."
 	@echo "  abbrev	Build abbreviation list."
+	@echo "  blorb		Build Blorb file."
 	@echo "  gametext	Output all game text."
 	@echo "  dist		Create distribution tarball."
 	@echo "  clean		Get rid of temporary files."

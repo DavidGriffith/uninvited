@@ -23,8 +23,8 @@ Constant Headline
 ^An unauthorized adaptation by David Griffith.
 ^(Type ~about~ for more information.)^";
 
-Release 1;
-Serial "121026";
+Release 2;
+Serial "121216";
 
 replace ScoreSub;
 replace CutSub;

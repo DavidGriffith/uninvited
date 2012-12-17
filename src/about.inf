@@ -52,7 +52,10 @@ That, however, will not detract from the game.";
 Option -> "Release History"
 	with description
 		"Release 1 / Serial number 121026^
-		First Release";
+		First Release^
+		^
+		Release 2 / Serial number 121216^
+		Minor typos fixed";
 
 Option -> "Credits"
 	with description

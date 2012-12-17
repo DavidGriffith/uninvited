@@ -40,6 +40,10 @@ a default installation of Inform and the "make" utility.  Most, if not
 all, modern flavors of Unix already have make.  You will also need a 
 Z-machine interpreter of some sort.
 
+If you want to build the Blorb file, you will need to make sure 
+perlBlorb.pl is in the path.  Type "make" twice.  First time the Blorb 
+system is primed.  Second time actually builds the Blorb file.
+
 If you're on a non-Unix platform, then go into the src directory and 
 execute the following command:
   inform -iecd2 '$MAX_OBJECTS=768' uninvited.inf
@@ -47,6 +51,9 @@ execute the following command:
 If you want to build with the debugging commands included, do this:
   inform -iecd2 '$MAX_OBJECTS=768' -D uninvited.inf
 
+As of this writing, cBlorb has bugs in it that prevent easy use with 
+Inform6 source code.  For the time being, Blorb building is supported 
+only on Unix and possibly Cygwin platforms.  
 
 ===================
 Release History  ||
@@ -54,6 +61,12 @@ Release History  ||
 
 Release 0 / Serial number 120722
 Undistributed development release
+
+Release 1 / Serial number 121026
+First public release
+
+Release 2 / Serial number 121216
+Minor typos fixed
 
 
 ==============================
