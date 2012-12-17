@@ -2,14 +2,13 @@
 # in Inform.  Feel free to adopt and adapt it for your own purposes.
 #
 
-VERSION = r1
+VERSION = r2
 BINNAME = uninvited
 EXTENSION = .z5
 BLORB_EXTENSION = .zblorb
 
 INFORM = inform
-BLORB  = perlBlorb.pl
-#BLORB = pblorb.pl
+BLORB = pblorb.pl
 #BLORB = cblorb
 
 NODEBUG = -~D~S

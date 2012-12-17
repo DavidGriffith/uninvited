@@ -40,20 +40,22 @@ a default installation of Inform and the "make" utility.  Most, if not
 all, modern flavors of Unix already have make.  You will also need a 
 Z-machine interpreter of some sort.
 
+A slightly modified version of Graham Nelson's perlBlorb script is used 
+to build the blorb file.  This script can be found at 
+http://661.org/if/pblorb.pl.
+
 If you want to build the Blorb file, you will need to make sure 
-perlBlorb.pl is in the path.  Type "make" twice.  First time the Blorb 
-system is primed.  Second time actually builds the Blorb file.
-
-If you're on a non-Unix platform, then go into the src directory and 
-execute the following command:
-  inform -iecd2 '$MAX_OBJECTS=768' uninvited.inf
-
-If you want to build with the debugging commands included, do this:
-  inform -iecd2 '$MAX_OBJECTS=768' -D uninvited.inf
+pblorb.pl is in the path.  Type "make" twice.  On the first pass, the 
+blorb file is built and filled with audio files.  Then the Inform code 
+is compiled.  Finally the compiled Zcode is added to the blorb file.  
+The first pass of pblorb.pl is needed because it generates src/blurb.inf 
+which contains constants necessary for naming the various audio files 
+instead of having to remember what resource n happens to be.
 
 As of this writing, cBlorb has bugs in it that prevent easy use with 
 Inform6 source code.  For the time being, Blorb building is supported 
 only on Unix and possibly Cygwin platforms.  
+
 
 ===================
 Release History  ||
