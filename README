@@ -42,7 +42,8 @@ Z-machine interpreter of some sort.
 
 A slightly modified version of Graham Nelson's perlBlorb script is used 
 to build the blorb file.  This script can be found at 
-http://661.org/if/pblorb.pl.
+http://661.org/if/pblorb.pl or 
+https://gist.github.com/DavidGriffith/5097403
 
 If you want to build the Blorb file, you will need to make sure 
 pblorb.pl is in the path.  Type "make" twice.  On the first pass, the 
