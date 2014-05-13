@@ -72,6 +72,25 @@ Release 2 / Serial number 121216
 Minor typos fixed
 
 
+===========
+License  ||
+===========
+
+This reimplementation of Uninvited is licensed under the Artistic 
+License 2.0.  See the file ARTISTIC in this archive.
+
+
+=======================
+Compiling Uninvited  ||
+=======================
+
+A Unix-style Makefile is provided. This was done mainly as a
+convenience for myself while writing the game. If, for whatever reason,
+you can't use it or don't want to, simply invoke the Inform compiler on
+src/uninvited.inf. Type "make" to build Uninvited with the debug code
+included. Type "make nodebug" to build without the debug code.
+
+
 ==============================
 Notes on Writing Uninvited  ||
 ==============================
@@ -89,6 +108,7 @@ are included in src/extra.  To compile this game, you need an
 installation of Inform 6.33 and version 6/12 of the Inform Library.  Any 
 later version should work as well.  This was built with a pre-release of 
 6.33, which is why it reports as being compiled by 6.32.
+
 
 ===============
 Attributions ||
