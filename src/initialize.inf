@@ -6,6 +6,7 @@
 
 [ Initialise dummy;
 
+	no_implicit_actions = true;
 	Car.mycount = 5;
 
 	! Make compiler shut up about unused sound.h stuff.

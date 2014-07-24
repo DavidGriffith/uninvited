@@ -7,13 +7,12 @@
 
 #Ifdef DEBUG;
 message "Debugging code enabled.";
-Constant INFIX;
 #endif;
 
 Constant NO_SCORE;
 Constant DIALECT_US;
 Constant NO_HOWTO_GRAMMAR = 1;
-Constant NO_IMPLICIT_ACTIONS;
+!Constant NO_IMPLICIT_ACTIONS;
 
 !Constant NOISY_DIR_TOS;		! NPC does not follow *_to routines
 
