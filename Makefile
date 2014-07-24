@@ -8,8 +8,8 @@ EXTENSION = .z5
 BLORB_EXTENSION = .zblorb
 
 INFORM = inform
-BLORB = pblorb.pl
-#BLORB = cblorb
+#BLORB = pblorb.pl
+BLORB = cBlorb
 
 NODEBUG = -~D~S
 DEBUG = -D
