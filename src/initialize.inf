@@ -4,7 +4,7 @@
 !
 
 
-[ Initialise dummy;
+[ Initialise ;
 
 	no_implicit_actions = true;
 	Car.mycount = 5;
@@ -54,8 +54,8 @@
 #endif; ! DEBUG
 	
 	print "[Press any key to begin.] ";
-	@read_char 1 dummy;
-	@erase_window 0;
+	KeyCharPrimitive();
+	ClearScreen();
 	"^";
 ];
 
