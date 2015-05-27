@@ -86,13 +86,15 @@ Moveclass -> FruitDemon "ugly creature"
 		}
 	],
 	before_action [ mylocation playerlocation fruitlocation;
-		mylocation == parent(self);
-		playerlocation == parent(player);
-		fruitlocation == parent(Fruit);
-		if (mylocation ~= ObservatoryCorridor)
+		mylocation = parent(self);
+		playerlocation = parent(player);
+		fruitlocation = parent(Fruit);
+		if (mylocation ~= ObservatoryCorridor) {
 			rtrue;	! shut up if player zaps self
 
-		if ((mylocation == playerlocation) == fruitlocation) {
+		}
+		if ((mylocation == playerlocation) &&
+			(mylocation == fruitlocation)) {
 			self.eat_fruit();
 			rtrue;
 		}

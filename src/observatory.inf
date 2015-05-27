@@ -26,7 +26,6 @@ Object -> Telescope "telescope"
 		1:	"better.";
 		}
 		"worse.";
-
 	Search:
 		"Looking through ", (the) self, " you see nothing in 
 		particular.";

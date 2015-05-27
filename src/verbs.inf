@@ -173,5 +173,5 @@ Verb 'use'
 	* held 'with' noun	-> Use
 	* held 'on' noun	-> Use;
 
-Extend 'turn' first
+Extend 'turn' last
 	* noun 'to' special	-> SetTo;

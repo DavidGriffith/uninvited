@@ -68,7 +68,7 @@ MyDoor -> BedDoor "old door",
 	with name "old" "door",
 	description "The door is old and cracked.",
 	nw_to Bedroom,
-	se_to SecondHall,
+	e_to SecondHall,
 	has scenery openable;
 
 MyDoor -> GuestDoor "wooden door"

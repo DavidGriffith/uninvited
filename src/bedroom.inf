@@ -21,15 +21,15 @@ Mansion Bedroom "Bedroom"
 			A small door is in the north wall.";
 		"";
 	],
-	w_to BedroomCloset,
-	se_to BedDoor,
+	w_to Wardrobe,
+	e_to BedDoor,
 	n_to Bathroom;
 
 BaseContainer -> Wardrobe "wardrobe"
 	with name "chest" "wardrobe" "closet",
 	description "It is a large, antique closet.  It is made of dark 
 		oak and is very heavy.",
-	has scenery openable;
+	has scenery openable door locked container;
 
 Lamp -> ReadingLamp "reading lamp"
 	with name "reading" "lamp",
@@ -50,7 +50,7 @@ Object -> BedroomBed "bed"
 	with name "bed",
 	description "This is half of a set of twin beds.  The polkadot 
 		bedspread almost matches the room's decor.",
-	has supporter enterable;
+	has static supporter enterable;
 
 Object -> -> WhitePillow "white pillow"
 	with name "white" "pillow",
@@ -62,12 +62,12 @@ Object -> -> BlackPillow "black pillow"
 	description "You could rest your head on this pillow to take a 
 		load off your shoulders.";
 
-BaseContainer -> BedroomCloset "closet door"
-	with name "closet" "door",
-	description "It is a large, antique closet.  It is made of dark 
-		oak and is very heavy.",
+!BaseContainer -> BedroomCloset "closet door"
+!	with name "closet" "door",
+!	description "It is a large, antique closet.  It is made of dark 
+!		oak and is very heavy.",
 !	with_key OnyxKey,
-	has scenery openable lockable locked;
+!	has scenery openable lockable locked door;
 
 Object -> BedPainting "abstract painting"
 	with name "abstract" "painting",
