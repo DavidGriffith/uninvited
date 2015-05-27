@@ -65,7 +65,7 @@ Class MyDoor
 
 Class BaseContainer
 	with
-	capacity 3,
+	capacity 1,
 	invent [;
 		if (inventory_stage == 1) {
 			rfalse;
@@ -135,7 +135,6 @@ Class BaseBottle
 		print_ret (The) noun, " is too big to fit in ",
 			(the) self, ".";
 	],
-	capacity 1,
 	has container openable;
 
 Class Bottle
