@@ -7,12 +7,17 @@ Mansion TrophyRoom "Trophy Room"
 	with name "room",
 	description "The walls of this room are lined with the heads of 
 		dead animals.  A mounted bear stands in a corner.  A 
-		tiger skin covers the middle of the floor.  To the 
-		north is a door leading outside.  You can go back to 
-		the rec room using the door to the east.",
+		tiger skin covers the middle of the floor.  A moose head 
+		and a boar head are mounted on the walls. To the north 
+		is a door leading outside.  You can go back to the rec 
+		room using the door to the east.",
 	e_to RecRoom,
 	n_to BackDoor;
 
+Object -> TrophyAnimals "dead animals"
+	with name "dead" "animal" "animals",
+	description "You'll have to examine the animals individually.",
+	has scenery;
 
 Object -> TigerSkin "tiger skin"
 	with name "tiger" "skin" "rug",
@@ -22,14 +27,14 @@ Object -> TigerSkin "tiger skin"
 	has scenery;
 
 Object -> MooseHead "moose head"
-	with name "moose" "head",
+	with name "mounted" "moose" "head",
 	description "This moose head is huge.  It must have been really 
 		intimidating when it had a body.  It has a very strange 
 		look in its eye.",
 	has scenery;
 
 Object -> BoarHead "boar head"
-	with name "boar" "head",
+	with name "mounted" "boar" "head",
 	description "Ooh!  That's one ugly pig.  He was probably an 
 		awful boar.",
 	has scenery;
