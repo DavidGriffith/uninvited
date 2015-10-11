@@ -10,7 +10,7 @@ Inside Laboratory "Laboratory"
 		You wonder what experiments were performed in here, and 
 		by whom.  You do not feel very comfortable in here.  
 		Embedded in one wall is a small iron safe.  In another 
-		wall is a small fireplace. A doorwal leads east.";
+		wall is a small fireplace. A doorway leads east.";
 	],
 	e_to ObservatoryCorridor,
 	d_to LabTrapDoor,
