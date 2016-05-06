@@ -62,7 +62,7 @@ Object -> -> Blotter "blotter"
 
 Object -> StudyPainting "painting"
 	with name "painting",
-	description "This mountainscape is stunning and exhilerating.  
+	description "This mountainscape is stunning and exhilarating.  
 		You can almost smell the mountain air gusting from 
 		the canvas.",
 	has scenery;
@@ -93,7 +93,7 @@ MyDoor StudyDoor "wooden door"
 	description [;
 		if (self in Study) 
 			"The doorway looks as if it were constructed 
-			centuries after the rest of the house.  there is 
+			centuries after the rest of the house.  There is 
 			no noticable lock or keyhole on the door.";
 		"This wooden door seems out of place in these 
 		underground caves.";

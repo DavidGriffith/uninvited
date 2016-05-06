@@ -236,7 +236,7 @@ Object -> -> Dracan "body"
 		the abyss.  The speck of light above you disappears as 
 		you become part of the darkness.";
 		default:
-			"foo";
+		"Only 1 or 2 allowed for Dracan.killplayer()";
 		}
 	];
 
