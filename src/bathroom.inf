@@ -15,7 +15,7 @@ Mansion Bathroom "Bathroom"
 		if (BathroomLight has general)
 			"There is a gaping hole in the ceiling.";
 
-		"Your attention is drawn to a strangly-shaped light 
+		"Your attention is drawn to a strangely-shaped light 
 		fixture on the ceiling.";
 	],
 	before [;

@@ -80,7 +80,7 @@ KeyChair -> FoyerChair "chair"
 		print "It's an early American chair -- very old and 
 			very valuable.  It looks soft and cushiony.";
 		if (self.cut_count > 0) {
-			" Too bad you ruined it by slashing at the upholstry.";
+			" Too bad you ruined it by slashing at the upholstery.";
 		}
 		"";
 	],

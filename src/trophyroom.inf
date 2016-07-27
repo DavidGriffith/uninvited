@@ -51,7 +51,7 @@ Object -> StuffedBear "stuffed bear"
 	has scenery;
 
 
-! This item should not be takable if the player has more than nine 
+! This item should not be takeable if the player has more than nine 
 ! non-tiny objects in inventory.
 Object -> Cage "small cage"
 	with name "small" "cage",

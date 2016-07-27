@@ -6,7 +6,7 @@
 
 [ Initialise ;
 
-	no_implicit_actions = true;
+!	no_implicit_actions = true;
 	Car.mycount = 5;
 
 	! Make compiler shut up about unused sound.h stuff.
@@ -81,7 +81,7 @@
 	indeed.^
 	^
 	CONGRATULATIONS^
-	By defeating the evil entities that had taken posession of both 
+	By defeating the evil entities that had taken possession of both 
 	this mansion and your little brother, you have proven yourself 
 	Master of the House of Abraxas.";
 ];

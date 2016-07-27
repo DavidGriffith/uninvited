@@ -253,7 +253,7 @@ Class Lamp
 !		"You pull the chain and the light goes out.";
 		"But the light is already off.";
 	Receive:
-		"Putting things on ", (the) self, " would achive nothing.";
+		"Putting things on ", (the) self, " would achieve nothing.";
 	],
 	capacity 0,
 	has scenery supporter;

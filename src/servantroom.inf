@@ -6,7 +6,7 @@
 Mansion ServantRoom "Servant's Bedroom"
 	with name "bedroom",
 	description "Whoever had occupied this room must have been quite 
-		satisfied with the small accomodations.  There is a 
+		satisfied with the small accommodations.  There is a 
 		simple bed, a floor lamp, and a dresser.  A small 
 		painting hangs on the wall above the bed.  This room
 		does not seem quite as untidy as the rest of the house.  
@@ -67,7 +67,7 @@ LampBulb -> -> ServantLampBulb "bulb";
 Object -> ServantPainting "painting"
 	with name "painting",
 	description "This painting looks like Picasso's rendering of 
-		~The Twillight Zone's~ title shot.",
+		~The Twilight Zone's~ title shot.",
 	has scenery;
 
 
@@ -152,7 +152,7 @@ Object SpiritServant "ghostly servant"
 	die [;
 		give self general;
 		remove self;
-		"The posessive ghost shrieks at the sight of the 
+		"The possessive ghost shrieks at the sight of the 
 		stunned spider.  Flustered and frightened, the spirit 
 		dissolves from view, leaving you alone again.";
 	],

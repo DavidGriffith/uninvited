@@ -16,12 +16,12 @@
 	}
 
 	if (obj == IceWall) {
-		no_infer_message = true;
+!		no_infer_message = true;
 		return 3;
 	}
 
 	if (obj == MatchBox) {
-		no_infer_message = true;
+!		no_infer_message = true;
 		return 3;
 	}
 
@@ -33,7 +33,7 @@
 
 	if (action_to_be == ##Exit && obj == Car) retval++;
 	if (action_to_be == ##Exit && obj == CarDoor) {
-		no_infer_message = true;
+!		no_infer_message = true;
 		retval--;
 	}
 

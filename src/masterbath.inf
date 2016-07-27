@@ -6,7 +6,7 @@
 Mansion MasterBath "Master Bathroom"
 	with name "master" "bathroom",
 	description "Whoever decorated this bathroom certainly had 
-		ecelctic tastes.  There is a large granite bathtub at 
+		eclectic tastes.  There is a large granite bathtub at 
 		one end of the room and a marble sink at the other.  The 
 		decor could be described as ~African Art Deco~.  The 
 		only exit is north.",
@@ -86,7 +86,7 @@ Object -> MasterShelf "shelf"
 ! as "It's a small bottle with a yellowish liquid inside."
 Bottle -> -> YellowBottle "yellow bottle"
 	with name "yellow" "bottle",
-	description "It's a small, purfume-sized bottle that contains a 
+	description "It's a small, perfume-sized bottle that contains a 
 		dark yellowish liquid.";
 
 Liquid -> -> -> YellowLiquid "yellow liquid"
@@ -98,7 +98,7 @@ Liquid -> -> -> YellowLiquid "yellow liquid"
 	Drink:
 		remove self;
 		"The solution is quickly swallowed and does not have any 
-		noticable effect, except that now your breath smells 
+		noticeable effect, except that now your breath smells 
 		like perfume.";
 	],
 	has edible;

@@ -28,12 +28,12 @@
 	" in a puff of smoke.";
 ];
 
-[SetSafeSub;
+[ SetSafeSub;
 	SafeDial.set_combination();
 	"The safe's combination has been reset.";
 ];
 
-[ResetSub z;
+[ ResetSub z;
 	for (z = 1 + (99 - 1) / 8 : z >= 0 : z--)
 		SafeFlags->z = 0;
 	"Reset shuffle on SafeFlags.";
@@ -108,7 +108,7 @@
 	}
 ];
 
-[FillWithSub thing;
+[ FillWithSub thing;
 	thing = parent(second);
 
 	if (~ObjectIsUntouchable(thing) && thing hasnt open && 
@@ -127,24 +127,24 @@
 	"You fill ", (the) noun, " with ", (the) second, ".";
 ];
 
-[CutSub;
+[ CutSub;
 	if (second ofclass Knife)
 		"Cutting that up would achieve little.";
 	"Be serious.";
 ];
 
 
-[StrikeSub;
+[ StrikeSub;
 	<<attack noun second>>;
 ];
 
 
-[RubSub;
+[ RubSub;
 	"You achieve nothing by this.";
 ];
 
 
-[BurnSub;
+[ BurnSub;
 	if (second) {
 		if (second ofclass UnlitMatch)
 			"You won't start a fire with a match in that state.";
@@ -156,12 +156,12 @@
 ];
 
 
-[DontKnowSub;
+[ DontKnowSub;
 	"I thought so.";
 ];
 
 
-[DoKnowSub;
+[ DoKnowSub;
 	switch (random(4)) {
 	1:	"Really?";
 	2:	"How profound.";
@@ -171,12 +171,12 @@
 ];
 
 
-[SnuffSub;
+[ SnuffSub;
 	<<SwitchOff noun>>;
 ];
 
 
-[ReadSub;
+[ ReadSub;
 	print (The) noun;
 	if (noun == player)
 		print " don't"; 
@@ -187,7 +187,7 @@
 ];
 
 
-[ShakeSub;
+[ ShakeSub;
 	if (noun == nothing || noun == Player)
 		"You're already shaking with fear.";
 
@@ -195,18 +195,18 @@
 ];
 
 
-[JumpSub;
+[ JumpSub;
 	if (noun == nothing)
 		"You jump on the spot, fruitlessly.";
 
 	"Jumping on ", (the) noun, " doesn't seem helpful.";
 ];
 
-[CatchSub;
+[ CatchSub;
 	"You won't catch ", (a) noun, " with ", (a) second, ".";
 ];
 
-[FartSub;
+[ FartSub;
 	if (noun && noun ~= Player) {
 		if (noun has animate) {
 			print "In return, ", (the) noun, " fart";
@@ -231,25 +231,25 @@
 ];
 
 
-[ConsultSub;
+[ ConsultSub;
 	"You discover nothing of interest in ", (the) noun, ".";
 ];
 
 
-[SpinSub;
+[ SpinSub;
 	"Spinning ", (the) noun, " doesn't seem helpful.";
 ];
 
-[UseSub;
+[ UseSub;
 	"I'm not sure how you intend to use ", (the) noun, ".";
 ];
 
-[ChantNothingSub;
+[ ChantNothingSub;
 	"You open your mouth to ", (address) verb_word, " but you don't 
 	know what to say.";
 ];
 
-[ChantSub w1 w2 w3 w4 w5 w6 quotes i;
+[ ChantSub w1 w2 w3 w4 w5 w6 quotes i;
 
 	wn = consult_from;
 	quotes = false;

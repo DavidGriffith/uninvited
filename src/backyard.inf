@@ -38,7 +38,7 @@ Object -> GreenhouseView "greenhouse"
 
 Object -> ChapelView "chapel"
 	with name "chapel",
-	description "In the distance, there looms the shadowly remnant 
+	description "In the distance, there looms the shadowy remnant 
 		of an old chapel.  You sense movement in the pools of 
 		darkness around the building.",
 	found_in Backyard YardPath,

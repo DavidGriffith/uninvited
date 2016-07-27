@@ -225,7 +225,7 @@ Object Notebook "notebook"
 			provide a nonreactive atmosphere for welding 
 			aluminum.";
 		TopicPotassium:
-			"#19.  Potassium.  K.  Orginally isolated from 
+			"#19.  Potassium.  K.  Originally isolated from 
 			potash, from where it gets its name, this highly 
 			reactive metal is vital to many life 
 			functions.";
@@ -335,7 +335,7 @@ Object Notebook "notebook"
 			with platinum ores.  Frequently used as a 
 			catalyst in some platinum alloys.";
 		TopicPalladium:
-			"#46.  Palladium.  One of the platium group of 
+			"#46.  Palladium.  One of the platinum group of 
 			metals.  Able to absorb up to nine-hundred 
 			times its own volume of hydrogen.";
 		TopicSilver:
@@ -520,7 +520,7 @@ Object Notebook "notebook"
 		TopicAmericium:
 			"#95.  Americium.  Am.  Named for the United 
 			States of America, this radioactive element is 
-			best known as an ionzation source for smoke 
+			best known as an ionization source for smoke 
 			detectors.  For such purposes, the danger is 
 			nil.";
 		TopicCurium:

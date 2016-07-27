@@ -30,7 +30,7 @@ Object -> Gramophone "gramophone"
 		movies.  This record player has no electronic parts.  It 
 		consists of a crankshaft, a nail of a needle, and a 
 		cone-like horn for a speaker.  On the platter is a 78 
-		rpm copy (with a MacNifty label) of Rudy Valee 
+		rpm copy (with a MacNifty label) of Rudy Vallee 
 		singing ~Winchester Cathedral~.",
 	before [;
 	SwitchOn:

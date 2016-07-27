@@ -165,7 +165,7 @@ Object -> -> Pesticide "can of pesticide"
 	description "It's a spray can of pesticide.",
 	before [;
 	Open:
-		print_ret (The) self, " is permenantly sealed.";
+		print_ret (The) self, " is permanently sealed.";
 	Shake:
 		"It seems empty.";
 	];
@@ -178,7 +178,7 @@ Object -> -> SpiderCider "can of spider cider"
 		by leading entomologists everywhere.~",
 	before [;
 	Open:
-		print_ret (The) self, " is permenantly sealed.";
+		print_ret (The) self, " is permanently sealed.";
 	Smell:
 		"It smells like pine oil.";
 	Taste:

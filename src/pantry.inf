@@ -37,7 +37,7 @@ Object -> PantryShelf "shelf"
 Object -> -> PewterPlate "pewter plate"
 	with name "pewter" "plate" "plates//p",
 	description "This solid, fine pewter plate is covered with 
-		embarassing water spots.",
+		embarrassing water spots.",
 	has supporter;
 
 

@@ -60,7 +60,7 @@ Option -> "Release History"
 Option -> "Credits"
 	with description
 "The Inform version of Univited was created by David Griffith 
-(davei@@64661.org) or (davidgriffith@@64acm.org).  Please visit 
+(dave@{40}661.org) or (davidgriffith@{40}acm.org).  Please visit 
 http://661.org/ for more of my stuff, including the 
 world-famous Frotz, which you may be using right now to play this game.  
 Portions of code used are from the 4th Edition of the Inform Designer's 
@@ -80,7 +80,7 @@ Option -> "License"
 	with description
 "The source code to this Inform reimplementation of Uninvited is freely
 redistributable. Do with it what you will, but don't go about claiming
-you wrote it. I do not appreciate plagarism.  Give credit where credit
+you wrote it. I do not appreciate plagiarism.  Give credit where credit
 is due.  Please let me know where and how you use code taken from this 
 game.^
 ^

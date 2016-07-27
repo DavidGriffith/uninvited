@@ -34,7 +34,7 @@ KeyChair -> ParlorChair "antique chair"
 		plush, intricate upholstery is framed by the finest 
 		oak.";
 		if (self.cut_count > 0) {
-			" Too bad you ruined it by slashing at the upholstry.";
+			" Too bad you ruined it by slashing at the upholstery.";
                 }
 		"";
 	],
@@ -44,7 +44,7 @@ KeyChair -> ParlorChair "antique chair"
 Object -> ParlorRug "rug"
 	with name "rug",
 	description "This simply-woven rug seems slightly out of place 
-		amidst the extravagent decor filling the rest of the 
+		amidst the extravagant decor filling the rest of the 
 		mansion.",
 	has scenery;
 

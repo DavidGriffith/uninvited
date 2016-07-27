@@ -307,8 +307,8 @@ DeadEnd Maze33 "Dead End"
 
 Tombstone -> Tombstone3 "tombstone"
 	with description "A cross adorns the top of this tombstone like 
-		a hood ordament to Hell.  This grave indicates that 
-		these grounds once housed a cemetary before housing a 
+		a hood ornament to Hell.  This grave indicates that 
+		these grounds once housed a cemetery before housing a 
 		maze.  ~Why build a labyrinth on a graveyard?~ you wonder.";
 
 NSMaze Maze34 "Maze"
@@ -487,9 +487,9 @@ Maze Maze57 "Maze"
 Tombstone -> SpecialTombstone "tombstone"
 	with
 	description "A stone cross has been planted in the sterile, 
-		rock-hard dirt that carpens this maze.  This cross 
+		rock-hard dirt that carpets this maze.  This cross 
 		obviously marks a grave.  It seems that this sepulchral 
-		labyrinth could have been constructed upon a cemetary.",
+		labyrinth could have been constructed upon a cemetery.",
 	before [;
 	Receive:
 		if (noun == Bouquet) {

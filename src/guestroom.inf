@@ -7,7 +7,7 @@ Mansion GuestRoom "Bedroom"
 	with name "guest" "room" "bedroom",
 	description [;
 		print "This room is like your typical, twentieth century 
-		bourgois bedroom -- a place to relax, perhaps?
+		bourgeois bedroom -- a place to relax, perhaps?
 		Against the far wall is a large bed.  
 		Next to it is a dresser.  Hanging over the bed 
 		is a small ";

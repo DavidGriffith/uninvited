@@ -38,12 +38,12 @@ replace PushSub;
 replace ConsultSub;
 
 ! First, the parser, verbs library.
-Include "abbreviations.inf";
+!Include "abbreviations.inf";
 Include "blurb.inf";
-Include "parser";
+Include "parser.h";
 Include "extra/seeno.h";
 Include "extra/sound.h";
-Include "verblib";
+Include "verblib.h";
 
 ! Second, add-ons and alterations.
 Include "extra/moveclass.h";
@@ -65,7 +65,7 @@ Include "initialize.inf";
 Include "notebook.inf";
 
 ! These belong at the end in this order.
-Include "grammar";
+Include "Grammar.h";
 Include "verbsub.inf";
 Include "verbs.inf";
 

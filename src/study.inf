@@ -94,7 +94,7 @@ MyDoor StudyDoor "wooden door"
 		if (self in Study) 
 			"The doorway looks as if it were constructed 
 			centuries after the rest of the house.  There is 
-			no noticable lock or keyhole on the door.";
+			no noticeable lock or keyhole on the door.";
 		"This wooden door seems out of place in these 
 		underground caves.";
 	],
